@@ -1,0 +1,190 @@
+:root {
+  --black: #000;
+  --white: #fff;
+  --pink: #ff00ff;
+  --purple: #9000ff;
+  --grey: #707070;
+  --limit: 1500px;
+  --spread: 75%;
+  --color: rgb(64, 82, 128);
+  --color: rgb(107, 127, 153);
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("../fonts/gilroy-light.otf");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gilroy Bold";
+  src: url("../fonts/gilroy-extrabold.otf");
+  font-display: swap;
+}
+
+html {
+  font-family: sans-serif;
+  box-sizing: border-box;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  font-size: 16px;
+  width: 100%;
+  scroll-behavior: smooth;
+  overflow: auto;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  margin: 0;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  font-family: sans-serif;
+  font-family: "Gilroy", sans-serif;
+  font-weight: normal;
+  color: var(--white);
+  background-color: var(--black);
+  font-size: 1rem;
+  margin: 0 auto;
+  width: 100%;
+}
+
+body:after {
+  content: "";
+  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/756881/gifnoise.gif);
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -999;
+  opacity: 0.06;
+  will-change: auto;
+  transform: translate3d(0, 0, 0);
+  pointer-events: none;
+}
+
+p {
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+  width: var(--spread);
+  max-width: var(--limit);
+  margin: 0 auto;
+}
+
+section {
+  margin: 8rem 0;
+  /* border: 1px solid blue; */
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+menu,
+nav,
+section,
+summary,
+canvas {
+  display: block;
+}
+
+img {
+  border-style: none;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea,
+a {
+  font: inherit;
+}
+
+button,
+input {
+  overflow: visible;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+textarea {
+  height: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  resize: none;
+  -webkit-appearance: none;
+}
+
+ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: var(--white);
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus,
+[contenteditable="true"]:focus {
+  outline: none;
+}
+
+button {
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: var(--white);
+  text-transform: uppercase;
+  background: none;
+  border: 1px solid var(--purple);
+  padding: 0.6rem 2rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-transform: lowercase;
+}
+
+@media screen and (max-width: 400px) {
+  :root {
+    --spread: 85%;
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  section {
+    margin: 15rem 0;
+  }
+
+  html {
+    font-size: 120%;
+  }
+}
