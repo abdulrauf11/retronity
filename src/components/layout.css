@@ -150,7 +150,8 @@ input:focus,
 select:focus,
 textarea:focus,
 button:focus,
-[contenteditable="true"]:focus {
+[contenteditable="true"]:focus,
+video {
   outline: none;
 }
 
@@ -171,6 +172,19 @@ h4,
 h5,
 h6 {
   text-transform: lowercase;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--purple);
+  height: 60px;
 }
 
 @media screen and (max-width: 400px) {

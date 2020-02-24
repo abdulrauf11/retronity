@@ -21,13 +21,15 @@ const Wrapper = styled.section`
 
 const Service = styled.div`
   margin-top: 4rem;
-  width: 50%;
+  width: 55%;
   max-width: 650px;
   margin-left: auto;
+  ${device.small`width: 100%;`}
   h2 {
     font-weight: normal;
     font-size: 3rem;
     margin: 1.5rem 0;
+    ${device.small`font-size: 1.7rem;`}
     ${device.large`font-size: 3.2rem;`}
   }
 `
@@ -35,6 +37,7 @@ const Service = styled.div`
 const RgbText = styled.div`
   font-size: 9vw;
   font-family: "Gilroy Bold";
+  ${device.small`font-size: 3.5rem;`}
   ${device.large`font-size: 9rem;`}
 `
 
@@ -45,6 +48,7 @@ const TextWrapper = styled.div`
 
 const Dots = styled.div`
   margin-left: auto;
+  ${device.small`display: none;`}
   img {
     width: 18vmax;
     max-width: 350px;

@@ -5,6 +5,7 @@ import device from "./device"
 
 const Box = styled.div`
   padding: 3rem;
+  ${device.small`padding: 2rem 0;`}
   ${device.large`padding: 5rem;`}
 `
 

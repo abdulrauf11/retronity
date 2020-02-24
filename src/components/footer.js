@@ -9,6 +9,7 @@ const Wrapper = styled.footer`
   margin: 12rem auto 3rem auto;
   position: relative;
   font-size: 0.9rem;
+  ${device.small`margin-top: 10rem;`}
   .container {
     display: flex;
   }
@@ -18,6 +19,7 @@ const SocialLinks = styled.div`
   flex: 1;
   height: 200px;
   position: relative;
+  ${device.small`display: none;`}
   ${device.large`height: 300px;`}
   .vertical {
     position: absolute;
@@ -37,6 +39,7 @@ const End = styled.div`
   flex: 1;
   display: flex;
   justify-content: space-between;
+  ${device.small`flex-direction: column; margin-top: 4rem;`}
   div {
     margin: 1rem 0;
   }

@@ -18,13 +18,6 @@ exports.createPages = ({ graphql, actions }) => {
       }
     }
   `).then(result => {
-    // createPage({
-    //   path: `/shop/`,
-    //   component: require.resolve("./src/templates/shop.js"),
-    //   context: {
-    //     slug: `/shop/`,
-    //   },
-    // })
     result.data.visuals.edges.forEach(({ node }) => {
       createPage({
         path: `visuals/${node.slug}`,

@@ -2,16 +2,18 @@ import React from "react"
 import styled from "styled-components"
 import device from "../device"
 
-// import Loadable from "@loadable/component"
-// const LoadableMirage = Loadable(() => import("../canvas/mirage"))
+import Loadable from "@loadable/component"
+const LoadableMirage = Loadable(() => import("../canvas/mirage"))
 
 const Wrapper = styled.section`
   margin-top: 0rem;
+  ${device.small`margin-top: 2rem;`}
   ${device.large`margin-top: 4rem;`}
   .container {
     width: 90%;
     margin: 0 auto;
     position: relative;
+    ${device.small`display: flex; flex-direction: column-reverse;`}
     .slogan {
       z-index: 1;
       position: absolute;
@@ -21,9 +23,10 @@ const Wrapper = styled.section`
       font-family: "Gilroy Bold";
       text-align: center;
       -webkit-text-fill-color: transparent;
-      -webkit-text-stroke-width: 1px;
+      -webkit-text-stroke-width: 2px;
       -webkit-text-stroke-color: var(--white);
       line-height: 1;
+      ${device.small`font-size: 3rem; position: static; transform: none;`}
       ${device.large`font-size: 7.5rem;`}
     }
   }
@@ -34,12 +37,15 @@ const Scene = styled.div`
   position: relative;
   width: 35vmax;
   height: 35vmax;
+  min-width: 250px;
+  min-height: 250px;
   max-width: 800px;
   max-height: 800px;
 `
 
 const SocialLinks = styled.div`
   position: relative;
+  ${device.small`display: none;`}
   .vertical {
     position: absolute;
     left: 0;
@@ -68,7 +74,9 @@ const Hero = () => (
         to retronity
         <br />& beyond
       </h1>
-      <Scene>{/* <LoadableMirage /> */}</Scene>
+      <Scene>
+        <LoadableMirage />
+      </Scene>
     </div>
 
     <SocialLinks>

@@ -1,17 +1,22 @@
 import React from "react"
 import styled from "styled-components"
+import device from "../device"
 // import { Formik, Field, Form, ErrorMessage } from "formik"
 // import * as Yup from "yup"
 
 const Form = styled.form`
-  max-width: 600px;
-  margin: 8rem 0;
+  width: 65%;
+  max-width: 1000px;
+  margin: 4rem 0;
+  ${device.small`width: 100%;`}
+  ${device.large`margin: 8rem 0;`}
 `
 
 const FieldWrapper = styled.div`
-  margin-top: 6rem;
+  margin-top: 4rem;
   position: relative;
   line-height: 1.2;
+  ${device.large`margin-top: 8rem;`}
   label {
     z-index: -1;
     position: absolute;
@@ -19,29 +24,36 @@ const FieldWrapper = styled.div`
     transform-origin: left top;
     transition: all 0.25s cubic-bezier(0, 0, 0.25, 1);
     font-family: "Gilroy Bold";
-    font-size: 6rem;
+    font-size: 4rem;
     -webkit-text-fill-color: var(--black);
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: var(--white);
     opacity: 0.2;
+    ${device.small`font-size: 2.5rem;`}
+    ${device.large`font-size: 6rem;`}
     &.active {
       transform: scale(0.3) translateY(-100%);
       -webkit-text-fill-color: var(--white);
       -webkit-text-stroke-width: 0;
+      ${device.small`transform: scale(0.5) translateY(-100%);`}
     }
   }
   .input {
     color: var(--white);
     width: 100%;
-    font-size: 6rem;
+    font-size: 4rem;
     display: block;
     border: 0;
     border-bottom: 1px solid var(--white);
     background: transparent;
+    ${device.small`font-size: 2.5rem;`}
+    ${device.large`font-size: 6rem;`}
   }
 
   textarea.scroll {
-    font-size: 3rem;
+    font-size: 2rem;
+    ${device.small`font-size: 1.5rem;`}
+    ${device.large`font-size: 3rem;`}
   }
 
   .error {
@@ -53,7 +65,7 @@ const FieldWrapper = styled.div`
 `
 
 const ButtonWrapper = styled.div`
-  margin: 4rem 0;
+  margin-top: 6rem;
   text-align: right;
 `
 

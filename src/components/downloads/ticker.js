@@ -1,6 +1,8 @@
 import React, { useRef, useEffect } from "react"
 import { gsap } from "gsap"
 import styled from "styled-components"
+import device from "../device"
+
 
 const Wrapper = styled.div`
   position: absolute;
@@ -15,7 +17,8 @@ const Wrapper = styled.div`
       display: inline;
       margin-right: 3rem;
       font-family: "Gilroy Bold", sans-serif;
-      font-size: 5rem;
+      font-size: 8rem;
+      ${device.small`font-size: 4rem;`}
     }
   }
 `

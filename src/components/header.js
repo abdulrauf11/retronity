@@ -1,8 +1,9 @@
+import React, { useEffect, useRef } from "react"
 import { Link } from "gatsby"
-import React from "react"
 import styled from "styled-components"
 import Sticky from "./sticky"
 import device from "./device"
+import { gsap } from "gsap"
 
 const Wrapper = styled.header`
   width: calc(var(--spread) + 6rem);
@@ -10,12 +11,13 @@ const Wrapper = styled.header`
   margin: 0 auto;
   display: flex;
   align-items: center;
+  ${device.small`width: var(--spread);`}
 `
 
 const Logo = styled.span`
   display: block;
   a {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-family: "Gilroy Bold";
   }
 `
@@ -26,6 +28,7 @@ const PageLinks = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  ${device.small`display: none;`}
   ${device.large`padding-right: 5rem;`}
   a {
     display: block;
@@ -44,21 +47,35 @@ const PageLinks = styled.div`
   }
 `
 
-const Header = () => (
-  <Wrapper>
-    <Sticky>
-      <Logo>
-        <Link to="/">retronity</Link>
-      </Logo>
-    </Sticky>
-    <PageLinks>
-      <Link to="/visuals">rad visuals</Link>
-      <Link to="/faq">get the 411</Link>
-      <Link to="/contact" className="bordered">
-        contact
-      </Link>
-    </PageLinks>
-  </Wrapper>
-)
+const Header = () => {
+  const logoRef = useRef(null)
+  useEffect(() => {
+    const timeline = gsap.timeline({
+      repeat: -1,
+      defaults: { duration: 0.8, ease: "linear" },
+    })
+    timeline
+      .to(logoRef.current, { css: { color: "var(--purple)" } })
+      .to(logoRef.current, { css: { color: "var(--white)" } })
+      .to(logoRef.current, { css: { color: "var(--pink)" } })
+      .to(logoRef.current, { css: { color: "var(--white)" } })
+  }, [])
 
+  return (
+    <Wrapper>
+      <Sticky>
+        <Logo>
+          <Link to="/" ref={logoRef}>
+            retronity
+          </Link>
+        </Logo>
+      </Sticky>
+      <PageLinks>
+        <Link to="/visuals">rad visuals</Link>
+        <Link to="/faq">wut da faq</Link>
+        <Link to="/contact">contact</Link>
+      </PageLinks>
+    </Wrapper>
+  )
+}
 export default Header

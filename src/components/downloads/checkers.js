@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react"
 import { gsap } from "gsap"
 import styled from "styled-components"
+import device from "../device"
 
 const Wrapper = styled.div`
   width: var(--spread);
@@ -9,6 +10,8 @@ const Wrapper = styled.div`
   margin: 0 auto;
   position: relative;
   z-index: -1;
+  ${device.small`height: 130px; width: 100%;`}
+  ${device.large`height: 350px;`}
 
   .lines {
     display: flex;
@@ -25,6 +28,7 @@ const Wrapper = styled.div`
       .line {
         width: 100%;
         height: 2px;
+        ${device.small`height: 1px;`}
       }
     }
     &.vertical {
@@ -33,6 +37,7 @@ const Wrapper = styled.div`
       .line {
         width: 2px;
         height: 100%;
+        ${device.small`width: 1px;`}
       }
     }
   }

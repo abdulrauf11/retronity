@@ -16,6 +16,7 @@ const Form = styled.form`
     padding: 0.5rem 0.5rem;
     width: 100%;
     width: 300px;
+    ${device.small`width: 100%;`}
     &::placeholder {
       color: var(--white);
       opacity: 0.2;
@@ -23,7 +24,7 @@ const Form = styled.form`
   }
   button {
     margin-left: 1.5rem;
-    ${device.small`margin-left: auto; margin-top: 1rem;`}
+    ${device.small`margin-left: auto; margin-top: 2rem;`}
   }
 `
 

@@ -1,12 +1,14 @@
 import React from "react"
 import styled from "styled-components"
-
+import device from "../components/device"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import ContactForm from "../components/forms/contactForm"
 
 const Wrapper = styled.section`
   margin-top: 4rem;
+  margin-bottom: 15rem;
+  ${device.large`margin-bottom: 20rem;`}
 `
 
 const Text = styled.div`
@@ -15,7 +17,10 @@ const Text = styled.div`
     font-size: 5rem;
   }
   p {
-    max-width: 600px;
+    margin-top: 1rem;
+    width: 65%;
+    max-width: 1000px;
+    ${device.small`width: 100%;`}
   }
 `
 
@@ -26,11 +31,12 @@ const ContactPage = () => {
       <main>
         <Wrapper>
           <Text>
-            <h1>contact</h1>
+            <h1>yello</h1>
             <p>
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua. At vero eos et accusam et
+              Feel free to reach out whether you're interested in working with
+              us, or just want to talk about the '80s.
+              <br />
+              Later days and better lays!
             </p>
           </Text>
           <ContactForm />

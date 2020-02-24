@@ -53,10 +53,16 @@ const BulgeText = () => {
     })
 
     function setTextSize() {
+      const minSize = 56
       const maxSize = 180
-      const condition = window.innerWidth < 2000
       const responsiveSize = (8 * window.innerWidth) / 100
-      style.fontSize = condition ? responsiveSize : maxSize
+      if(window.innerWidth < 400) {
+        style.fontSize = minSize  
+      } else if(window.innerWidth < 2000) {
+        style.fontSize = responsiveSize  
+      } else {
+        style.fontSize = maxSize
+      }
     }
     setTextSize()
 
