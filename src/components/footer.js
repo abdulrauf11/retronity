@@ -6,10 +6,9 @@ import device from "./device"
 const Wrapper = styled.footer`
   width: var(--spread);
   max-width: var(--limit);
-  margin: 12rem auto 3rem auto;
+  margin: 3rem auto;
   position: relative;
   font-size: 0.9rem;
-  ${device.small`margin-top: 10rem;`}
   .container {
     display: flex;
   }

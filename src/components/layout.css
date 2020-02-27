@@ -79,13 +79,13 @@ p {
 main {
   position: relative;
   z-index: 1;
-  width: var(--spread);
-  max-width: var(--limit);
-  margin: 0 auto;
+  overflow: hidden;
 }
 
 section {
-  margin: 8rem 0;
+  margin: 8rem auto;
+  width: var(--spread);
+  max-width: var(--limit);
   /* border: 1px solid blue; */
 }
 
@@ -195,7 +195,7 @@ h6 {
 
 @media screen and (min-width: 2000px) {
   section {
-    margin: 15rem 0;
+    margin: 15rem auto;
   }
 
   html {

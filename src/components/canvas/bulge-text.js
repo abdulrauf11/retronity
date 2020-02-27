@@ -9,10 +9,10 @@ import { useWindowContext } from "../context"
 PixiPlugin.registerPIXI(PIXI)
 
 const CanvasWrapper = styled.div`
-  width: 100%;
+  width: calc(100% + 50px);
   height: 100%;
   position: absolute;
-  left: 0;
+  left: -50px;
   top: 0;
 `
 
@@ -55,11 +55,11 @@ const BulgeText = () => {
     function setTextSize() {
       const minSize = 56
       const maxSize = 180
-      const responsiveSize = (8 * window.innerWidth) / 100
-      if(window.innerWidth < 400) {
-        style.fontSize = minSize  
-      } else if(window.innerWidth < 2000) {
-        style.fontSize = responsiveSize  
+      const responsiveSize = (9 * window.innerWidth) / 100
+      if (window.innerWidth < 400) {
+        style.fontSize = minSize
+      } else if (window.innerWidth < 2000) {
+        style.fontSize = responsiveSize
       } else {
         style.fontSize = maxSize
       }

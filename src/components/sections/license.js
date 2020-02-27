@@ -6,8 +6,7 @@ import ccLogo from "../../images/attribution-license.svg"
 const Wrapper = styled.section`
   display: flex;
   align-items: center;
-  width: 80%;
-  ${device.small`display: block; width: 100%;`}
+  ${device.small`display: block;`}
   .container {
     margin-left: 2rem;
     ${device.small`margin-left: 0; text-align: center;`}

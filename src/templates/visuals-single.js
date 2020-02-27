@@ -1,29 +1,41 @@
-import React from "react"
+import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
 import { graphql, Link } from "gatsby"
+import { gsap } from "gsap"
 
 import device from "../components/device"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import tree from "../images/visuals/tree.svg"
+
+const Main = styled.main`
+  position: relative;
+  .tree {
+    position: absolute;
+    width: 35vmax;
+    right: 0;
+    z-index: -1;
+    ${device.large`width: 40vmax;`}
+  }
+`
 
 const VideoWrapper = styled.section`
   margin-top: 4rem;
-  margin-bottom: 15rem;
-  ${device.large`margin-bottom: 20rem;`}
+  margin-bottom: 12rem;
+  ${device.large`margin-bottom: 17rem;`}
   video {
-    margin: 2rem 0;
+    margin: 2rem 0 4rem 0;
     width: 100%;
   }
-
   .faq-link {
     text-align: center;
     margin-top: 10rem;
     a {
-      font-size: 4rem;
+      font-size: 3.5rem;
       font-family: "Gilroy Bold", sans-serif;
       -webkit-text-stroke-width: 1px;
       -webkit-text-stroke-color: var(--white);
-      ${device.large`font-size: 5rem;`}
+      ${device.large`font-size: 4.5rem;`}
       transition: all 0.3s;
       &:hover {
         -webkit-text-fill-color: transparent;
@@ -39,7 +51,7 @@ const Details = styled.div`
     ${device.small`font-size: 3.5rem;`}
   }
   .details {
-    margin: 1rem 0;
+    margin: 0.5rem 0;
     max-width: 600px;
   }
 `
@@ -72,10 +84,24 @@ const VisualSingle = ({ data }) => {
   const slug = splitUrl[splitUrl.length - 1]
   const downloadLink = `https://res.cloudinary.com/tippydreamer/video/upload/fl_attachment:${name}/${randomNumber}/${slug}`
 
+  const treeRef = useRef(null)
+  useEffect(() => {
+    gsap.set(treeRef.current, { scaleX: -1, xPercent: 30 })
+    gsap.to(treeRef.current, {
+      duration: 1,
+      rotation: 5,
+      ease: "steps(1)",
+      repeat: -1,
+      yoyo: true,
+    })
+  }, [])
+
   return (
     <Layout>
       <SEO title={name} />
-      <main>
+      <Main>
+        <img className="tree" src={tree} alt="Tree" ref={treeRef} />
+
         <VideoWrapper>
           <Details>
             <h1 className="name">{name}</h1>
@@ -93,10 +119,10 @@ const VisualSingle = ({ data }) => {
           </Buttons>
 
           <div className="faq-link">
-            <Link to="/faq">how to use?</Link>
+            <Link to="/faq">how to use this rad visual?</Link>
           </div>
         </VideoWrapper>
-      </main>
+      </Main>
     </Layout>
   )
 }

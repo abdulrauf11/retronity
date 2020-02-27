@@ -4,8 +4,8 @@ import device from "../device"
 
 import dots from "../../images/about/dots.svg"
 
-// import Loadable from "@loadable/component"
-// const LoadableBulgeText = Loadable(() => import("../canvas/bulge-text"))
+import Loadable from "@loadable/component"
+const LoadableBulgeText = Loadable(() => import("../canvas/bulge-text"))
 
 const Wrapper = styled.section`
   position: relative;
@@ -24,7 +24,7 @@ const Service = styled.div`
   width: 55%;
   max-width: 650px;
   margin-left: auto;
-  ${device.small`width: 100%;`}
+  ${device.small`width: 100%; margin-top: 0rem;`}
   h2 {
     font-weight: normal;
     font-size: 3rem;
@@ -37,13 +37,14 @@ const Service = styled.div`
 const RgbText = styled.div`
   font-size: 9vw;
   font-family: "Gilroy Bold";
+  line-height: 1.2;
   ${device.small`font-size: 3.5rem;`}
   ${device.large`font-size: 9rem;`}
 `
 
 const TextWrapper = styled.div`
   position: relative;
-  height: 30vmax;
+  height: 32vmax;
 `
 
 const Dots = styled.div`
@@ -66,8 +67,8 @@ const About = () => (
         '80s theme.
       </RgbText>
       {/* <TextWrapper>
-      <LoadableBulgeText />
-    </TextWrapper> */}
+        <LoadableBulgeText />
+      </TextWrapper> */}
       <Dots>
         <img src={dots} alt="Dots" />
       </Dots>
@@ -79,10 +80,10 @@ const About = () => (
         <br />& loops for your music.
       </h2>
       <p>
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-        eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-        voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-        clita
+        All the video loops you need you for your music! We select video loops
+        every month to give away for free. If you are a video artist, VJ, media
+        producer or video hobbyist you will find our site a valuable resource
+        for your products/art.
       </p>
     </Service>
   </Wrapper>

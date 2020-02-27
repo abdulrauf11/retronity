@@ -15,6 +15,9 @@ const CanvasWrapper = styled.div`
   height: 100%;
   left: 0;
   top: 0;
+
+  canvas {
+  }
 `
 
 const Slider = ({ currIndex, prevIndex, thumbnails }) => {

@@ -1,12 +1,12 @@
 import React from "react"
 import styled from "styled-components"
-import {graphql, Link} from "gatsby"
+import { graphql, Link } from "gatsby"
 import Img from "gatsby-image/withIEPolyfill"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Ticker from "../components/downloads/ticker"
-import Checkers from "../components/downloads/checkers"
+import Ticker from "../components/visuals/ticker"
+import Checkers from "../components/visuals/checkers"
 import License from "../components/sections/license"
 import device from "../components/device"
 
@@ -16,8 +16,7 @@ const Container = styled.div`
   overflow: hidden;
 `
 
-const Grid = styled.div`
-  margin: 8rem 0;
+const Grid = styled.section`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: 1fr;
@@ -69,7 +68,10 @@ const Grid = styled.div`
   }
 `
 
-const Visuals = ({data}) => {
+const Visuals = ({ data }) => {
+  let visuals = data.allContentfulVisual.edges.map(({ node }) => node)
+  visuals.sort((a, b) => (a.order > b.order ? 1 : b.order > a.order ? -1 : 0))
+
   return (
     <Layout>
       <SEO title="Visuals" />
@@ -79,19 +81,20 @@ const Visuals = ({data}) => {
       </Container>
       <main>
         <Grid>
-          {
-            data.allContentfulVisual.edges.map(({node}, index) => 
-              <Link className="grid-item" key={index} to={`/visuals/${node.slug}`}>
-                {
-                  !!node.thumbnail &&  
-                  <Img fluid={node.thumbnail.fluid} className="thumbnail" />
-                }
-                <div className="overlay">
-                  <h3 className="name">{node.name}</h3>
-                </div>
-              </Link>
-            )
-          }
+          {visuals.map((node, index) => (
+            <Link
+              className="grid-item"
+              key={index}
+              to={`/visuals/${node.slug}`}
+            >
+              {!!node.thumbnail && (
+                <Img fluid={node.thumbnail.fluid} className="thumbnail" />
+              )}
+              <div className="overlay">
+                <h3 className="name">{node.name}</h3>
+              </div>
+            </Link>
+          ))}
         </Grid>
         <License />
       </main>
@@ -108,6 +111,7 @@ export const query = graphql`
         node {
           slug
           name
+          order
           thumbnail {
             fluid(maxWidth: 700) {
               ...GatsbyContentfulFluid
@@ -118,4 +122,3 @@ export const query = graphql`
     }
   }
 `
-

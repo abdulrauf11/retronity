@@ -18,10 +18,6 @@ const WindowContextProvider = ({ children }) => {
   const [isScrolling, setScrolling] = useState(false)
   const [windowSize, setWindowSize] = useState(false)
 
-  // useEffect(() => {
-  //   console.log(loaded)
-  // }, [loaded])
-
   useLayoutEffect(() => {
     function updateSize() {
       setWindowSize(true)

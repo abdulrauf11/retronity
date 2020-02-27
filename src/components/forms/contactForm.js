@@ -1,10 +1,10 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import device from "../device"
-// import { Formik, Field, Form, ErrorMessage } from "formik"
-// import * as Yup from "yup"
+import { Formik, Field, Form, ErrorMessage } from "formik"
+import * as Yup from "yup"
 
-const Form = styled.form`
+const FormWrapper = styled.div`
   width: 65%;
   max-width: 1000px;
   margin: 4rem 0;
@@ -49,18 +49,18 @@ const FieldWrapper = styled.div`
     ${device.small`font-size: 2.5rem;`}
     ${device.large`font-size: 6rem;`}
   }
-
   textarea.scroll {
     font-size: 2rem;
     ${device.small`font-size: 1.5rem;`}
     ${device.large`font-size: 3rem;`}
   }
-
   .error {
     font-size: 0.8rem;
     margin: 0.5rem 0;
     position: absolute;
-    color: #932422;
+    right: 0;
+    top: 50%;
+    color: tomato;
   }
 `
 
@@ -69,23 +69,48 @@ const ButtonWrapper = styled.div`
   text-align: right;
 `
 
-// const Schema = Yup.object().shape({
-//   name: Yup.string()
-//     .min(3, "Too Short!")
-//     .max(50, "Too Long!")
-//     .required("required field"),
-//   email: Yup.string()
-//     .email("invalid email")
-//     .required("required field"),
-// })
+const SubmitError = styled.div``
+
+const Schema = Yup.object().shape({
+  name: Yup.string()
+    .min(3, "Too Short!")
+    .max(50, "Too Long!")
+    .required("required field"),
+  email: Yup.string()
+    .email("invalid email")
+    .required("required field"),
+})
+
+function encode(data) {
+  return Object.keys(data)
+    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+    .join("&")
+}
 
 const ContactForm = () => {
-  function handleSubmit(e) {
-    console.log("submit")
-    e.preventDefault()
+  const [error, setError] = useState(false)
+
+  function handleSubmit(values, setSubmitting, resetForm) {
+    fetch("/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode({
+        "form-name": "contact",
+        ...values,
+      }),
+    })
+      .then(() => {
+        resetForm()
+        console.log("submitted")
+      })
+      .catch(() => {
+        setError(true)
+        console.log("error")
+      })
+    setSubmitting(false)
   }
 
-  function handleChange(e) {
+  function animate(e) {
     if (e.target.name === "msg") {
       e.target.classList.remove("scroll")
       if (e.target.scrollHeight >= 250) {
@@ -107,44 +132,86 @@ const ContactForm = () => {
   }
 
   return (
-    <Form method="post" name="contact" onSubmit={handleSubmit}>
-      <FieldWrapper>
-        <label htmlFor="name">name</label>
-        <input
-          type="text"
-          name="name"
-          className="input"
-          onChange={handleChange}
-        />
-        <div className="error"></div>
-      </FieldWrapper>
+    <FormWrapper>
+      <Formik
+        initialValues={{
+          name: "",
+          email: "",
+          msg: "",
+        }}
+        validationSchema={Schema}
+        onSubmit={(values, { setSubmitting, resetForm }) => {
+          handleSubmit(values, setSubmitting, resetForm)
+        }}
+      >
+        {({ isSubmitting, handleChange }) => (
+          <Form
+            method="post"
+            name="contact"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field"
+          >
+            <input type="hidden" name="bot-field" />
+            <input type="hidden" name="form-name" value="contact" />
 
-      <FieldWrapper>
-        <label htmlFor="email">email</label>
-        <input
-          type="email"
-          name="email"
-          className="input"
-          onChange={handleChange}
-        />
-        <div className="error"></div>
-      </FieldWrapper>
+            <FieldWrapper>
+              <label htmlFor="name">name</label>
+              <Field
+                type="text"
+                name="name"
+                className="input"
+                onChange={e => {
+                  handleChange(e)
+                  animate(e)
+                }}
+              />
+              <div className="error">
+                <ErrorMessage name="name" />
+              </div>
+            </FieldWrapper>
 
-      <FieldWrapper>
-        <label htmlFor="name">message</label>
-        <textarea
-          name="msg"
-          className="input"
-          onChange={handleChange}
-          rows="1"
-          columns="1"
-        />
-      </FieldWrapper>
+            <FieldWrapper>
+              <label htmlFor="email">email</label>
+              <Field
+                type="email"
+                name="email"
+                className="input"
+                onChange={e => {
+                  handleChange(e)
+                  animate(e)
+                }}
+              />
+              <div className="error">
+                <ErrorMessage name="email" />
+              </div>
+            </FieldWrapper>
 
-      <ButtonWrapper>
-        <button type="submit">Submit</button>
-      </ButtonWrapper>
-    </Form>
+            <FieldWrapper>
+              <label htmlFor="name">message</label>
+              <Field
+                name="msg"
+                component="textarea"
+                rows="1"
+                className="input"
+                onChange={e => {
+                  handleChange(e)
+                  animate(e)
+                }}
+              />
+            </FieldWrapper>
+
+            <ButtonWrapper>
+              <button type="submit" disabled={isSubmitting}>
+                Submit
+              </button>
+            </ButtonWrapper>
+          </Form>
+        )}
+      </Formik>
+      {/* {error && (
+        <SubmitError>Something went wrong. Please try again!</SubmitError>
+      )} */}
+    </FormWrapper>
   )
 }
 

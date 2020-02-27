@@ -11,10 +11,6 @@ const Wrapper = styled.section`
   margin-top: 4rem;
   margin-bottom: 15rem;
   ${device.large`margin-bottom: 20rem;`}
-  h1 {
-    font-family: "Gilroy Bold", sans-serif;
-    font-size: 5rem;
-  }
 `
 
 const Accordian = styled.ul`
@@ -30,6 +26,7 @@ const Accordian = styled.ul`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    ${device.small`font-size: 2rem;`}
     ${device.large`font-size: 4.5rem;`}
   }
   .answer {
@@ -80,7 +77,6 @@ const Faq = ({ data }) => {
       <SEO title={"faq"} />
       <main>
         <Wrapper>
-          {/* <h1>wut da faq</h1> */}
           <Accordian>
             {faqs.map(({ node }, index) => (
               <li key={index}>

@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from "react"
 import { Link } from "gatsby"
 import styled from "styled-components"
-import Sticky from "./sticky"
 import device from "./device"
 import { gsap } from "gsap"
+import Sticky from "./sticky"
+import MobileMenu from "./mobile-menu"
 
 const Wrapper = styled.header`
   width: calc(var(--spread) + 6rem);
@@ -11,11 +12,13 @@ const Wrapper = styled.header`
   margin: 0 auto;
   display: flex;
   align-items: center;
-  ${device.small`width: var(--spread);`}
+  ${device.small`width: var(--spread); justify-content: space-between;`}
 `
 
 const Logo = styled.span`
   display: block;
+  position: relative;
+  z-index: 101;
   a {
     font-size: 1.5rem;
     font-family: "Gilroy Bold";
@@ -38,11 +41,26 @@ const PageLinks = styled.div`
     &:first-child {
       margin-left: 0;
     }
-    &.bordered {
-      font-size: 0.8rem;
-      border: 1px solid var(--purple);
-      padding: 0.6rem 2rem;
-      text-transform: uppercase;
+
+    position: relative;
+    &:after {
+      display: block;
+      backface-visibility: none;
+      left: -5%;
+      top: 50%;
+      position: absolute;
+      content: "";
+      width: 110%;
+      height: 1px;
+      background: var(--purple);
+      transform: scaleX(0);
+      transform-origin: 0 0;
+      transition: transform 0.35s ease-out;
+    }
+
+    &:hover:after,
+    &.active:after {
+      transform: scaleX(1);
     }
   }
 `
@@ -71,10 +89,17 @@ const Header = () => {
         </Logo>
       </Sticky>
       <PageLinks>
-        <Link to="/visuals">rad visuals</Link>
-        <Link to="/faq">wut da faq</Link>
-        <Link to="/contact">contact</Link>
+        <Link to="/visuals/" activeClassName="active">
+          rad visuals
+        </Link>
+        <Link to="/faq/" activeClassName="active">
+          wut da faq
+        </Link>
+        <Link to="/contact/" activeClassName="active">
+          contact
+        </Link>
       </PageLinks>
+      <MobileMenu />
     </Wrapper>
   )
 }

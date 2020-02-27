@@ -6,17 +6,16 @@ import Hero from "../components/sections/hero"
 import About from "../components/sections/about"
 import Downloads from "../components/sections/downloads"
 import License from "../components/sections/license"
-import Loader from "../components/loader"
-
-import { useWindowContext } from "../components/context"
+// import Loader from "../components/loader"
+// import { useWindowContext } from "../components/context"
 
 const IndexPage = () => {
-  const { loaded } = useWindowContext()
-  const [allLoaded, setAllLoaded] = useState(false)
-  useEffect(() => {
-    Object.values(loaded).every(val => val) &&
-      setTimeout(() => setAllLoaded(true), 2000)
-  }, [loaded])
+  // const { loaded } = useWindowContext()
+  // const [allLoaded, setAllLoaded] = useState(false)
+  // useEffect(() => {
+  //   Object.values(loaded).every(val => val) &&
+  //     setTimeout(() => setAllLoaded(true), 2000)
+  // }, [loaded])
 
   return (
     <Layout>
