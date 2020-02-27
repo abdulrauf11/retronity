@@ -209,11 +209,11 @@ const Downloads = () => {
         <Carousel>
           <div className="thumbnail-wrapper">
             <div className="thumbnail">
-              {/* <LoadableSlider
+              <LoadableSlider
                 currIndex={currIndex}
                 prevIndex={prevIndex}
                 thumbnails={thumbnails}
-              /> */}
+              />
             </div>
           </div>
           <div className="button-container">

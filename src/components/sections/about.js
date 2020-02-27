@@ -59,16 +59,16 @@ const Dots = styled.div`
 const About = () => (
   <Wrapper>
     <div className="heading-wrapper">
-      <RgbText>
+      {/* <RgbText>
         retronity is
         <br />
         inspired by
         <br />
         '80s theme.
-      </RgbText>
-      {/* <TextWrapper>
+      </RgbText> */}
+      <TextWrapper>
         <LoadableBulgeText />
-      </TextWrapper> */}
+      </TextWrapper>
       <Dots>
         <img src={dots} alt="Dots" />
       </Dots>

@@ -3,6 +3,8 @@ import styled from "styled-components"
 import device from "../device"
 import { Formik, Field, Form, ErrorMessage } from "formik"
 import * as Yup from "yup"
+import { useStaticKit } from "@statickit/react"
+import { sendContactEmail } from "@statickit/functions"
 
 const FormWrapper = styled.div`
   width: 65%;
@@ -81,32 +83,52 @@ const Schema = Yup.object().shape({
     .required("required field"),
 })
 
-function encode(data) {
-  return Object.keys(data)
-    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-    .join("&")
-}
+// function encode(data) {
+//   return Object.keys(data)
+//     .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+//     .join("&")
+// }
 
 const ContactForm = () => {
+  const client = useStaticKit()
+
   const [error, setError] = useState(false)
 
-  function handleSubmit(values, setSubmitting, resetForm) {
-    fetch("/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode({
-        "form-name": "contact",
-        ...values,
-      }),
+  async function handleSubmit(values, setSubmitting, resetForm) {
+    // fetch("/contact", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    //   body: encode({
+    //     "form-name": "contact",
+    //     ...values,
+    //   }),
+    // })
+    //   .then(() => {
+    //     resetForm()
+    //     console.log("submitted")
+    //   })
+    //   .catch(() => {
+    //     setError(true)
+    //     console.log("error")
+    //   })
+    // setSubmitting(false)
+    let resp = await sendContactEmail(client, {
+      subject: `${values.email} submitted the contact form`,
+      replyTo: values.email,
+      fields: { name: values.name, msg: values.msg },
     })
-      .then(() => {
+
+    switch (resp.status) {
+      case "ok":
         resetForm()
         console.log("submitted")
-      })
-      .catch(() => {
+        break
+
+      case "argumentError":
         setError(true)
         console.log("error")
-      })
+        break
+    }
     setSubmitting(false)
   }
 
@@ -148,11 +170,11 @@ const ContactForm = () => {
           <Form
             method="post"
             name="contact"
-            data-netlify="true"
-            data-netlify-honeypot="bot-field"
+            // data-netlify="true"
+            // data-netlify-honeypot="bot-field"
           >
-            <input type="hidden" name="bot-field" />
-            <input type="hidden" name="form-name" value="contact" />
+            {/* <input type="hidden" name="bot-field" /> */}
+            {/* <input type="hidden" name="form-name" value="contact" /> */}
 
             <FieldWrapper>
               <label htmlFor="name">name</label>

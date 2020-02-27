@@ -49,5 +49,11 @@ module.exports = {
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
       },
     },
+    {
+      resolve: `gatsby-plugin-statickit`,
+      options: {
+        siteId: "787a939012d5",
+      },
+    },
   ],
 }
