@@ -1,6 +1,10 @@
 import React, { createContext, useContext, useState } from "react"
 
-const WindowContext = createContext(null)
+const WindowContext = createContext({
+  mirage: false,
+  bulge: false,
+  slider: false,
+})
 
 const WindowContextProvider = ({ children }) => {
   const [loaded, setLoaded] = useState({

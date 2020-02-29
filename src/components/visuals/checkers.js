@@ -51,14 +51,14 @@ const Checkers = () => {
     gsap.to(hRef.current, {
       duration: 1.5,
       scale: 1,
-      delay: 0.5,
+      delay: 1,
       stagger: { from: "center", amount: 1.5 / 6 },
       ease: "power2.out",
     })
     gsap.to(vRef.current, {
       duration: 1.5,
       scale: 1,
-      delay: 0.5,
+      delay: 1,
       stagger: { from: "center", amount: 1.5 / 20 },
       ease: "power2.out",
     })
