@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Link } from "gatsby"
 import styled from "styled-components"
 import device from "./device"
@@ -60,9 +60,9 @@ const Hamburger = styled.button`
 
 const Overlay = styled.div`
   position: absolute;
-  z-index: 1000;
+  z-index: 100;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   left: 0;
   top: 0;
   background: var(--black);
@@ -112,6 +112,16 @@ const MobileMenu = () => {
   function toggleActive() {
     setActive(!active)
   }
+
+  useEffect(() => {
+    if (active) {
+      document.body.style.overflow = "hidden"
+      document.body.style.position = "fixed"
+    } else {
+      document.body.style.overflow = "auto"
+      document.body.style.position = "static"
+    }
+  }, [active])
 
   return (
     <Wrapper>

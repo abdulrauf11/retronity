@@ -70,6 +70,12 @@ const FieldWrapper = styled.div`
 const ButtonWrapper = styled.div`
   margin-top: 6rem;
   text-align: right;
+  button {
+    transition: all 0.8s;
+    &:hover {
+      box-shadow: inset 0 0 0px 30px var(--purple);
+    }
+  }
 `
 
 const Message = styled.div`

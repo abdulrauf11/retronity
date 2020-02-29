@@ -27,7 +27,11 @@ const Form = styled.form`
   }
   button {
     margin-left: 1.5rem;
+    transition: all 0.8s;
     ${device.small`margin-left: auto; margin-top: 2rem;`}
+    &:hover {
+      box-shadow: inset 0 0 0px 30px var(--purple);
+    }
   }
 `
 

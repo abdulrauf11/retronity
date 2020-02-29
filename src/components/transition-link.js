@@ -11,9 +11,10 @@ function entryAnimation(entry, node) {
   gsap.to(node, { duration: 0.8, opacity: 1 })
 }
 
-const FadeLink = ({ to, children }) => (
+const FadeLink = ({ to, children, activeClassName }) => (
   <TransitionLink
     to={to}
+    activeClassName={activeClassName}
     exit={{
       length: 0.2,
       trigger: ({ exit, node }) => exitAnimation(exit, node),
