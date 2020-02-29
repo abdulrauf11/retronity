@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState } from "react"
 import { Link } from "gatsby"
 import styled from "styled-components"
 import device from "./device"
-// import { gsap } from "gsap"
 import { CSSTransition } from "react-transition-group"
 
 const Wrapper = styled.div`
   display: none;
   ${device.small`display: block;`}
-
   .overlay-enter {
     opacity: 0;
   }
@@ -62,7 +60,7 @@ const Hamburger = styled.button`
 
 const Overlay = styled.div`
   position: absolute;
-  z-index: 100;
+  z-index: 1000;
   width: 100%;
   height: 100%;
   left: 0;
@@ -111,8 +109,6 @@ const Credits = styled.div`
 const MobileMenu = () => {
   const [active, setActive] = useState(false)
 
-  const overlayRef = useRef(null)
-
   function toggleActive() {
     setActive(!active)
   }
@@ -129,7 +125,7 @@ const MobileMenu = () => {
         classNames="overlay"
         unmountOnExit
       >
-        <Overlay ref={overlayRef}>
+        <Overlay>
           <PageLinks>
             <Link to="/" activeClassName="active">
               home

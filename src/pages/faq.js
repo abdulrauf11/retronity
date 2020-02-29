@@ -10,6 +10,7 @@ import plus from "../images/faq/plus.svg"
 const Wrapper = styled.section`
   margin-top: 4rem;
   margin-bottom: 15rem;
+  ${device.small`margin-bottom: 10rem;`}
   ${device.large`margin-bottom: 20rem;`}
 `
 

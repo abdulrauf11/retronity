@@ -55,5 +55,6 @@ module.exports = {
         siteId: "787a939012d5",
       },
     },
+    `gatsby-plugin-transition-link`,
   ],
 }

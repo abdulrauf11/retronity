@@ -5,6 +5,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik"
 import * as Yup from "yup"
 import { useStaticKit } from "@statickit/react"
 import { sendContactEmail } from "@statickit/functions"
+import { SwitchTransition, Transition } from "react-transition-group"
 
 const FormWrapper = styled.div`
   width: 65%;
@@ -71,7 +72,29 @@ const ButtonWrapper = styled.div`
   text-align: right;
 `
 
-const SubmitError = styled.div``
+const Message = styled.div`
+  width: 65%;
+  max-width: 1000px;
+  margin: 4rem 0;
+  ${device.small`width: 100%;`}
+  ${device.large`margin: 8rem 0;`}
+  .text {
+    font-size: 6rem;
+    font-family: "Gilroy Bold";
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: var(--white);
+    line-height: 1;
+    ${device.small`font-size: 3rem;`}
+    ${device.large`font-size: 8rem;`}
+  }
+`
+
+const FadeDiv = styled.div`
+  transition: 0.5s;
+  opacity: ${({ state }) => (state === "entered" ? 1 : 0)};
+  display: ${({ state }) => (state === "exited" ? "none" : "block")};
+`
 
 const Schema = Yup.object().shape({
   name: Yup.string()
@@ -81,55 +104,39 @@ const Schema = Yup.object().shape({
   email: Yup.string()
     .email("invalid email")
     .required("required field"),
+  msg: Yup.string().required("required field"),
 })
 
-// function encode(data) {
-//   return Object.keys(data)
-//     .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-//     .join("&")
-// }
+const FadeTransition = ({ children, ...rest }) => (
+  <Transition {...rest}>
+    {state => <FadeDiv state={state}>{children}</FadeDiv>}
+  </Transition>
+)
 
 const ContactForm = () => {
   const client = useStaticKit()
 
-  const [error, setError] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [errors, setErrors] = useState([])
 
-  async function handleSubmit(values, setSubmitting, resetForm) {
-    // fetch("/contact", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    //   body: encode({
-    //     "form-name": "contact",
-    //     ...values,
-    //   }),
-    // })
-    //   .then(() => {
-    //     resetForm()
-    //     console.log("submitted")
-    //   })
-    //   .catch(() => {
-    //     setError(true)
-    //     console.log("error")
-    //   })
-    // setSubmitting(false)
+  async function handleSubmit(values, setSubmitting) {
     let resp = await sendContactEmail(client, {
-      subject: `${values.email} submitted the contact form`,
+      subject: `Retronity - contact form submitted by <${values.email}>`,
       replyTo: values.email,
-      fields: { name: values.name, msg: values.msg },
+      fields: { name: values.name, email: values.email, msg: values.msg },
     })
-
     switch (resp.status) {
       case "ok":
-        resetForm()
-        console.log("submitted")
+        setIsSubmitted(true)
+        setSubmitting(false)
         break
-
       case "argumentError":
-        setError(true)
-        console.log("error")
+        setErrors(resp.errors)
+        setSubmitting(false)
         break
+      default:
+        setSubmitting(false)
     }
-    setSubmitting(false)
   }
 
   function animate(e) {
@@ -154,86 +161,99 @@ const ContactForm = () => {
   }
 
   return (
-    <FormWrapper>
-      <Formik
-        initialValues={{
-          name: "",
-          email: "",
-          msg: "",
-        }}
-        validationSchema={Schema}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
-          handleSubmit(values, setSubmitting, resetForm)
-        }}
-      >
-        {({ isSubmitting, handleChange }) => (
-          <Form
-            method="post"
-            name="contact"
-            // data-netlify="true"
-            // data-netlify-honeypot="bot-field"
-          >
-            {/* <input type="hidden" name="bot-field" /> */}
-            {/* <input type="hidden" name="form-name" value="contact" /> */}
-
-            <FieldWrapper>
-              <label htmlFor="name">name</label>
-              <Field
-                type="text"
-                name="name"
-                className="input"
-                onChange={e => {
-                  handleChange(e)
-                  animate(e)
-                }}
-              />
-              <div className="error">
-                <ErrorMessage name="name" />
+    <>
+      <SwitchTransition mode="out-in">
+        <FadeTransition
+          key={isSubmitted || errors.length ? "message" : "form"}
+          timeout={250}
+          unmountOnExit
+          mountOnEnter
+        >
+          {isSubmitted || errors.length ? (
+            <Message>
+              <div className="text">
+                {errors.length
+                  ? "Sorry! Something went wrong."
+                  : "Schweet! We'll get back to you asap."}
               </div>
-            </FieldWrapper>
-
-            <FieldWrapper>
-              <label htmlFor="email">email</label>
-              <Field
-                type="email"
-                name="email"
-                className="input"
-                onChange={e => {
-                  handleChange(e)
-                  animate(e)
+            </Message>
+          ) : (
+            <FormWrapper>
+              <Formik
+                initialValues={{
+                  name: "",
+                  email: "",
+                  msg: "",
                 }}
-              />
-              <div className="error">
-                <ErrorMessage name="email" />
-              </div>
-            </FieldWrapper>
-
-            <FieldWrapper>
-              <label htmlFor="name">message</label>
-              <Field
-                name="msg"
-                component="textarea"
-                rows="1"
-                className="input"
-                onChange={e => {
-                  handleChange(e)
-                  animate(e)
+                validationSchema={Schema}
+                onSubmit={(values, { setSubmitting }) => {
+                  handleSubmit(values, setSubmitting)
                 }}
-              />
-            </FieldWrapper>
+              >
+                {({ isSubmitting, handleChange }) => (
+                  <Form method="post" name="contact">
+                    <FieldWrapper>
+                      <label htmlFor="name">name</label>
+                      <Field
+                        type="text"
+                        name="name"
+                        className="input"
+                        onChange={e => {
+                          handleChange(e)
+                          animate(e)
+                        }}
+                      />
+                      <div className="error">
+                        <ErrorMessage name="name" />
+                      </div>
+                    </FieldWrapper>
 
-            <ButtonWrapper>
-              <button type="submit" disabled={isSubmitting}>
-                Submit
-              </button>
-            </ButtonWrapper>
-          </Form>
-        )}
-      </Formik>
-      {/* {error && (
-        <SubmitError>Something went wrong. Please try again!</SubmitError>
-      )} */}
-    </FormWrapper>
+                    <FieldWrapper>
+                      <label htmlFor="email">email</label>
+                      <Field
+                        type="email"
+                        name="email"
+                        className="input"
+                        onChange={e => {
+                          handleChange(e)
+                          animate(e)
+                        }}
+                      />
+                      <div className="error">
+                        <ErrorMessage name="email" />
+                      </div>
+                    </FieldWrapper>
+
+                    <FieldWrapper>
+                      <label htmlFor="name">message</label>
+                      <Field
+                        name="msg"
+                        component="textarea"
+                        rows="1"
+                        className="input"
+                        onChange={e => {
+                          handleChange(e)
+                          animate(e)
+                        }}
+                      />
+                      <div className="error">
+                        <ErrorMessage name="msg" />
+                      </div>
+                    </FieldWrapper>
+
+                    <ButtonWrapper>
+                      <button type="submit" disabled={isSubmitting}>
+                        Submit
+                      </button>
+                    </ButtonWrapper>
+                  </Form>
+                )}
+              </Formik>
+            </FormWrapper>
+          )}
+        </FadeTransition>
+      </SwitchTransition>
+    </>
   )
 }
 

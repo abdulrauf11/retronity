@@ -4,9 +4,11 @@
       "type": "sendNotification",
       "to": "hello@rauftech.com"
     },
-    "sendSubscribeEmail": {
-      "type": "sendNotification",
-      "to": "hello@rauftech.com"
+    "addToMailchimp": {
+      "app": "mailchimp",
+      "type": "addOrUpdateListMember",
+      "apiKey": "@mailchimp-api-key",
+      "audience": "@mailchimp-audience"
     }
   }
 }

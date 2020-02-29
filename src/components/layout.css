@@ -56,7 +56,7 @@ body {
 
 body:after {
   content: "";
-  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/756881/gifnoise.gif);
+  background-image: url(../images/gifnoise.gif);
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -77,8 +77,6 @@ p {
 }
 
 main {
-  position: relative;
-  z-index: 1;
   overflow: hidden;
 }
 
@@ -86,7 +84,6 @@ section {
   margin: 8rem auto;
   width: var(--spread);
   max-width: var(--limit);
-  /* border: 1px solid blue; */
 }
 
 article,
@@ -163,6 +160,11 @@ button {
   background: none;
   border: 1px solid var(--purple);
   padding: 0.6rem 2rem;
+  transition: all 0.8s;
+}
+
+button:hover {
+  box-shadow: inset 0 0 0px 30px var(--purple);
 }
 
 h1,
@@ -190,6 +192,10 @@ h6 {
 @media screen and (max-width: 400px) {
   :root {
     --spread: 85%;
+  }
+
+  section {
+    margin: 6rem auto;
   }
 }
 

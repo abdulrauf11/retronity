@@ -34,13 +34,13 @@ const Service = styled.div`
   }
 `
 
-const RgbText = styled.div`
-  font-size: 9vw;
-  font-family: "Gilroy Bold";
-  line-height: 1.2;
-  ${device.small`font-size: 3.5rem;`}
-  ${device.large`font-size: 9rem;`}
-`
+// const RgbText = styled.div`
+//   font-size: 9vw;
+//   font-family: "Gilroy Bold";
+//   line-height: 1.2;
+//   ${device.small`font-size: 3.5rem;`}
+//   ${device.large`font-size: 9rem;`}
+// `
 
 const TextWrapper = styled.div`
   position: relative;

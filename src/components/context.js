@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useLayoutEffect,
-} from "react"
+import React, { createContext, useContext, useState } from "react"
 
 const WindowContext = createContext(null)
 
@@ -15,36 +9,8 @@ const WindowContextProvider = ({ children }) => {
     slider: false,
   })
 
-  const [isScrolling, setScrolling] = useState(false)
-  const [windowSize, setWindowSize] = useState(false)
-
-  useLayoutEffect(() => {
-    function updateSize() {
-      setWindowSize(true)
-    }
-    window.addEventListener("resize", updateSize)
-    updateSize()
-    return () => window.removeEventListener("resize", updateSize)
-  }, [])
-
-  useEffect(() => {
-    let scrollTimer = -1
-    const handleScroll = () => {
-      setScrolling(true)
-      if (scrollTimer !== -1) clearTimeout(scrollTimer)
-      scrollTimer = window.setTimeout(handleScrollStop, 500)
-    }
-    const handleScrollStop = () => {
-      setScrolling(false)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
   return (
-    <WindowContext.Provider
-      value={{ isScrolling, setScrolling, windowSize, loaded, setLoaded }}
-    >
+    <WindowContext.Provider value={{ loaded, setLoaded }}>
       {children}
     </WindowContext.Provider>
   )

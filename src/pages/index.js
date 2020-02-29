@@ -1,22 +1,13 @@
-import React, { useState, useEffect } from "react"
-
+import React from "react"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Hero from "../components/sections/hero"
 import About from "../components/sections/about"
 import Downloads from "../components/sections/downloads"
 import License from "../components/sections/license"
-// import Loader from "../components/loader"
-// import { useWindowContext } from "../components/context"
+import Loader from "../components/loader"
 
 const IndexPage = () => {
-  // const { loaded } = useWindowContext()
-  // const [allLoaded, setAllLoaded] = useState(false)
-  // useEffect(() => {
-  //   Object.values(loaded).every(val => val) &&
-  //     setTimeout(() => setAllLoaded(true), 2000)
-  // }, [loaded])
-
   return (
     <Layout>
       <SEO title="Home" />
@@ -26,7 +17,7 @@ const IndexPage = () => {
         <Downloads />
         <License />
       </main>
-      {/* {!allLoaded && <Loader />} */}
+      <Loader />
     </Layout>
   )
 }

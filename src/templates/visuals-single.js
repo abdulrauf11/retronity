@@ -19,7 +19,7 @@ const Main = styled.main`
   }
 `
 
-const VideoWrapper = styled.section`
+const Wrapper = styled.section`
   margin-top: 4rem;
   margin-bottom: 12rem;
   ${device.large`margin-bottom: 17rem;`}
@@ -35,10 +35,10 @@ const VideoWrapper = styled.section`
       font-family: "Gilroy Bold", sans-serif;
       -webkit-text-stroke-width: 1px;
       -webkit-text-stroke-color: var(--white);
+      transition: all 0.3s ease-out;
       ${device.large`font-size: 4.5rem;`}
-      transition: all 0.3s;
       &:hover {
-        -webkit-text-fill-color: transparent;
+        color: var(--black);
       }
     }
   }
@@ -102,7 +102,7 @@ const VisualSingle = ({ data }) => {
       <Main>
         <img className="tree" src={tree} alt="Tree" ref={treeRef} />
 
-        <VideoWrapper>
+        <Wrapper>
           <Details>
             <h1 className="name">{name}</h1>
             <p className="details">
@@ -121,7 +121,7 @@ const VisualSingle = ({ data }) => {
           <div className="faq-link">
             <Link to="/faq">how to use this rad visual?</Link>
           </div>
-        </VideoWrapper>
+        </Wrapper>
       </Main>
     </Layout>
   )

@@ -3,6 +3,7 @@ import React from "react"
 import Header from "./header"
 import Footer from "./footer"
 import "./layout.css"
+// import Noise from "./canvas/noise"
 
 const Layout = ({ children }) => {
   return (
@@ -10,6 +11,7 @@ const Layout = ({ children }) => {
       <Header />
       {children}
       <Footer />
+      {/* <Noise /> */}
     </>
   )
 }
