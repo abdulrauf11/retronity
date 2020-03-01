@@ -44,6 +44,8 @@ const RgbText = ({ textContent }) => {
       resizeTo: canvasWrapperRef.current,
       transparent: true,
     })
+    app.renderer.plugins.interaction.autoPreventDefault = false
+    app.renderer.view.style.touchAction = "auto"
 
     loader.load((_, resources) => {
       const style = new PIXI.TextStyle({

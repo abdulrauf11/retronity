@@ -28,7 +28,7 @@ const Wrapper = styled.section`
       -webkit-text-stroke-width: 2px;
       -webkit-text-stroke-color: var(--white);
       line-height: 1;
-      ${device.small`font-size: 3rem; position: static; transform: none;`}
+      ${device.small`font-size: 3.2rem; position: static; transform: none; margin-top: 2rem;`}
       ${device.large`font-size: 7.5rem;`}
     }
   }
@@ -39,8 +39,8 @@ const Scene = styled.div`
   position: relative;
   width: 35vmax;
   height: 35vmax;
-  min-width: 250px;
-  min-height: 250px;
+  min-width: 300px;
+  min-height: 300px;
   max-width: 800px;
   max-height: 800px;
   .scene-loader {

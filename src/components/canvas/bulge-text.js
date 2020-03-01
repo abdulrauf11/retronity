@@ -34,6 +34,8 @@ const BulgeText = () => {
       transparent: true,
     })
     app.stage.interactive = true
+    app.renderer.plugins.interaction.autoPreventDefault = false
+    app.renderer.view.style.touchAction = "auto"
 
     function resize() {
       text.position.set(50, app.renderer.screen.height / 2)

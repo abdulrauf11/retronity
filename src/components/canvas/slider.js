@@ -76,6 +76,8 @@ const Slider = ({ currIndex, prevIndex, thumbnails }) => {
       resizeTo: canvasWrapperRef.current,
       transparent: true,
     })
+    app.renderer.plugins.interaction.autoPreventDefault = false
+    app.renderer.view.style.touchAction = "auto"
 
     function resize() {
       const newWidth = canvasWrapperRef.current.clientWidth

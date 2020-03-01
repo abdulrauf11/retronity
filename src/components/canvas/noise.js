@@ -36,6 +36,8 @@ const NoiseBg = () => {
       antialias: true,
       transparent: true,
     })
+    app.renderer.plugins.interaction.autoPreventDefault = false
+    app.renderer.view.style.touchAction = "auto"
 
     function resize() {
       app.renderer.resize(window.innerWidth, window.innerHeight)

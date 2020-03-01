@@ -60,13 +60,18 @@ const Hamburger = styled.button`
 `
 
 const Overlay = styled.div`
-  position: absolute;
+  position: fixed;
   z-index: 100;
   width: 100%;
   height: 100vh;
+  min-height: 650px;
   left: 0;
   top: 0;
+  bottom: 0;
+  right: 0;
   background: var(--black);
+  overflow-y: scroll;
+
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -81,7 +86,7 @@ const PageLinks = styled.div`
   a {
     margin: 0.5rem 0;
     display: block;
-    font-size: 3.2rem;
+    font-size: 2.5rem;
     font-family: "Gilroy Bold";
     -webkit-text-fill-color: transparent;
     -webkit-text-stroke-width: 2px;
@@ -93,7 +98,7 @@ const PageLinks = styled.div`
 `
 
 const SocialLinks = styled.div`
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   a {
     margin: 0 1rem;
   }
@@ -101,7 +106,7 @@ const SocialLinks = styled.div`
 
 const Credits = styled.div`
   margin: 2rem 0 4rem 0;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   a {
     color: var(--purple);
   }
