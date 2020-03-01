@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react"
-import { Link } from "gatsby"
 import styled from "styled-components"
 import { gsap } from "gsap"
-import device from "../device"
 
+import FadeLink from "../transition-link"
+import device from "../device"
 import arrow from "../../images/visuals/right-arrow.svg"
 import tree from "../../images/visuals/tree.svg"
 import image1 from "../../images/slider/ride_along.png"
@@ -43,6 +43,21 @@ const Wrapper = styled.div`
     -webkit-text-stroke-color: var(--white);
     ${device.small`font-size: 3rem;`}
   }
+
+  .card-enter {
+    opacity: 0;
+  }
+  .card-enter-active {
+    opacity: 1;
+    transition: opacity 300ms;
+  }
+  .card-exit {
+    opacity: 1;
+  }
+  .card-exit-active {
+    opacity: 0;
+    transition: opacity 300ms;
+  }
 `
 
 const Carousel = styled.div`
@@ -56,6 +71,7 @@ const Carousel = styled.div`
       height: 35vmax;
       max-height: 800px;
       background: var(--purple);
+      ${device.small`min-height: 250px;`}
     }
   }
   .button-container {
@@ -102,6 +118,7 @@ const Card = styled.div`
   color: var(--black);
   background: var(--white);
   ${device.small`position: static; transform: none; width: 100%;`}
+  ${device.large`height: 300px;`}
   .name {
     font-size: 2rem;
     font-family: "Gilroy Bold";
@@ -135,6 +152,26 @@ const Card = styled.div`
     font-size: 0.95rem;
     font-family: "Gilroy Bold";
   }
+
+  .animated {
+    width: 100%;
+  }
+  .view-all {
+    display: block;
+    text-align: center;
+    a {
+      display: block;
+      font-size: 4rem;
+      font-family: "Gilroy Bold";
+      -webkit-text-stroke-width: 2px;
+      -webkit-text-stroke-color: var(--black);
+      transition: all 0.3s ease-out;
+      ${device.small`font-size: 3rem;`}
+      &:hover {
+        color: var(--black);
+      }
+    }
+  }
 `
 
 const Downloads = () => {
@@ -162,6 +199,9 @@ const Downloads = () => {
       thumbnail: image3,
       slug: "/visuals/fade-away",
     },
+    {
+      slug: "/visuals/",
+    },
   ]
   const thumbnails = data.map(v => v.thumbnail)
 
@@ -177,7 +217,7 @@ const Downloads = () => {
       opacity: 0,
       ease: "sine",
       onComplete: () => {
-        setCurrIndex((currIndex + 1) % 3)
+        setCurrIndex((currIndex + 1) % data.length)
       },
     })
   }
@@ -224,19 +264,27 @@ const Downloads = () => {
         </Carousel>
         <Card>
           <div className="animated" ref={animatedRef}>
-            <h3 className="name">{data[currIndex].title}</h3>
-            <p className="quote">
-              "{data[currIndex].quote}" –{" "}
-              <span className="reference">{data[currIndex].reference}</span>
-            </p>
-            <div className="link-wrapper">
-              <Link className="link" to={data[currIndex].slug}>
-                download now
-              </Link>
-              <button className="next" onClick={handleClick}>
-                <img src={arrow} alt="Arrow" />
-              </button>
-            </div>
+            {currIndex < data.length - 1 ? (
+              <>
+                <h3 className="name">{data[currIndex].title}</h3>
+                <p className="quote">
+                  "{data[currIndex].quote}" –{" "}
+                  <span className="reference">{data[currIndex].reference}</span>
+                </p>
+                <div className="link-wrapper">
+                  <FadeLink className="link" to={data[currIndex].slug}>
+                    download now
+                  </FadeLink>
+                  <button className="next" onClick={handleClick}>
+                    <img src={arrow} alt="Arrow" />
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="view-all">
+                <FadeLink to={data[currIndex].slug}>view all</FadeLink>
+              </div>
+            )}
           </div>
         </Card>
       </section>

@@ -15,7 +15,8 @@ const Wrapper = styled.div`
     height: 100vh;
     z-index: 9999;
     background-color: var(--black);
-    &:after {
+    &:before {
+      z-index: 1;
       content: "";
       position: absolute;
       width: 100%;
@@ -55,36 +56,34 @@ const Loader = () => {
   }, [loaded])
 
   const overlayRef = useRef(null)
-  const logoRef = useRef(null)
+  // const logoRef = useRef(null)
   useEffect(() => {
     const tl = gsap.timeline()
-    end &&
-      tl
-        .to(logoRef.current, {
-          delay: 1,
-          duration: 1,
-          top: 0,
-          left: 0,
-          x: "50%",
-          y: "50%",
-          scale: 1,
-        })
-        .to(overlayRef.current, {
-          duration: 0.5,
-          opacity: 0,
-          delay: 0.5,
-          zIndex: "-9999",
-        })
+    end && tl
+    // .to(logoRef.current, {
+    //   delay: 1,
+    //   duration: 1,
+    //   top: 0,
+    //   left: 0,
+    //   x: "50%",
+    //   y: "50%",
+    //   scale: 1,
+    // })
+    // .to(overlayRef.current, {
+    //   duration: 0.5,
+    //   opacity: 0,
+    //   delay: 0.5,
+    //   zIndex: "-9999",
+    // })
   }, [end])
 
   return (
     <Wrapper>
       <div className="overlay" ref={overlayRef}>
-        <div className="outer-container">
+        {/* <div className="outer-container">
           <div className="logo-wrapper" ref={logoRef}>
-            <Logo />
           </div>
-        </div>
+        </div> */}
       </div>
     </Wrapper>
   )

@@ -5,7 +5,26 @@ import device from "../device"
 import dots from "../../images/about/dots.svg"
 
 import Loadable from "@loadable/component"
-const LoadableBulgeText = Loadable(() => import("../canvas/bulge-text"))
+
+const RgbText = styled.div`
+  font-size: 9vw;
+  font-family: "Gilroy Bold";
+  line-height: 1.2;
+  ${device.small`font-size: 3.5rem;`}
+  ${device.large`font-size: 9rem;`}
+`
+
+const LoadableBulgeText = Loadable(() => import("../canvas/bulge-text"), {
+  fallback: (
+    <RgbText>
+      retronity is
+      <br />
+      inspired by
+      <br />
+      '80s theme.
+    </RgbText>
+  ),
+})
 
 const Wrapper = styled.section`
   position: relative;
@@ -34,14 +53,6 @@ const Service = styled.div`
   }
 `
 
-// const RgbText = styled.div`
-//   font-size: 9vw;
-//   font-family: "Gilroy Bold";
-//   line-height: 1.2;
-//   ${device.small`font-size: 3.5rem;`}
-//   ${device.large`font-size: 9rem;`}
-// `
-
 const TextWrapper = styled.div`
   position: relative;
   height: 32vmax;
@@ -59,13 +70,6 @@ const Dots = styled.div`
 const About = () => (
   <Wrapper>
     <div className="heading-wrapper">
-      {/* <RgbText>
-        retronity is
-        <br />
-        inspired by
-        <br />
-        '80s theme.
-      </RgbText> */}
       <TextWrapper>
         <LoadableBulgeText />
       </TextWrapper>

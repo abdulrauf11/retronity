@@ -1,8 +1,9 @@
 import React from "react"
 import styled from "styled-components"
-import { graphql, Link } from "gatsby"
+import { graphql } from "gatsby"
 import Img from "gatsby-image/withIEPolyfill"
 
+import FadeLink from "../components/transition-link"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Ticker from "../components/visuals/ticker"
@@ -82,7 +83,7 @@ const Visuals = ({ data }) => {
       <main>
         <Grid>
           {visuals.map((node, index) => (
-            <Link
+            <FadeLink
               className="grid-item"
               key={index}
               to={`/visuals/${node.slug}`}
@@ -93,7 +94,7 @@ const Visuals = ({ data }) => {
               <div className="overlay">
                 <h3 className="name">{node.name}</h3>
               </div>
-            </Link>
+            </FadeLink>
           ))}
         </Grid>
         <License />

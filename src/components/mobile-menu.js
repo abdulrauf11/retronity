@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
-import { Link } from "gatsby"
+
+import FadeLink from "./transition-link"
 import styled from "styled-components"
 import device from "./device"
 import { CSSTransition } from "react-transition-group"
@@ -137,18 +138,18 @@ const MobileMenu = () => {
       >
         <Overlay>
           <PageLinks>
-            <Link to="/" activeClassName="active">
+            <FadeLink to="/" activeClassName="active">
               home
-            </Link>
-            <Link to="/visuals/" activeClassName="active">
+            </FadeLink>
+            <FadeLink to="/visuals/" activeClassName="active">
               rad visuals
-            </Link>
-            <Link to="/faq/" activeClassName="active">
+            </FadeLink>
+            <FadeLink to="/faq/" activeClassName="active">
               wut da faq
-            </Link>
-            <Link to="/contact/" activeClassName="active">
+            </FadeLink>
+            <FadeLink to="/contact/" activeClassName="active">
               contact
-            </Link>
+            </FadeLink>
           </PageLinks>
           <div className="external-links">
             <SocialLinks>

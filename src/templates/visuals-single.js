@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
-import { graphql, Link } from "gatsby"
+import { graphql } from "gatsby"
 import { gsap } from "gsap"
 
+import FadeLink from "../components/transition-link"
 import device from "../components/device"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -119,7 +120,7 @@ const VisualSingle = ({ data }) => {
           </Buttons>
 
           <div className="faq-link">
-            <Link to="/faq">how to use this rad visual?</Link>
+            <FadeLink to="/faq/">how to use this rad visual?</FadeLink>
           </div>
         </Wrapper>
       </Main>

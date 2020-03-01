@@ -102,8 +102,8 @@ const SubscribeForm = () => {
             <Message>
               <div className="text">
                 {errors.length
-                  ? "Something went wrong!"
-                  : "Thank you for subscribing!"}
+                  ? "something went wrong!"
+                  : "thank you for subscribing!"}
               </div>
             </Message>
           ) : (

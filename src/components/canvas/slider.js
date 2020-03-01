@@ -123,12 +123,6 @@ const Slider = ({ currIndex, prevIndex, thumbnails }) => {
           "cover"
         )
         container.addChild(slide.container)
-        // sprite.anchor.set(0.5)
-        // sprite.x = app.screen.width / 2
-        // sprite.y = app.screen.height / 2
-        // sprite.width = app.screen.width
-        // sprite.height = app.screen.height
-        // container.addChild(sprite)
         index && gsap.set(sprite, { alpha: 0 })
         return sprite
       })

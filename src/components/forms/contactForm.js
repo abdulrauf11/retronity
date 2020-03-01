@@ -179,8 +179,8 @@ const ContactForm = () => {
             <Message>
               <div className="text">
                 {errors.length
-                  ? "Sorry! Something went wrong."
-                  : "Schweet! We'll get back to you asap."}
+                  ? "sorry! something went wrong."
+                  : "schweet! we'll get back to you asap."}
               </div>
             </Message>
           ) : (
