@@ -68,7 +68,7 @@ const Buttons = styled.div`
       font-size: 0.8rem;
       text-transform: uppercase;
       border: 1px solid var(--purple);
-      padding: 0.6rem 2rem;
+      padding: 0.8rem 2.5rem;
       background: var(--purple);
     }
   }

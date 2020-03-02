@@ -109,12 +109,14 @@ const Slider = ({ currIndex, prevIndex, thumbnails }) => {
       .add("one", thumbnails[0])
       .add("two", thumbnails[1])
       .add("three", thumbnails[2])
+      .add("four", thumbnails[3])
 
     loader.load((_, resources) => {
       const allImages = [
         resources.one.data,
         resources.two.data,
         resources.three.data,
+        resources.four.data,
       ]
       const allSprites = allImages.map((image, index) => {
         const texture = PIXI.Texture.from(image)
@@ -131,7 +133,9 @@ const Slider = ({ currIndex, prevIndex, thumbnails }) => {
       setSprites(allSprites)
     })
 
-    setLoaded({ ...loaded, slider: true })
+    loader.onComplete.add(() => {
+      setLoaded({ ...loaded, slider: true })
+    })
   }, [])
 
   useEffect(() => {

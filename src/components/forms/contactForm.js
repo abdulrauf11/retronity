@@ -8,7 +8,7 @@ import { sendContactEmail } from "@statickit/functions"
 import { SwitchTransition, Transition } from "react-transition-group"
 
 const FormWrapper = styled.div`
-  width: 65%;
+  width: 60%;
   max-width: 1000px;
   margin: 4rem 0;
   ${device.small`width: 100%;`}
@@ -27,13 +27,13 @@ const FieldWrapper = styled.div`
     transform-origin: left top;
     transition: all 0.25s cubic-bezier(0, 0, 0.25, 1);
     font-family: "Gilroy Bold";
-    font-size: 4rem;
+    font-size: 5rem;
     -webkit-text-fill-color: var(--black);
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: var(--white);
     opacity: 0.2;
     ${device.small`font-size: 2.5rem;`}
-    ${device.large`font-size: 6rem;`}
+    ${device.large`font-size: 7rem;`}
     &.active {
       transform: scale(0.3) translateY(-100%);
       -webkit-text-fill-color: var(--white);
@@ -44,18 +44,18 @@ const FieldWrapper = styled.div`
   .input {
     color: var(--white);
     width: 100%;
-    font-size: 4rem;
+    font-size: 5rem;
     display: block;
     border: 0;
     border-bottom: 1px solid var(--white);
     background: transparent;
     ${device.small`font-size: 2.5rem;`}
-    ${device.large`font-size: 6rem;`}
+    ${device.large`font-size: 7rem;`}
   }
   textarea.scroll {
-    font-size: 2rem;
+    font-size: 3rem;
     ${device.small`font-size: 1.5rem;`}
-    ${device.large`font-size: 3rem;`}
+    ${device.large`font-size: 4rem;`}
   }
   .error {
     font-size: 0.8rem;
@@ -68,7 +68,7 @@ const FieldWrapper = styled.div`
 `
 
 const ButtonWrapper = styled.div`
-  margin-top: 6rem;
+  margin-top: 4rem;
   text-align: right;
   button {
     transition: all 0.8s;

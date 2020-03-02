@@ -41,9 +41,10 @@ const Wrapper = styled.section`
 const Service = styled.div`
   margin-top: 4rem;
   width: 55%;
-  max-width: 650px;
+  max-width: 550px;
   margin-left: auto;
   ${device.small`width: 100%; margin-top: 0rem;`}
+  ${device.large`max-width: 650px;`}
   h2 {
     font-weight: normal;
     font-size: 3rem;

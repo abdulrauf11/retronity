@@ -6,9 +6,11 @@ import FadeLink from "../transition-link"
 import device from "../device"
 import arrow from "../../images/visuals/right-arrow.svg"
 import tree from "../../images/visuals/tree.svg"
-import image1 from "../../images/slider/ride_along.png"
-import image2 from "../../images/slider/chasing_dreams.png"
-import image3 from "../../images/slider/fade_away.png"
+import sliderOne from "../../images/slider/ride_along.png"
+import sliderTwo from "../../images/slider/chasing_dreams.png"
+import sliderThree from "../../images/slider/fade_away.png"
+import sliderFour from "../../images/slider/collage.png"
+// import useImage from "../image"
 
 import Loadable from "@loadable/component"
 const LoadableSlider = Loadable(() => import("../canvas/slider"))
@@ -64,12 +66,14 @@ const Carousel = styled.div`
   display: flex;
   align-items: center;
   .thumbnail-wrapper {
-    flex: 3;
+    width: calc(3.5 * 16vmax);
+    height: calc(3.5 * 10vmax);
+    max-width: calc(75 * 16px);
+    max-height: calc(75 * 10px);
     .thumbnail {
       position: relative;
       width: 100%;
-      height: 35vmax;
-      max-height: 800px;
+      height: 100%;
       background: var(--purple);
       ${device.small`min-height: 250px;`}
     }
@@ -82,8 +86,8 @@ const Carousel = styled.div`
     .circle {
       position: relative;
       padding: 0;
-      width: 140px;
-      height: 140px;
+      width: 130px;
+      height: 130px;
       border-radius: 50%;
       border: 1px solid var(--pink);
       transition: all 0.8s;
@@ -105,7 +109,7 @@ const Carousel = styled.div`
 `
 
 const Card = styled.div`
-  height: 250px;
+  height: 45%;
   display: flex;
   justif-content: center;
   align-items: center;
@@ -118,7 +122,7 @@ const Card = styled.div`
   color: var(--black);
   background: var(--white);
   ${device.small`position: static; transform: none; width: 100%;`}
-  ${device.large`height: 300px;`}
+  ${device.large`height: 350px;`}
   .name {
     font-size: 2rem;
     font-family: "Gilroy Bold";
@@ -151,6 +155,24 @@ const Card = styled.div`
     color: var(--black);
     font-size: 0.95rem;
     font-family: "Gilroy Bold";
+    position: relative;
+    &:after {
+      display: block;
+      backface-visibility: none;
+      left: -5%;
+      top: 55%;
+      position: absolute;
+      content: "";
+      width: 110%;
+      height: 2px;
+      background: var(--purple);
+      transform: scaleX(0);
+      transform-origin: 0 0;
+      transition: transform 0.35s ease-out;
+    }
+    &:hover:after {
+      transform: scaleX(1);
+    }
   }
 
   .animated {
@@ -175,13 +197,15 @@ const Card = styled.div`
 `
 
 const Downloads = () => {
+  // const { sliderOne, sliderTwo, sliderThree } = useImage()
+
   const data = [
     {
       title: "ride along",
       quote:
         "If my calculations are correct, when this baby hits 88 miles per hour, you're gonna see some serious shit.",
       reference: "Back to the Future (1985)",
-      thumbnail: image1,
+      thumbnail: sliderOne,
       slug: "/visuals/ride-along",
     },
     {
@@ -189,17 +213,18 @@ const Downloads = () => {
       quote:
         "All he'd wanted were the same answers the rest of us want. Where did I come from? Where am I going? How long have I got?",
       reference: "Blade Runner (1982)",
-      thumbnail: image2,
+      thumbnail: sliderTwo,
       slug: "/visuals/chasing-dreams",
     },
     {
       title: "fade away",
       quote: "The more things change, the more they stay the same.",
       reference: "The Color Purple (1985)",
-      thumbnail: image3,
+      thumbnail: sliderThree,
       slug: "/visuals/fade-away",
     },
     {
+      thumbnail: sliderFour,
       slug: "/visuals/",
     },
   ]

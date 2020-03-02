@@ -18,12 +18,13 @@ const Container = styled.div`
 `
 
 const Grid = styled.section`
+  margin-bottom: 12rem;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: 1fr;
   grid-gap: 100px;
-  ${device.small`margin-top: 4rem; grid-gap: 50px; grid-template-columns: repeat(1, 1fr);`}
-  ${device.large`grid-gap: 150px 100px;`}
+  ${device.small`margin-top: 4rem; margin-bottom: 6rem; grid-gap: 50px; grid-template-columns: repeat(1, 1fr);`}
+  ${device.large`grid-gap: 150px 100px; margin-bottom: 18rem;`}
   &::before {
     content: "";
     width: 0;
@@ -57,6 +58,8 @@ const Grid = styled.section`
         opacity: 1;
       }
       .name {
+        width: 90%;
+        margin: 0 auto;
         font-size: 3rem;
         font-family: "Gilroy Bold";
         -webkit-text-fill-color: transparent;

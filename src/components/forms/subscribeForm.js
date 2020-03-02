@@ -8,7 +8,7 @@ import device from "../device"
 const Form = styled.form`
   font-size: 0.9rem;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   input {
@@ -16,10 +16,12 @@ const Form = styled.form`
     background: transparent;
     border: none;
     border-bottom: 1px solid var(--pink);
-    padding: 0.5rem 0.5rem;
+    height: 100%;
+    padding: 0.75rem 0.5rem;
     width: 100%;
     width: 300px;
     ${device.small`width: 100%;`}
+    ${device.large`width: 400px;`}
     &::placeholder {
       color: var(--white);
       opacity: 0.2;

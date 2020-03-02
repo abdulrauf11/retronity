@@ -75,6 +75,10 @@ const Overlay = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
+
+  .external-links {
+    padding: 4rem 0;
+  }
 `
 
 const PageLinks = styled.div`
@@ -105,7 +109,7 @@ const SocialLinks = styled.div`
 `
 
 const Credits = styled.div`
-  margin: 2rem 0 4rem 0;
+  margin-top: 2rem;
   font-size: 1.1rem;
   a {
     color: var(--purple);
