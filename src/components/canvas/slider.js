@@ -3,9 +3,9 @@ import * as PIXI from "pixi.js"
 import { gsap } from "gsap"
 import PixiPlugin from "gsap/PixiPlugin"
 import styled from "styled-components"
-import { useWindowContext } from "../context"
-
 import mapImage from "../../images/swirly.png"
+
+import Loader from "./slider-loader"
 
 PixiPlugin.registerPIXI(PIXI)
 
@@ -15,82 +15,20 @@ const CanvasWrapper = styled.div`
   height: 100%;
   left: 0;
   top: 0;
-
-  canvas {
-  }
 `
 
 const Slider = ({ currIndex, prevIndex, thumbnails }) => {
-  const { loaded, setLoaded } = useWindowContext()
+  const [isLoaded, setIsLoaded] = useState(false)
 
   const canvasWrapperRef = useRef(null)
   const canvasRef = useRef(null)
 
+  const [container, setContainer] = useState(null)
   const [filter, setFilter] = useState(null)
   const [sprites, setSprites] = useState(null)
 
-  function background(bgSize, inputSprite, type, forceSize) {
-    var sprite = inputSprite
-    var bgContainer = new PIXI.Container()
-    var mask = new PIXI.Graphics()
-      .beginFill(0x8bc5ff)
-      .drawRect(0, 0, bgSize.x, bgSize.y)
-      .endFill()
-    bgContainer.mask = mask
-    bgContainer.addChild(mask)
-    bgContainer.addChild(sprite)
-    function resize() {
-      var sp = { x: sprite.width, y: sprite.height }
-      if (forceSize) sp = forceSize
-      var winratio = bgSize.x / bgSize.y
-      var spratio = sp.x / sp.y
-      var scale = 1
-      var pos = new PIXI.Point(0, 0)
-      if (type === "cover" ? winratio > spratio : winratio < spratio) {
-        //photo is wider than background
-        scale = bgSize.x / sp.x
-        pos.y = -(sp.y * scale - bgSize.y) / 2
-      } else {
-        //photo is taller than background
-        scale = bgSize.y / sp.y
-        pos.x = -(sp.x * scale - bgSize.x) / 2
-      }
-      sprite.scale = new PIXI.Point(scale, scale)
-      sprite.position = pos
-    }
-    resize()
-    return {
-      container: bgContainer,
-      doResize: resize,
-    }
-  }
-
   useEffect(() => {
-    const app = new PIXI.Application({
-      width: canvasWrapperRef.current.clientWidth,
-      height: canvasWrapperRef.current.clientHeight,
-      view: canvasRef.current,
-      resolution: window.devicePixelRatio,
-      autoDensity: true,
-      antialias: true,
-      resizeTo: canvasWrapperRef.current,
-      transparent: true,
-    })
-    app.renderer.plugins.interaction.autoPreventDefault = false
-    app.renderer.view.style.touchAction = "auto"
-
-    function resize() {
-      const newWidth = canvasWrapperRef.current.clientWidth
-      const newHeight = canvasWrapperRef.current.clientHeight
-      app.renderer.resize(newWidth, newHeight)
-      container.width = app.screen.width
-      container.height = app.screen.height
-    }
-    window.addEventListener("resize", resize)
-
     let container = new PIXI.Container()
-    app.stage.addChild(container)
-
     const displacementSprite = PIXI.Sprite.from(mapImage)
     displacementSprite.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT
     const displacementFilter = new PIXI.filters.DisplacementFilter(
@@ -121,22 +59,48 @@ const Slider = ({ currIndex, prevIndex, thumbnails }) => {
       const allSprites = allImages.map((image, index) => {
         const texture = PIXI.Texture.from(image)
         const sprite = new PIXI.Sprite(texture)
-        const slide = background(
-          { x: app.screen.width, y: app.screen.height },
-          sprite,
-          "cover"
-        )
-        container.addChild(slide.container)
+        sprite.width = canvasWrapperRef.current.clientWidth
+        sprite.height = canvasWrapperRef.current.clientHeight
+        container.addChild(sprite)
         index && gsap.set(sprite, { alpha: 0 })
         return sprite
       })
+      setContainer(container)
       setSprites(allSprites)
     })
 
     loader.onComplete.add(() => {
-      setLoaded({ ...loaded, slider: true })
+      setIsLoaded(true)
     })
   }, [])
+
+  useEffect(() => {
+    if (!isLoaded) return
+
+    const app = new PIXI.Application({
+      width: canvasWrapperRef.current.clientWidth,
+      height: canvasWrapperRef.current.clientHeight,
+      view: canvasRef.current,
+      resolution: window.devicePixelRatio,
+      autoDensity: true,
+      antialias: true,
+      resizeTo: canvasWrapperRef.current,
+      transparent: true,
+    })
+    app.renderer.plugins.interaction.autoPreventDefault = false
+    app.renderer.view.style.touchAction = "auto"
+
+    app.stage.addChild(container)
+
+    function resize() {
+      const newWidth = canvasWrapperRef.current.clientWidth
+      const newHeight = canvasWrapperRef.current.clientHeight
+      app.renderer.resize(newWidth, newHeight)
+      container.width = app.screen.width
+      container.height = app.screen.height
+    }
+    window.addEventListener("resize", resize)
+  }, [isLoaded])
 
   useEffect(() => {
     if (!sprites || prevIndex < 0) return
@@ -160,7 +124,11 @@ const Slider = ({ currIndex, prevIndex, thumbnails }) => {
 
   return (
     <CanvasWrapper ref={canvasWrapperRef}>
-      <canvas ref={canvasRef}></canvas>
+      {isLoaded ? (
+        <canvas ref={canvasRef}></canvas>
+      ) : (
+        <Loader prevIndex={prevIndex} currIndex={currIndex} />
+      )}
     </CanvasWrapper>
   )
 }

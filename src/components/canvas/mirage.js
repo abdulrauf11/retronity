@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef } from "react"
 import * as PIXI from "pixi.js"
 import { gsap } from "gsap"
 import PixiPlugin from "gsap/PixiPlugin"
@@ -7,7 +7,6 @@ import { GlitchFilter } from "@pixi/filter-glitch"
 import { RGBSplitFilter } from "@pixi/filter-rgb-split"
 
 import styled from "styled-components"
-import { useWindowContext } from "../context"
 
 import mapImage from "../../images/displacement_map.jpg"
 import sunImage from "../../images/hero/sun.png"
@@ -24,8 +23,6 @@ const CanvasWrapper = styled.div`
 `
 
 const Mirage = () => {
-  const { loaded, setLoaded } = useWindowContext()
-
   const canvasWrapperRef = useRef(null)
   const canvasRef = useRef(null)
 
@@ -194,8 +191,6 @@ const Mirage = () => {
 
     displacementAnimation()
     glitchAnimation()
-
-    setLoaded({ ...loaded, mirage: true })
   }, [])
 
   return (

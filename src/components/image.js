@@ -18,21 +18,28 @@ export default function useImage() {
     query {
       sliderOne: file(relativePath: { eq: "slider/ride_along.png" }) {
         childImageSharp {
-          fluid(maxHeight: 800) {
+          fluid(maxWidth: 1200, maxHeight: 750) {
             ...GatsbyImageSharpFluid
           }
         }
       }
       sliderTwo: file(relativePath: { eq: "slider/chasing_dreams.png" }) {
         childImageSharp {
-          fluid(maxHeight: 800) {
+          fluid(maxWidth: 1200, maxHeight: 750) {
             ...GatsbyImageSharpFluid
           }
         }
       }
       sliderThree: file(relativePath: { eq: "slider/fade_away.png" }) {
         childImageSharp {
-          fluid(maxHeight: 800) {
+          fluid(maxWidth: 1200, maxHeight: 750) {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
+      sliderFour: file(relativePath: { eq: "slider/collage.png" }) {
+        childImageSharp {
+          fluid(maxWidth: 1200, maxHeight: 750) {
             ...GatsbyImageSharpFluid
           }
         }
@@ -40,9 +47,14 @@ export default function useImage() {
     }
   `)
 
-  return {
-    sliderOne: <Img fluid={data.sliderOne.childImageSharp.fluid} />,
-    sliderTwo: <Img fluid={data.sliderOne.childImageSharp.fluid} />,
-    sliderThree: <Img fluid={data.sliderOne.childImageSharp.fluid} />,
+  const style = {
+    width: "100%",
+    height: "100%",
   }
+  return [
+    <Img fluid={data.sliderOne.childImageSharp.fluid} style={style} />,
+    <Img fluid={data.sliderTwo.childImageSharp.fluid} style={style} />,
+    <Img fluid={data.sliderThree.childImageSharp.fluid} style={style} />,
+    <Img fluid={data.sliderFour.childImageSharp.fluid} style={style} />,
+  ]
 }

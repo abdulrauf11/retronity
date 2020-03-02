@@ -2,9 +2,7 @@ import React, { useEffect, useRef } from "react"
 import * as PIXI from "pixi.js"
 import PixiPlugin from "gsap/PixiPlugin"
 import styled from "styled-components"
-
 import { BulgePinchFilter } from "@pixi/filter-bulge-pinch"
-import { useWindowContext } from "../context"
 
 PixiPlugin.registerPIXI(PIXI)
 
@@ -17,8 +15,6 @@ const CanvasWrapper = styled.div`
 `
 
 const BulgeText = () => {
-  const { loaded, setLoaded } = useWindowContext()
-
   const canvasWrapperRef = useRef(null)
   const canvasRef = useRef(null)
 
@@ -89,8 +85,6 @@ const BulgeText = () => {
     }
 
     app.stage.on("mousemove", onPointerMove)
-
-    setLoaded({ ...loaded, bulge: true })
   }, [])
 
   return (

@@ -10,8 +10,6 @@ import sliderOne from "../../images/slider/ride_along.png"
 import sliderTwo from "../../images/slider/chasing_dreams.png"
 import sliderThree from "../../images/slider/fade_away.png"
 import sliderFour from "../../images/slider/collage.png"
-// import useImage from "../image"
-
 import Loadable from "@loadable/component"
 const LoadableSlider = Loadable(() => import("../canvas/slider"))
 
@@ -60,6 +58,12 @@ const Wrapper = styled.div`
     opacity: 0;
     transition: opacity 300ms;
   }
+
+  .loading-slide {
+    width: 100%;
+    height: 100%;
+    background: red;
+  }
 `
 
 const Carousel = styled.div`
@@ -70,12 +74,12 @@ const Carousel = styled.div`
     height: calc(3.5 * 10vmax);
     max-width: calc(75 * 16px);
     max-height: calc(75 * 10px);
+    ${device.small`height: 250px; width: 100%;`}
     .thumbnail {
       position: relative;
       width: 100%;
       height: 100%;
       background: var(--purple);
-      ${device.small`min-height: 250px;`}
     }
   }
   .button-container {
@@ -109,7 +113,6 @@ const Carousel = styled.div`
 `
 
 const Card = styled.div`
-  height: 45%;
   display: flex;
   justif-content: center;
   align-items: center;
@@ -117,12 +120,14 @@ const Card = styled.div`
   right: 0;
   transform: translateY(-50%);
   width: 32vmax;
+  height: 45%;
   max-width: 600px;
+  max-height: 350px;
+  min-height: 250px;
   padding: 0rem 2rem;
   color: var(--black);
   background: var(--white);
   ${device.small`position: static; transform: none; width: 100%;`}
-  ${device.large`height: 350px;`}
   .name {
     font-size: 2rem;
     font-family: "Gilroy Bold";
@@ -197,8 +202,6 @@ const Card = styled.div`
 `
 
 const Downloads = () => {
-  // const { sliderOne, sliderTwo, sliderThree } = useImage()
-
   const data = [
     {
       title: "ride along",
