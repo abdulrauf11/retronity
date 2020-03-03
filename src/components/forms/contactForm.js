@@ -68,9 +68,10 @@ const FieldWrapper = styled.div`
 `
 
 const ButtonWrapper = styled.div`
-  margin-top: 4rem;
+  margin-top: 5rem;
   text-align: right;
   button {
+    padding: calc(1rem / 1) calc(4rem / 1);
     transition: all 0.8s;
     &:hover {
       box-shadow: inset 0 0 0px 30px var(--purple);

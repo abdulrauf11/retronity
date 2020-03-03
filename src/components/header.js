@@ -40,7 +40,7 @@ const PageLinks = styled.div`
       position: absolute;
       content: "";
       width: 110%;
-      height: 1px;
+      height: 2px;
       background: var(--purple);
       transform: scaleX(0);
       transform-origin: 0 0;

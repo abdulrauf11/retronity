@@ -17,7 +17,7 @@ const Form = styled.form`
     border: none;
     border-bottom: 1px solid var(--pink);
     height: 100%;
-    padding: 0.75rem 0.5rem;
+    padding: 0.5rem;
     width: 100%;
     width: 300px;
     ${device.small`width: 100%;`}
@@ -28,6 +28,7 @@ const Form = styled.form`
     }
   }
   button {
+    padding: calc(1rem / 1.8) calc(4rem / 1.8);
     margin-left: 1.5rem;
     transition: all 0.8s;
     ${device.small`margin-left: auto; margin-top: 2rem;`}

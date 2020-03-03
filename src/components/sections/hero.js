@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import device from "../device"
-import { gsap } from "gsap"
+// import { gsap } from "gsap"
 
 import Loadable from "@loadable/component"
 const LoadableMirage = Loadable(() => import("../canvas/mirage"), {
@@ -41,8 +41,8 @@ const Scene = styled.div`
   position: relative;
   width: 35vmax;
   height: 35vmax;
-  min-width: 300px;
-  min-height: 300px;
+  min-width: 257px;
+  min-height: 257px;
   max-width: 800px;
   max-height: 800px;
   .scene-loader {
@@ -79,31 +79,31 @@ const SocialLinks = styled.div`
 `
 
 const Hero = () => {
-  function handleMouseMove(e) {
-    const slogan = e.currentTarget.firstChild
-    const scene = e.currentTarget.lastChild
-    parallaxIt(e, slogan, 20)
-    parallaxIt(e, scene, -10)
-  }
+  // function handleMouseMove(e) {
+  //   const slogan = e.currentTarget.firstChild
+  //   const scene = e.currentTarget.lastChild
+  //   parallaxIt(e, slogan, 20)
+  //   parallaxIt(e, scene, -10)
+  // }
 
-  function parallaxIt(e, target, movement) {
-    const container = e.currentTarget
-    var relX = e.pageX - container.getBoundingClientRect().left
-    var relY = e.pageY - container.getBoundingClientRect().top
-    gsap.to(target, {
-      duration: 2,
-      ease: "sine.out",
-      x:
-        ((relX - container.offsetWidth / 2) / container.offsetWidth) * movement,
-      y:
-        ((relY - container.offsetHeight / 2) / container.offsetHeight) *
-        movement,
-    })
-  }
+  // function parallaxIt(e, target, movement) {
+  //   const container = e.currentTarget
+  //   var relX = e.pageX - container.getBoundingClientRect().left
+  //   var relY = e.pageY - container.getBoundingClientRect().top
+  //   gsap.to(target, {
+  //     duration: 2,
+  //     ease: "sine.out",
+  //     x:
+  //       ((relX - container.offsetWidth / 2) / container.offsetWidth) * movement,
+  //     y:
+  //       ((relY - container.offsetHeight / 2) / container.offsetHeight) *
+  //       movement,
+  //   })
+  // }
 
   return (
     <Wrapper>
-      <div className="container" onMouseMove={handleMouseMove}>
+      <div className="container">
         <h1 className="slogan">
           to retronity
           <br />& beyond

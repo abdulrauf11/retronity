@@ -58,18 +58,22 @@ const Details = styled.div`
 `
 
 const Buttons = styled.div`
-  text-align: center;
-  button,
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${device.small`flex-direction: column;`}
   a {
-    min-width: 140px;
+    text-align: center;
     margin: 0 1rem;
-    ${device.small`margin: 1rem auto; display: inline-block; width: 50%;`}
+    padding: 1rem;
+    width: 12rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    border: 1px solid var(--purple);
+    ${device.small`width: 100%;`}
     &.download {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      border: 1px solid var(--purple);
-      padding: 0.8rem 2.5rem;
       background: var(--purple);
+      ${device.small`margin-bottom: 2rem;`}
     }
   }
 `
@@ -110,13 +114,19 @@ const VisualSingle = ({ data }) => {
               {video.width}X{video.height}
             </p>
           </Details>
-          {/* <Video src={video.secure_url} /> */}
           <video src={video.secure_url} controls />
           <Buttons>
             <a className="download" href={downloadLink} download>
               Download
             </a>
-            <button className="donate">Donate</button>
+            <a
+              className="donate"
+              href="https://www.patreon.com/tippydreamer"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              donate
+            </a>
           </Buttons>
 
           <div className="faq-link">

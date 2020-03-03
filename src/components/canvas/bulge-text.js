@@ -3,6 +3,7 @@ import * as PIXI from "pixi.js"
 import PixiPlugin from "gsap/PixiPlugin"
 import styled from "styled-components"
 import { BulgePinchFilter } from "@pixi/filter-bulge-pinch"
+import device from "../device"
 
 PixiPlugin.registerPIXI(PIXI)
 
@@ -12,6 +13,10 @@ const CanvasWrapper = styled.div`
   position: absolute;
   left: -50px;
   top: 0;
+  ${device.small`width: 100%; position: static; left: 0; height: auto;`}
+  canvas {
+    width: 100%;
+  }
 `
 
 const BulgeText = () => {
@@ -50,12 +55,20 @@ const BulgeText = () => {
       letterSpacing: 2,
     })
 
+    let text = new PIXI.Text("retronity is\ninspired by\n'80s theme.", style)
+    text.anchor.set(0, 0.5)
+    text.position.set(50, app.renderer.screen.height / 2)
+    container.addChild(text)
+
     function setTextSize() {
-      const minSize = 56
+      const minSize = 45
       const maxSize = 180
       const responsiveSize = (9 * window.innerWidth) / 100
       if (window.innerWidth < 400) {
+        text.position.set(0, app.renderer.screen.height / 2)
+        // style.padding = 0
         style.fontSize = minSize
+        container.filters = []
       } else if (window.innerWidth < 2000) {
         style.fontSize = responsiveSize
       } else {
@@ -63,11 +76,6 @@ const BulgeText = () => {
       }
     }
     setTextSize()
-
-    let text = new PIXI.Text("retronity is\ninspired by\n'80s theme.", style)
-    text.anchor.set(0, 0.5)
-    text.position.set(50, app.renderer.screen.height / 2)
-    container.addChild(text)
 
     const bulgeFilter = new BulgePinchFilter()
     bulgeFilter.radius = 300
@@ -89,7 +97,7 @@ const BulgeText = () => {
 
   return (
     <CanvasWrapper ref={canvasWrapperRef}>
-      <canvas ref={canvasRef}></canvas>
+      <canvas ref={canvasRef} id="canvas-bulge"></canvas>
     </CanvasWrapper>
   )
 }

@@ -43,13 +43,20 @@ const Accordian = styled.ul`
   }
 
   .plus {
-    cursor: pointer;
+    position: relative;
     background: none;
     border: none;
     padding: 0;
+    width: 30px;
+    height: 30px;
     transition: transform 0.2s ease-out;
     img {
-      width: 30px;
+      z-index: -1;
+      top: 0;
+      left: 0;
+      position: absolute;
+      width: 100%;
+      display: block;
       ${device.large`width: 50px;`}
     }
   }

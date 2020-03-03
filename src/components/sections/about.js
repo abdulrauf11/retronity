@@ -1,16 +1,13 @@
 import React from "react"
 import styled from "styled-components"
 import device from "../device"
-
 import dots from "../../images/about/dots.svg"
-
 import Loadable from "@loadable/component"
 
 const RgbText = styled.div`
   font-size: 9vw;
   font-family: "Gilroy Bold";
-  line-height: 1.2;
-  ${device.small`font-size: 3.5rem;`}
+  ${device.small`font-size: 45px;`}
   ${device.large`font-size: 9rem;`}
 `
 
@@ -49,7 +46,7 @@ const Service = styled.div`
     font-weight: normal;
     font-size: 3rem;
     margin: 1.5rem 0;
-    ${device.small`font-size: 1.7rem;`}
+    ${device.small`font-size: 1.5rem;`}
     ${device.large`font-size: 3.2rem;`}
   }
 `
@@ -57,6 +54,8 @@ const Service = styled.div`
 const TextWrapper = styled.div`
   position: relative;
   height: 32vmax;
+  max-height: 650px;
+  ${device.small`height: auto; margin-bottom: 2rem;`}
 `
 
 const Dots = styled.div`

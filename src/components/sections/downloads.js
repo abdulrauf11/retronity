@@ -74,7 +74,7 @@ const Carousel = styled.div`
     height: calc(3.5 * 10vmax);
     max-width: calc(75 * 16px);
     max-height: calc(75 * 10px);
-    ${device.small`height: 250px; width: 100%;`}
+    ${device.small`width: 320px; height: 200px;`}
     .thumbnail {
       position: relative;
       width: 100%;

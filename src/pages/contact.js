@@ -34,7 +34,7 @@ const Text = styled.div`
   }
   p {
     margin-top: 1rem;
-    width: 65%;
+    width: 60%;
     max-width: 1000px;
     ${device.small`width: 100%;`}
   }
