@@ -65,8 +65,8 @@ const Cursor = () => {
 
   useEffect(() => {
     gsap.set(circleRef.current, {
-      xPercent: -100,
-      yPercent: -100,
+      xPercent: -50,
+      yPercent: -50,
     })
 
     const getLinks = document.querySelectorAll("a, button")

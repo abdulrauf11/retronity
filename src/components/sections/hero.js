@@ -55,6 +55,7 @@ const Scene = styled.div`
 `
 
 const SocialLinks = styled.div`
+  margin-top: 5%;
   position: relative;
   ${device.small`display: none;`}
   .vertical {
@@ -64,6 +65,7 @@ const SocialLinks = styled.div`
     transform: rotate(270deg) translate(0, 0);
     transform-origin: 0 0;
     &.scroll {
+      padding: 0 0.5rem;
       right: 0;
       left: auto;
       transform-origin: 100% 0;
