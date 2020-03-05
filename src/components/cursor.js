@@ -24,39 +24,66 @@ const CircleWrapper = styled.div`
 
 const Cursor = () => {
   const circleRef = useRef(null)
-
   function handleMouseMove(e) {
     if (!circleRef.current) return
-    gsap.to(circleRef.current, 0.3, {
+    gsap.to(circleRef.current, 0.35, {
       x: e.clientX,
       y: e.clientY,
     })
+    // if (
+    //   e.toElement.nodeName === "A" ||
+    //   e.toElement.id === "canvas-bulge" ||
+    //   e.toElement.parentNode.nodeName === "A" ||
+    //   e.toElement.parentNode.nodeName === "BUTTON" ||
+    //   e.toElement.nodeName === "BUTTON"
+    // ) {
+    //   gsap.to(circleRef.current, 0.4, {
+    //     scale: 5,
+    //     ease: "sine",
+    //   })
+    // } else {
+    //   gsap.to(circleRef.current, 0.4, {
+    //     scale: 1,
+    //     ease: "sine",
+    //   })
+    // }
+  }
 
-    if (
-      e.toElement.nodeName === "A" ||
-      e.toElement.id === "canvas-bulge" ||
-      e.toElement.nodeName === "BUTTON"
-    ) {
-      gsap.to(circleRef.current, 0.3, {
-        scale: 5,
-        ease: "sine",
-      })
-    } else {
-      gsap.to(circleRef.current, 0.3, {
-        scale: 1,
-        ease: "sine",
-      })
-    }
+  function handleMouseEnter() {
+    gsap.to(circleRef.current, 0.4, {
+      scale: 5,
+      ease: "sine",
+    })
+  }
+
+  function handleMouseLeave() {
+    gsap.to(circleRef.current, 0.4, {
+      scale: 1,
+      ease: "sine",
+    })
   }
 
   useEffect(() => {
     gsap.set(circleRef.current, {
-      xPercent: -50,
-      yPercent: -50,
+      xPercent: -100,
+      yPercent: -100,
     })
+
+    const getLinks = document.querySelectorAll("a, button")
+    getLinks.forEach(l => {
+      l.addEventListener("mouseenter", handleMouseEnter)
+      l.addEventListener("mouseleave", handleMouseLeave)
+    })
+
     document.addEventListener("mousemove", e => handleMouseMove(e))
-    return () =>
+
+    return () => {
       document.removeEventListener("mousemove", e => handleMouseMove(e))
+      getLinks.forEach(l => {
+        l.removeEventListener("mouseenter", handleMouseEnter)
+        l.removeEventListener("mouseleave", handleMouseLeave)
+      })
+    }
   }, [])
 
   return (

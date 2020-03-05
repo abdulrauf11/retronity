@@ -135,7 +135,7 @@ const Card = styled.div`
   }
   .quote {
     font-size: 0.9rem;
-    margin: 1rem 0 2rem 0;
+    margin: 1rem 0 1rem 0;
   }
   .reference {
     font-style: oblique;
@@ -161,11 +161,12 @@ const Card = styled.div`
     font-size: 0.95rem;
     font-family: "Gilroy Bold";
     position: relative;
+    padding: 1rem 0;
     &:after {
       display: block;
       backface-visibility: none;
       left: -5%;
-      top: 55%;
+      top: 50%;
       position: absolute;
       content: "";
       width: 110%;

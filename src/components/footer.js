@@ -28,8 +28,27 @@ const SocialLinks = styled.div`
     transform-origin: 0 0;
   }
   a {
+    position: relative;
+    padding: 0.5rem;
+    &:after {
+      display: block;
+      backface-visibility: none;
+      left: 0;
+      top: 50%;
+      position: absolute;
+      content: "";
+      width: 100%;
+      height: 2px;
+      background: var(--purple);
+      transform: scaleX(0);
+      transform-origin: 0 0;
+      transition: transform 0.35s ease-out;
+    }
+    &:hover:after {
+      transform: scaleX(1);
+    }
     &:first-child {
-      margin-right: 2rem;
+      margin-right: 1rem;
     }
   }
 `

@@ -26,8 +26,9 @@ const PageLinks = styled.div`
   a {
     display: block;
     font-size: 0.9rem;
-    margin-left: 3rem;
-    ${device.large`margin-left: 5rem;`}
+    margin-left: 2rem;
+    padding: 1rem;
+    ${device.large`margin-left: 4rem;`}
     &:first-child {
       margin-left: 0;
     }
@@ -35,11 +36,11 @@ const PageLinks = styled.div`
     &:after {
       display: block;
       backface-visibility: none;
-      left: -5%;
+      left: 0.75rem;
       top: 50%;
       position: absolute;
       content: "";
-      width: 110%;
+      width: calc(100% - 1.5rem);
       height: 2px;
       background: var(--purple);
       transform: scaleX(0);
