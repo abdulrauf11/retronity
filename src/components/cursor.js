@@ -26,9 +26,10 @@ const Cursor = () => {
   const circleRef = useRef(null)
   function handleMouseMove(e) {
     if (!circleRef.current) return
-    gsap.to(circleRef.current, 0.3, {
+    gsap.to(circleRef.current, 0.1, {
       x: e.clientX,
       y: e.clientY,
+      ease: "sine",
     })
   }
 
