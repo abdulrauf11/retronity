@@ -30,23 +30,6 @@ const Cursor = () => {
       x: e.clientX,
       y: e.clientY,
     })
-    // if (
-    //   e.toElement.nodeName === "A" ||
-    //   e.toElement.id === "canvas-bulge" ||
-    //   e.toElement.parentNode.nodeName === "A" ||
-    //   e.toElement.parentNode.nodeName === "BUTTON" ||
-    //   e.toElement.nodeName === "BUTTON"
-    // ) {
-    //   gsap.to(circleRef.current, 0.4, {
-    //     scale: 5,
-    //     ease: "sine",
-    //   })
-    // } else {
-    //   gsap.to(circleRef.current, 0.4, {
-    //     scale: 1,
-    //     ease: "sine",
-    //   })
-    // }
   }
 
   function handleMouseEnter() {

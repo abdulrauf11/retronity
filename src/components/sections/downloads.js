@@ -14,7 +14,7 @@ import Loadable from "@loadable/component"
 const LoadableSlider = Loadable(() => import("../canvas/slider"))
 
 const Wrapper = styled.div`
-  margin-bottom: 16rem;
+  margin-bottom: 20rem;
   position: relative;
   ${device.small`margin-bottom: 8rem;`}
   ${device.large`margin-bottom: 20rem;`}
