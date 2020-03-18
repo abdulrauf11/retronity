@@ -26,21 +26,21 @@ const Cursor = () => {
   const circleRef = useRef(null)
   function handleMouseMove(e) {
     if (!circleRef.current) return
-    gsap.to(circleRef.current, 0.35, {
+    gsap.to(circleRef.current, 0.3, {
       x: e.clientX,
       y: e.clientY,
     })
   }
 
   function handleMouseEnter() {
-    gsap.to(circleRef.current, 0.4, {
+    gsap.to(circleRef.current, 0.35, {
       scale: 5,
       ease: "sine",
     })
   }
 
   function handleMouseLeave() {
-    gsap.to(circleRef.current, 0.4, {
+    gsap.to(circleRef.current, 0.35, {
       scale: 1,
       ease: "sine",
     })
