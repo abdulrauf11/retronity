@@ -15,7 +15,7 @@ const Wrapper = styled.section`
     width: 90%;
     margin: 0 auto;
     position: relative;
-    ${device.small`display: flex; flex-direction: column-reverse; justify-content: center; height: 75vh;`}
+    ${device.small`display: flex; flex-direction: column-reverse; justify-content: center; height: 72vh;`}
     .slogan {
       z-index: 2;
       position: absolute;
@@ -28,7 +28,8 @@ const Wrapper = styled.section`
       -webkit-text-stroke-width: 2px;
       -webkit-text-stroke-color: var(--white);
       line-height: 1;
-      ${device.small`font-size: 3.2rem; position: static; width: 100%; transform: none; margin-top: 2rem;`}
+      ${device.small`font-size: 3.2rem; position: static; width: 100%;
+        transform: none; margin-top: 2rem; -webkit-text-stroke-width: 1px;`}
       ${device.large`font-size: 7.5rem;`}
     }
   }

@@ -6,6 +6,10 @@ import { BulgePinchFilter } from "@pixi/filter-bulge-pinch"
 import device from "../device"
 
 PixiPlugin.registerPIXI(PIXI)
+PIXI.settings.SPRITE_MAX_TEXTURES = Math.min(
+  PIXI.settings.SPRITE_MAX_TEXTURES,
+  16
+)
 
 const CanvasWrapper = styled.div`
   width: calc(100% + 50px);
@@ -61,10 +65,10 @@ const BulgeText = () => {
     container.addChild(text)
 
     function setTextSize() {
-      const minSize = 50
+      const minSize = 45
       const maxSize = 180
       const responsiveSize = (9 * window.innerWidth) / 100
-      if (window.innerWidth < 800) {
+      if (window.innerWidth < 600) {
         text.position.set(0, app.renderer.screen.height / 2)
         // style.padding = 0
         style.fontSize = minSize

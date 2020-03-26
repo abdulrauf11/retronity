@@ -2,17 +2,22 @@ import React, { useEffect, useRef } from "react"
 import * as PIXI from "pixi.js"
 import { gsap } from "gsap"
 import PixiPlugin from "gsap/PixiPlugin"
+import { useStaticQuery, graphql } from "gatsby"
 
 import { GlitchFilter } from "@pixi/filter-glitch"
 import { RGBSplitFilter } from "@pixi/filter-rgb-split"
 
 import styled from "styled-components"
 
-import mapImage from "../../images/displacement_map.jpg"
-import sunImage from "../../images/hero/sun.png"
-import carImage from "../../images/hero/car.png"
+// import mapImage from "../../images/displacement_map.jpg"
+// import sunImage from "../../images/hero/sun.png"
+// import carImage from "../../images/hero/car.png"
 
 PixiPlugin.registerPIXI(PIXI)
+PIXI.settings.SPRITE_MAX_TEXTURES = Math.min(
+  PIXI.settings.SPRITE_MAX_TEXTURES,
+  16
+)
 
 const CanvasWrapper = styled.div`
   width: 100%;
@@ -25,6 +30,41 @@ const CanvasWrapper = styled.div`
 const Mirage = () => {
   const canvasWrapperRef = useRef(null)
   const canvasRef = useRef(null)
+
+  const imgData = useStaticQuery(graphql`
+    query {
+      sun: file(relativePath: { eq: "hero/sun.png" }) {
+        childImageSharp {
+          fluid(maxWidth: 800) {
+            ...GatsbyImageSharpFluid_withWebp
+          }
+        }
+      }
+      car: file(relativePath: { eq: "hero/car.png" }) {
+        childImageSharp {
+          fluid(maxWidth: 800) {
+            ...GatsbyImageSharpFluid_withWebp
+          }
+        }
+      }
+      map: file(relativePath: { eq: "displacement_map.jpg" }) {
+        childImageSharp {
+          fluid(maxWidth: 800) {
+            ...GatsbyImageSharpFluid_withWebp
+          }
+        }
+      }
+    }
+  `)
+
+  let allImages = [
+    imgData.sun.childImageSharp.fluid,
+    imgData.car.childImageSharp.fluid,
+    imgData.map.childImageSharp.fluid,
+  ].map(i => (i.srcWebp ? i.srcWebp : i.src))
+  const sunImage = allImages[0]
+  const carImage = allImages[1]
+  const mapImage = allImages[2]
 
   function randomIntFromInterval(min, max) {
     return Math.random() * (max - min + 1) + min

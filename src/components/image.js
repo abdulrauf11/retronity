@@ -19,28 +19,28 @@ export default function useImage() {
       sliderOne: file(relativePath: { eq: "slider/ride_along.png" }) {
         childImageSharp {
           fluid(maxWidth: 1200, maxHeight: 750) {
-            ...GatsbyImageSharpFluid
+            ...GatsbyImageSharpFluid_withWebp
           }
         }
       }
       sliderTwo: file(relativePath: { eq: "slider/chasing_dreams.png" }) {
         childImageSharp {
           fluid(maxWidth: 1200, maxHeight: 750) {
-            ...GatsbyImageSharpFluid
+            ...GatsbyImageSharpFluid_withWebp
           }
         }
       }
       sliderThree: file(relativePath: { eq: "slider/fade_away.png" }) {
         childImageSharp {
           fluid(maxWidth: 1200, maxHeight: 750) {
-            ...GatsbyImageSharpFluid
+            ...GatsbyImageSharpFluid_withWebp
           }
         }
       }
       sliderFour: file(relativePath: { eq: "slider/collage.png" }) {
         childImageSharp {
           fluid(maxWidth: 1200, maxHeight: 750) {
-            ...GatsbyImageSharpFluid
+            ...GatsbyImageSharpFluid_withWebp
           }
         }
       }

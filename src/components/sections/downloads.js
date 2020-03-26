@@ -1,17 +1,14 @@
 import React, { useState, useRef, useEffect } from "react"
 import styled from "styled-components"
 import { gsap } from "gsap"
+import { useStaticQuery, graphql } from "gatsby"
 
 import FadeLink from "../transition-link"
 import device from "../device"
 import arrow from "../../images/visuals/right-arrow.svg"
 import tree from "../../images/visuals/tree.svg"
-import sliderOne from "../../images/slider/ride_along.png"
-import sliderTwo from "../../images/slider/chasing_dreams.png"
-import sliderThree from "../../images/slider/fade_away.png"
-import sliderFour from "../../images/slider/collage.png"
 import Loadable from "@loadable/component"
-const LoadableSlider = Loadable(() => import("../canvas/slider"))
+const LoadableSlider = Loadable(() => import("../canvas/slider-2"))
 
 const Wrapper = styled.div`
   margin-bottom: 20rem;
@@ -203,6 +200,59 @@ const Card = styled.div`
 `
 
 const Downloads = () => {
+  const imgData = useStaticQuery(graphql`
+    query {
+      sliderOne: file(relativePath: { eq: "slider/ride_along.png" }) {
+        childImageSharp {
+          fluid(maxWidth: 1200, maxHeight: 750) {
+            ...GatsbyImageSharpFluid_withWebp
+          }
+        }
+      }
+      sliderTwo: file(relativePath: { eq: "slider/chasing_dreams.png" }) {
+        childImageSharp {
+          fluid(maxWidth: 1200, maxHeight: 750) {
+            ...GatsbyImageSharpFluid_withWebp
+          }
+        }
+      }
+      sliderThree: file(relativePath: { eq: "slider/fade_away.png" }) {
+        childImageSharp {
+          fluid(maxWidth: 1200, maxHeight: 750) {
+            ...GatsbyImageSharpFluid_withWebp
+          }
+        }
+      }
+      sliderFour: file(relativePath: { eq: "slider/collage.png" }) {
+        childImageSharp {
+          fluid(maxWidth: 1200, maxHeight: 750) {
+            ...GatsbyImageSharpFluid_withWebp
+          }
+        }
+      }
+      map: file(relativePath: { eq: "swirly.png" }) {
+        childImageSharp {
+          fluid(maxWidth: 1200, maxHeight: 750) {
+            ...GatsbyImageSharpFluid_withWebp
+          }
+        }
+      }
+    }
+  `)
+
+  let allImages = [
+    imgData.sliderOne.childImageSharp.fluid,
+    imgData.sliderTwo.childImageSharp.fluid,
+    imgData.sliderThree.childImageSharp.fluid,
+    imgData.sliderFour.childImageSharp.fluid,
+    imgData.map.childImageSharp.fluid,
+  ].map(i => (i.srcWebp ? i.srcWebp : i.src))
+  const sliderOne = allImages[0]
+  const sliderTwo = allImages[1]
+  const sliderThree = allImages[2]
+  const sliderFour = allImages[3]
+  const map = allImages[4]
+
   const data = [
     {
       title: "ride along",
@@ -282,6 +332,7 @@ const Downloads = () => {
                 currIndex={currIndex}
                 prevIndex={prevIndex}
                 thumbnails={thumbnails}
+                mapImage={map}
               />
             </div>
           </div>

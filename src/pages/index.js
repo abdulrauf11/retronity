@@ -5,7 +5,6 @@ import Hero from "../components/sections/hero"
 import About from "../components/sections/about"
 import Downloads from "../components/sections/downloads"
 import License from "../components/sections/license"
-// import Loader from "../components/loader"
 
 const IndexPage = () => {
   return (
@@ -17,7 +16,6 @@ const IndexPage = () => {
         <Downloads />
         <License />
       </main>
-      {/* <Loader /> */}
     </Layout>
   )
 }
