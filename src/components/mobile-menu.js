@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-
 import FadeLink from "./transition-link"
 import styled from "styled-components"
 import device from "./device"
@@ -8,17 +7,18 @@ import { CSSTransition } from "react-transition-group"
 const Wrapper = styled.div`
   display: none;
   ${device.small`display: block;`}
-  .overlay-enter {
+
+  .overlay-outer-enter {
     opacity: 0;
   }
-  .overlay-enter-active {
+  .overlay-outer-enter-active {
     opacity: 1;
     transition: opacity 300ms;
   }
-  .overlay-exit {
+  .overlay-outer-exit {
     opacity: 1;
   }
-  .overlay-exit-active {
+  .overlay-outer-exit-active {
     opacity: 0;
     transition: opacity 300ms;
   }
@@ -61,20 +61,24 @@ const Hamburger = styled.button`
 
 const Overlay = styled.div`
   position: fixed;
-  z-index: 100;
   width: 100%;
-  height: 100vh;
-  min-height: 650px;
+  height: 100%;
   left: 0;
   top: 0;
-  bottom: 0;
   right: 0;
-  background: var(--black);
+  left: 0;
   overflow-y: scroll;
-
+  z-index: 10;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   text-align: center;
+  background-color: var(--black);
+
+  .overlay-inner {
+    margin: 8rem 0;
+  }
 
   .external-links {
     padding: 4rem 0;
@@ -88,12 +92,12 @@ const PageLinks = styled.div`
   align-items: center;
   justify-content: center;
   a {
-    margin: 0.5rem 0;
+    margin: 1rem 0;
     display: block;
     font-size: 2.5rem;
     font-family: "Gilroy Bold";
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: var(--white);
     &.active {
       -webkit-text-stroke-color: var(--purple);
@@ -142,51 +146,53 @@ const MobileMenu = () => {
       <CSSTransition
         in={active}
         timeout={300}
-        classNames="overlay"
+        classNames="overlay-outer"
         unmountOnExit
       >
         <Overlay>
-          <PageLinks>
-            <FadeLink to="/" activeClassName="active">
-              home
-            </FadeLink>
-            <FadeLink to="/visuals/" activeClassName="active">
-              rad visuals
-            </FadeLink>
-            <FadeLink to="/faq/" activeClassName="active">
-              wut da faq
-            </FadeLink>
-            <FadeLink to="/contact/" activeClassName="active">
-              contact
-            </FadeLink>
-          </PageLinks>
-          <div className="external-links">
-            <SocialLinks>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://www.facebook.com/"
-              >
-                fb
-              </a>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://www.instagram.com/"
-              >
-                insta
-              </a>
-            </SocialLinks>
-            <Credits>
-              Website by{"  "}
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://www.rauftech.com/"
-              >
-                Rauf Tech
-              </a>
-            </Credits>
+          <div className="overlay-inner">
+            <PageLinks>
+              <FadeLink to="/" activeClassName="active">
+                home
+              </FadeLink>
+              <FadeLink to="/visuals/" activeClassName="active">
+                rad visuals
+              </FadeLink>
+              <FadeLink to="/faq/" activeClassName="active">
+                wut da faq
+              </FadeLink>
+              <FadeLink to="/contact/" activeClassName="active">
+                contact
+              </FadeLink>
+            </PageLinks>
+            <div className="external-links">
+              <SocialLinks>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.facebook.com/"
+                >
+                  fb
+                </a>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.instagram.com/"
+                >
+                  insta
+                </a>
+              </SocialLinks>
+              <Credits>
+                Website by{"  "}
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.rauftech.com/"
+                >
+                  Rauf Tech
+                </a>
+              </Credits>
+            </div>
           </div>
         </Overlay>
       </CSSTransition>

@@ -39,7 +39,7 @@ const Wrapper = styled.div`
     font-size: 4rem;
     font-family: "Gilroy Bold";
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: var(--white);
     ${device.small`font-size: 3rem;`}
   }

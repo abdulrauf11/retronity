@@ -61,10 +61,10 @@ const BulgeText = () => {
     container.addChild(text)
 
     function setTextSize() {
-      const minSize = 45
+      const minSize = 50
       const maxSize = 180
       const responsiveSize = (9 * window.innerWidth) / 100
-      if (window.innerWidth < 400) {
+      if (window.innerWidth < 800) {
         text.position.set(0, app.renderer.screen.height / 2)
         // style.padding = 0
         style.fontSize = minSize

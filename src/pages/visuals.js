@@ -63,7 +63,7 @@ const Grid = styled.section`
         font-size: 3rem;
         font-family: "Gilroy Bold";
         -webkit-text-fill-color: transparent;
-        -webkit-text-stroke-width: 2px;
+        -webkit-text-stroke-width: 1px;
         -webkit-text-stroke-color: var(--white);
         ${device.small`font-size: 2rem; -webkit-text-stroke-width: 1px;`}
         ${device.large`font-size: 4rem;`}
