@@ -55,7 +55,7 @@ body {
   cursor: none;
 }
 
-body:after {
+/* body:after {
   content: "";
   background-image: url(../images/gifnoise.gif);
   position: fixed;
@@ -70,7 +70,7 @@ body:after {
   will-change: auto;
   transform: translate3d(0, 0, 0);
   pointer-events: none;
-}
+} */
 
 p {
   line-height: 1.6;

@@ -89,13 +89,6 @@ const Carousel = styled.div`
           opacity: 1;
           transition: opacity 1s ease-out;
         }
-        &.animated-exit {
-          opacity: 1;
-        }
-        &.animated-exit-active {
-          opacity: 0;
-          transition: opacity 1s ease-out;
-        }
       }
     }
   }
