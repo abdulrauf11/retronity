@@ -4,8 +4,8 @@ import Header from "./header"
 import Footer from "./footer"
 import "./layout.css"
 import Cursor from "./cursor"
-import Loadable from "@loadable/component"
-const LoadableNoise = Loadable(() => import("./canvas/noise"))
+// import Loadable from "@loadable/component"
+// const LoadableNoise = Loadable(() => import("./canvas/noise"))
 
 const Layout = ({ children }) => {
   return (
@@ -14,7 +14,7 @@ const Layout = ({ children }) => {
       {children}
       <Footer />
       <Cursor />
-      <LoadableNoise />
+      {/* <LoadableNoise /> */}
     </>
   )
 }

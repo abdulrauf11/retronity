@@ -9,10 +9,6 @@ import { RGBSplitFilter } from "@pixi/filter-rgb-split"
 
 import styled from "styled-components"
 
-// import mapImage from "../../images/displacement_map.jpg"
-// import sunImage from "../../images/hero/sun.png"
-// import carImage from "../../images/hero/car.png"
-
 PixiPlugin.registerPIXI(PIXI)
 PIXI.settings.SPRITE_MAX_TEXTURES = Math.min(
   PIXI.settings.SPRITE_MAX_TEXTURES,
@@ -84,15 +80,6 @@ const Mirage = () => {
     app.renderer.plugins.interaction.autoPreventDefault = false
     app.renderer.view.style.touchAction = "auto"
 
-    function resize() {
-      const newWidth = canvasWrapperRef.current.clientWidth
-      const newHeight = canvasWrapperRef.current.clientHeight
-      app.renderer.resize(newWidth, newHeight)
-      container.width = app.screen.width
-      container.height = app.screen.height
-    }
-    window.addEventListener("resize", resize)
-
     let container = new PIXI.Container()
     app.stage.addChild(container)
 
@@ -135,15 +122,6 @@ const Mirage = () => {
     // reset glitch
     glitchFilter.slices = 0
     glitchFilter.offset = 20
-
-    // app.ticker.add(() => {
-    //   // Offset the sprite position to make vFilterCoord update to larger value. Repeat wrapping makes sure there's still pixels on the coordinates.
-    //   displacementSprite.x++
-    //   // Reset x to 0 when it's over width to keep values from going to very huge numbers.
-    //   if (displacementSprite.x > displacementSprite.width) {
-    //     displacementSprite.x = 0
-    //   }
-    // })
 
     function displacementAnimation() {
       gsap.to(displacementSprite, {
@@ -231,6 +209,16 @@ const Mirage = () => {
 
     displacementAnimation()
     glitchAnimation()
+
+    function resize() {
+      const newWidth = canvasWrapperRef.current.clientWidth
+      const newHeight = canvasWrapperRef.current.clientHeight
+      app.renderer.resize(newWidth, newHeight)
+      container.width = app.screen.width
+      container.height = app.screen.height
+    }
+    window.addEventListener("resize", resize)
+    return () => window.removeEventListener("resize", resize)
   }, [])
 
   return (

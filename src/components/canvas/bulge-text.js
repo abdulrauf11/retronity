@@ -42,12 +42,6 @@ const BulgeText = () => {
     app.renderer.plugins.interaction.autoPreventDefault = false
     app.renderer.view.style.touchAction = "auto"
 
-    function resize() {
-      text.position.set(50, app.renderer.screen.height / 2)
-      setTextSize()
-    }
-    window.addEventListener("resize", resize)
-
     const container = new PIXI.Container()
     app.stage.addChild(container)
 
@@ -97,6 +91,13 @@ const BulgeText = () => {
     }
 
     app.stage.on("mousemove", onPointerMove)
+
+    function resize() {
+      text.position.set(50, app.renderer.screen.height / 2)
+      setTextSize()
+    }
+    window.addEventListener("resize", resize)
+    return () => window.removeEventListener("resize", resize)
   }, [])
 
   return (

@@ -79,6 +79,7 @@ const Slider = ({ currIndex, prevIndex, thumbnails, mapImage }) => {
     app.renderer.plugins.interaction.autoPreventDefault = false
     app.renderer.view.style.touchAction = "auto"
     app.stage.addChild(container)
+
     function resize() {
       const newWidth = canvasWrapperRef.current.clientWidth
       const newHeight = canvasWrapperRef.current.clientHeight

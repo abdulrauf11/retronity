@@ -43,11 +43,6 @@ const NoiseBg = () => {
     app.renderer.plugins.interaction.autoPreventDefault = false
     app.renderer.view.style.touchAction = "auto"
 
-    function resize() {
-      app.renderer.resize(window.innerWidth, window.innerHeight)
-    }
-    window.addEventListener("resize", resize)
-
     const container = new PIXI.Graphics()
       .beginFill(0x000000)
       .drawRect(0, 0, app.renderer.screen.width, app.renderer.screen.height)
@@ -64,6 +59,12 @@ const NoiseBg = () => {
       seed: Math.random(),
       repeat: -1,
     })
+
+    function resize() {
+      app.renderer.resize(window.innerWidth, window.innerHeight)
+    }
+    window.addEventListener("resize", resize)
+    return () => window.removeEventListener("resize", resize)
   }, [])
 
   return (
