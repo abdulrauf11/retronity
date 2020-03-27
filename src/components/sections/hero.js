@@ -101,28 +101,6 @@ const SocialLinks = styled.div`
 `
 
 const Hero = () => {
-  // function handleMouseMove(e) {
-  //   const slogan = e.currentTarget.firstChild
-  //   const scene = e.currentTarget.lastChild
-  //   parallaxIt(e, slogan, 20)
-  //   parallaxIt(e, scene, -10)
-  // }
-
-  // function parallaxIt(e, target, movement) {
-  //   const container = e.currentTarget
-  //   var relX = e.pageX - container.getBoundingClientRect().left
-  //   var relY = e.pageY - container.getBoundingClientRect().top
-  //   gsap.to(target, {
-  //     duration: 2,
-  //     ease: "sine.out",
-  //     x:
-  //       ((relX - container.offsetWidth / 2) / container.offsetWidth) * movement,
-  //     y:
-  //       ((relY - container.offsetHeight / 2) / container.offsetHeight) *
-  //       movement,
-  //   })
-  // }
-
   return (
     <Wrapper>
       <div className="container">

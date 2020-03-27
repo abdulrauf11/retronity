@@ -8,7 +8,7 @@ import device from "../device"
 import arrow from "../../images/visuals/right-arrow.svg"
 import tree from "../../images/visuals/tree.svg"
 import Loadable from "@loadable/component"
-const LoadableSlider = Loadable(() => import("../canvas/slider-2"))
+const LoadableSlider = Loadable(() => import("../canvas/slider"))
 
 const Wrapper = styled.div`
   margin-bottom: 20rem;

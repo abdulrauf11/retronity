@@ -5,10 +5,14 @@ import PixiPlugin from "gsap/PixiPlugin"
 import styled from "styled-components"
 
 PixiPlugin.registerPIXI(PIXI)
+PIXI.settings.SPRITE_MAX_TEXTURES = Math.min(
+  PIXI.settings.SPRITE_MAX_TEXTURES,
+  16
+)
 
 const CanvasWrapper = styled.div`
   position: fixed;
-  z-index: -1;
+  z-index: -999;
   top: 0;
   left: 0;
   right: 0;

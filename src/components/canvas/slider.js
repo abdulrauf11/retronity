@@ -3,7 +3,6 @@ import * as PIXI from "pixi.js"
 import { gsap } from "gsap"
 import PixiPlugin from "gsap/PixiPlugin"
 import styled from "styled-components"
-import Loader from "./slider-loader"
 
 PixiPlugin.registerPIXI(PIXI)
 PIXI.settings.SPRITE_MAX_TEXTURES = Math.min(
@@ -20,12 +19,9 @@ const CanvasWrapper = styled.div`
 `
 
 const Slider = ({ currIndex, prevIndex, thumbnails, mapImage }) => {
-  const [isLoaded, setIsLoaded] = useState(false)
-
   const canvasWrapperRef = useRef(null)
   const canvasRef = useRef(null)
 
-  const [container, setContainer] = useState(null)
   const [filter, setFilter] = useState(null)
   const [sprites, setSprites] = useState(null)
 
@@ -67,17 +63,8 @@ const Slider = ({ currIndex, prevIndex, thumbnails, mapImage }) => {
         index && gsap.set(sprite, { alpha: 0 })
         return sprite
       })
-      setContainer(container)
       setSprites(allSprites)
     })
-
-    loader.onComplete.add(() => {
-      setIsLoaded(true)
-    })
-  }, [])
-
-  useEffect(() => {
-    if (!isLoaded) return
 
     const app = new PIXI.Application({
       width: canvasWrapperRef.current.clientWidth,
@@ -91,9 +78,7 @@ const Slider = ({ currIndex, prevIndex, thumbnails, mapImage }) => {
     })
     app.renderer.plugins.interaction.autoPreventDefault = false
     app.renderer.view.style.touchAction = "auto"
-
     app.stage.addChild(container)
-
     function resize() {
       const newWidth = canvasWrapperRef.current.clientWidth
       const newHeight = canvasWrapperRef.current.clientHeight
@@ -102,7 +87,9 @@ const Slider = ({ currIndex, prevIndex, thumbnails, mapImage }) => {
       container.height = app.screen.height
     }
     window.addEventListener("resize", resize)
-  }, [isLoaded])
+
+    return () => window.removeEventListener("resize", resize)
+  }, [])
 
   useEffect(() => {
     if (!sprites || prevIndex < 0) return
@@ -126,11 +113,7 @@ const Slider = ({ currIndex, prevIndex, thumbnails, mapImage }) => {
 
   return (
     <CanvasWrapper ref={canvasWrapperRef}>
-      {isLoaded ? (
-        <canvas ref={canvasRef}></canvas>
-      ) : (
-        <Loader prevIndex={prevIndex} currIndex={currIndex} />
-      )}
+      <canvas ref={canvasRef}></canvas>
     </CanvasWrapper>
   )
 }
