@@ -3,25 +3,26 @@ import styled from "styled-components"
 import device from "../device"
 import dots from "../../images/about/dots.svg"
 import Loadable from "@loadable/component"
-
-const RgbText = styled.div`
-  font-size: 9vw;
-  font-family: "Gilroy Bold";
-  ${device.small`font-size: 45px;`}
-  ${device.large`font-size: 9rem;`}
-`
-
-const LoadableBulgeText = Loadable(() => import("../canvas/bulge-text"), {
-  fallback: (
-    <RgbText>
-      retronity is
-      <br />
-      inspired by
-      <br />
-      '80s theme.
-    </RgbText>
-  ),
-})
+import { useInView } from "react-intersection-observer"
+import { CSSTransition } from "react-transition-group"
+// const RgbText = styled.div`
+//   font-size: 9vw;
+//   font-family: "Gilroy Bold";
+//   ${device.small`font-size: 45px;`}
+//   ${device.large`font-size: 9rem;`}
+// `
+// const LoadableBulgeText = Loadable(() => import("../canvas/bulge-text"), {
+//   fallback: (
+//     <RgbText>
+//       retronity is
+//       <br />
+//       inspired by
+//       <br />
+//       '80s theme.
+//     </RgbText>
+//   ),
+// })
+const LoadableBulgeText = Loadable(() => import("../canvas/bulge-text"))
 
 const Wrapper = styled.section`
   position: relative;
@@ -56,6 +57,23 @@ const TextWrapper = styled.div`
   height: 32vmax;
   max-height: 650px;
   ${device.small`height: auto; margin-bottom: 2rem;`}
+
+  .animated-wrapper {
+    &.animated-enter {
+      opacity: 0;
+    }
+    &.animated-enter-active {
+      opacity: 1;
+      transition: opacity 1s ease-out;
+    }
+    &.animated-exit {
+      opacity: 1;
+    }
+    &.animated-exit-active {
+      opacity: 0;
+      transition: opacity 1s ease-out;
+    }
+  }
 `
 
 const Dots = styled.div`
@@ -67,30 +85,43 @@ const Dots = styled.div`
   }
 `
 
-const About = () => (
-  <Wrapper>
-    <div className="heading-wrapper">
-      <TextWrapper>
-        <LoadableBulgeText />
-      </TextWrapper>
-      <Dots>
-        <img src={dots} alt="Dots" />
-      </Dots>
-    </div>
+const About = () => {
+  const [ref, inView] = useInView({ triggerOnce: true })
 
-    <Service>
-      <h2>
-        we provide free visuals
-        <br />& loops for your music.
-      </h2>
-      <p>
-        All the video loops you need you for your music! We select video loops
-        every month to give away for free. If you are a video artist, VJ, media
-        producer or video hobbyist you will find our site a valuable resource
-        for your products/art.
-      </p>
-    </Service>
-  </Wrapper>
-)
+  return (
+    <Wrapper ref={ref}>
+      <div className="heading-wrapper">
+        <TextWrapper>
+          <CSSTransition
+            in={inView}
+            timeout={1000}
+            classNames="animated"
+            unmountOnExit
+          >
+            <div className="animated-wrapper">
+              <LoadableBulgeText />
+            </div>
+          </CSSTransition>
+        </TextWrapper>
+        <Dots>
+          <img src={dots} alt="Dots" />
+        </Dots>
+      </div>
+
+      <Service>
+        <h2>
+          we provide free visuals
+          <br />& loops for your music.
+        </h2>
+        <p>
+          All the video loops you need you for your music! We select video loops
+          every month to give away for free. If you are a video artist, VJ,
+          media producer or video hobbyist you will find our site a valuable
+          resource for your products/art.
+        </p>
+      </Service>
+    </Wrapper>
+  )
+}
 
 export default About
