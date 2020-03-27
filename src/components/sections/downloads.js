@@ -2,8 +2,6 @@ import React, { useState, useRef, useEffect } from "react"
 import styled from "styled-components"
 import { gsap } from "gsap"
 import { useStaticQuery, graphql } from "gatsby"
-import { useInView } from "react-intersection-observer"
-import { CSSTransition } from "react-transition-group"
 
 import FadeLink from "../transition-link"
 import device from "../device"
@@ -11,7 +9,10 @@ import arrow from "../../images/visuals/right-arrow.svg"
 import tree from "../../images/visuals/tree.svg"
 
 import Loadable from "@loadable/component"
-const LoadableSlider = Loadable(() => import("../canvas/slider"))
+import SliderLoader from "../canvas/slider-loader"
+const LoadableSlider = Loadable(() => import("../canvas/slider"), {
+  fallback: <SliderLoader currIndex={0} />,
+})
 
 const Wrapper = styled.div`
   margin-bottom: 20rem;
@@ -80,16 +81,6 @@ const Carousel = styled.div`
       width: 100%;
       height: 100%;
       background: var(--purple);
-
-      .animated-wrapper {
-        &.animated-enter {
-          opacity: 0;
-        }
-        &.animated-enter-active {
-          opacity: 1;
-          transition: opacity 1s ease-out;
-        }
-      }
     }
   }
   .button-container {
@@ -333,31 +324,20 @@ const Downloads = () => {
     })
   }, [])
 
-  const [ref, inView] = useInView({ triggerOnce: true })
-
   return (
-    <Wrapper ref={ref}>
+    <Wrapper>
       <img className="tree" src={tree} alt="Tree" ref={treeRef} />
       <section>
         <h2>visuals</h2>
         <Carousel>
           <div className="thumbnail-wrapper">
             <div className="thumbnail">
-              <CSSTransition
-                in={inView}
-                timeout={1000}
-                classNames="animated"
-                unmountOnExit
-              >
-                <div className="animated-wrapper">
-                  <LoadableSlider
-                    currIndex={currIndex}
-                    prevIndex={prevIndex}
-                    thumbnails={thumbnails}
-                    mapImage={map}
-                  />
-                </div>
-              </CSSTransition>
+              <LoadableSlider
+                currIndex={currIndex}
+                prevIndex={prevIndex}
+                thumbnails={thumbnails}
+                mapImage={map}
+              />
             </div>
           </div>
           <div className="button-container">

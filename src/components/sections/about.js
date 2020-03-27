@@ -3,26 +3,23 @@ import styled from "styled-components"
 import device from "../device"
 import dots from "../../images/about/dots.svg"
 import Loadable from "@loadable/component"
-import { useInView } from "react-intersection-observer"
-import { CSSTransition } from "react-transition-group"
-// const RgbText = styled.div`
-//   font-size: 9vw;
-//   font-family: "Gilroy Bold";
-//   ${device.small`font-size: 45px;`}
-//   ${device.large`font-size: 9rem;`}
-// `
-// const LoadableBulgeText = Loadable(() => import("../canvas/bulge-text"), {
-//   fallback: (
-//     <RgbText>
-//       retronity is
-//       <br />
-//       inspired by
-//       <br />
-//       '80s theme.
-//     </RgbText>
-//   ),
-// })
-const LoadableBulgeText = Loadable(() => import("../canvas/bulge-text"))
+const RgbText = styled.div`
+  font-size: 9vw;
+  font-family: "Gilroy Bold";
+  ${device.small`font-size: 45px;`}
+  ${device.large`font-size: 9rem;`}
+`
+const LoadableBulgeText = Loadable(() => import("../canvas/bulge-text"), {
+  fallback: (
+    <RgbText>
+      retronity is
+      <br />
+      inspired by
+      <br />
+      '80s theme.
+    </RgbText>
+  ),
+})
 
 const Wrapper = styled.section`
   position: relative;
@@ -57,16 +54,6 @@ const TextWrapper = styled.div`
   height: 32vmax;
   max-height: 650px;
   ${device.small`height: auto; margin-bottom: 2rem;`}
-
-  .animated-wrapper {
-    &.animated-enter {
-      opacity: 0;
-    }
-    &.animated-enter-active {
-      opacity: 1;
-      transition: opacity 1s ease-out;
-    }
-  }
 `
 
 const Dots = styled.div`
@@ -79,22 +66,11 @@ const Dots = styled.div`
 `
 
 const About = () => {
-  const [ref, inView] = useInView({ triggerOnce: true })
-
   return (
-    <Wrapper ref={ref}>
+    <Wrapper>
       <div className="heading-wrapper">
         <TextWrapper>
-          <CSSTransition
-            in={inView}
-            timeout={1000}
-            classNames="animated"
-            unmountOnExit
-          >
-            <div className="animated-wrapper">
-              <LoadableBulgeText />
-            </div>
-          </CSSTransition>
+          <LoadableBulgeText />
         </TextWrapper>
         <Dots>
           <img src={dots} alt="Dots" />

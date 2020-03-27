@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   height: 100%;
 `
 
-const Slider = ({ currIndex, prevIndex }) => {
+const Slider = ({ currIndex }) => {
   const allSlides = useImage()
   return <Wrapper>{allSlides[currIndex]}</Wrapper>
 }

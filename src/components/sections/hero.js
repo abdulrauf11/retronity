@@ -1,14 +1,11 @@
 import React from "react"
 import styled from "styled-components"
-import { useInView } from "react-intersection-observer"
-import { CSSTransition } from "react-transition-group"
 import device from "../device"
 
 import Loadable from "@loadable/component"
-// const LoadableMirage = Loadable(() => import("../canvas/mirage"), {
-//   fallback: <div className="scene-loader"></div>,
-// })
-const LoadableMirage = Loadable(() => import("../canvas/mirage"))
+const LoadableMirage = Loadable(() => import("../canvas/mirage"), {
+  fallback: <div className="scene-loader"></div>,
+})
 
 const Wrapper = styled.section`
   margin-top: 0rem;
@@ -55,16 +52,6 @@ const Scene = styled.div`
     border-radius: 50%;
     width: 93%;
     height: 93%;
-  }
-
-  .animated-wrapper {
-    &.animated-enter {
-      opacity: 0;
-    }
-    &.animated-enter-active {
-      opacity: 1;
-      transition: opacity 1s ease-out;
-    }
   }
 `
 
@@ -114,25 +101,15 @@ const SocialLinks = styled.div`
 `
 
 const Hero = () => {
-  const [ref, inView] = useInView({ triggerOnce: true })
   return (
-    <Wrapper ref={ref}>
+    <Wrapper>
       <div className="container">
         <h1 className="slogan">
           to retronity
           <br />& beyond
         </h1>
         <Scene>
-          <CSSTransition
-            in={inView}
-            timeout={1000}
-            classNames="animated"
-            unmountOnExit
-          >
-            <div className="animated-wrapper">
-              <LoadableMirage />
-            </div>
-          </CSSTransition>
+          <LoadableMirage />
         </Scene>
       </div>
 
