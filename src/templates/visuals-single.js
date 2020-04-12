@@ -101,6 +101,27 @@ const VisualSingle = ({ data }) => {
     })
   }, [])
 
+  function notifySlack(name) {
+    async function postData(url = "", data = {}) {
+      // Default options are marked with *
+      const response = await fetch(url, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+      return response
+    }
+    postData("/.netlify/functions/notify-slack", {
+      name: name,
+    })
+    // .then(data => {
+    //   console.log(data)
+    // })
+  }
+
   return (
     <Layout>
       <SEO title={name} />
@@ -116,7 +137,12 @@ const VisualSingle = ({ data }) => {
           </Details>
           <video src={video.secure_url} controls />
           <Buttons>
-            <a className="download" href={downloadLink} download>
+            <a
+              className="download"
+              href={downloadLink}
+              download
+              onClick={() => notifySlack(name)}
+            >
               Download
             </a>
             <a
