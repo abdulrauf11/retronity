@@ -10,12 +10,19 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: "gatsby-plugin-google-tagmanager",
+      options: {
+        id: "GTM-W7JB36Z",
+        defaultDataLayer: { platform: "gatsby" },
+      },
+    },
+    {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         // your google analytics tracking id
         trackingId: "UA-131443581-2",
         // Puts tracking script in the head instead of the body
-        head: true,
+        // head: true,
         // enable ip anonymization
         // anonymize: false,
       },
