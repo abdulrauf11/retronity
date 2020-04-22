@@ -10,14 +10,14 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: `gatsby-plugin-gtag`,
+      resolve: `gatsby-plugin-google-analytics`,
       options: {
         // your google analytics tracking id
         trackingId: process.env.GOOGLE_ANALYTICS_ID,
         // Puts tracking script in the head instead of the body
         head: true,
         // enable ip anonymization
-        anonymize: false,
+        // anonymize: false,
       },
     },
     `gatsby-plugin-react-helmet`,
