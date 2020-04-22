@@ -13,7 +13,7 @@ exports.handler = function(event, context, callback) {
   // prepare call to the Slack API
   let slackURL = process.env.SLACK_DOWNLOAD_WEBHOOK_URL
   let slackPayload = {
-    text: `"${body.name}" was just downloaded!`,
+    text: `"${body.name}" was just downloaded.`,
   }
 
   request.post({ url: slackURL, json: slackPayload }, function(
