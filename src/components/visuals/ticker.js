@@ -3,15 +3,15 @@ import { gsap } from "gsap"
 import styled from "styled-components"
 import device from "../device"
 
-
 const Wrapper = styled.div`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+
   white-space: nowrap;
   overflow: hidden;
   font-size: 0;
-  .headings {
+  .list {
     display: inline-block;
     .heading {
       display: inline;
@@ -24,40 +24,28 @@ const Wrapper = styled.div`
 `
 
 const Ticker = () => {
-  const headingsRef1 = useRef(null)
-  const headingsRef2 = useRef(null)
+  const containerRef = useRef(null)
+  const listRef = useRef(null)
 
   useEffect(() => {
-    gsap.to([headingsRef1.current, headingsRef2.current], {
-      duration: 50,
-      x: -headingsRef1.current.offsetWidth,
+    const list = listRef.current.cloneNode(true)
+    containerRef.current.appendChild(list)
+    gsap.to(containerRef.current.children, {
+      duration: 30,
+      x: -list.offsetWidth,
       repeat: -1,
-      ease: "none",
-      // to improve jittery animation
+      ease: "linear",
       force3D: true,
       rotation: 0.01,
     })
   }, [])
 
   return (
-    <Wrapper>
-      <div className="headings" ref={headingsRef1}>
-        {Array(6)
-          .fill(null)
-          .map((_, index) => (
-            <h1 className="heading" key={index}>
-              free downloads
-            </h1>
-          ))}
-      </div>
-      <div className="headings" ref={headingsRef2}>
-        {Array(6)
-          .fill(null)
-          .map((_, index) => (
-            <h1 className="heading" key={index}>
-              free downloads
-            </h1>
-          ))}
+    <Wrapper ref={containerRef}>
+      <div className="list" ref={listRef}>
+        <h1 className="heading">free downloads</h1>
+        <h1 className="heading">free downloads</h1>
+        <h1 className="heading">free downloads</h1>
       </div>
     </Wrapper>
   )

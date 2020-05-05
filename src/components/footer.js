@@ -1,6 +1,8 @@
 import React from "react"
 import styled from "styled-components"
+
 import SubscribeForm from "./forms/subscribeForm"
+import FadeLink from "../components/transition-link"
 import device from "./device"
 
 const Wrapper = styled.footer`
@@ -74,14 +76,14 @@ const Footer = () => (
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://www.facebook.com/"
+            href="https://www.facebook.com/retronity"
           >
             fb
           </a>
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://www.instagram.com/"
+            href="https://www.instagram.com/toretronityandbeyond/"
           >
             insta
           </a>
@@ -91,7 +93,9 @@ const Footer = () => (
     </div>
     <End>
       <div className="copyright">© Copyright {new Date().getFullYear()}</div>
-      <div className="privacy-policy">Privacy Policy</div>
+      <div className="privacy-policy">
+        <FadeLink to="/faq">Privacy Policy</FadeLink>
+      </div>
       <div className="credits">
         Website by{"  "}
         <a

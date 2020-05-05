@@ -118,14 +118,14 @@ const Hero = () => {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://www.facebook.com/"
+            href="https://www.facebook.com/retronity"
           >
             fb
           </a>
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://www.instagram.com/"
+            href="https://www.instagram.com/toretronityandbeyond/"
           >
             insta
           </a>
