@@ -6,7 +6,6 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "@loadable/component": "^5.12.0",
-    "@netlify/zip-it-and-ship-it": "^0.3.1",
     "@statickit/functions": "github:unstacked/statickit-functions#3b66ac2c-f4e9-45b0-94cd-5eedeaf56e5d",
     "@statickit/react": "^2.1.0",
     "babel-plugin-styled-components": "^1.10.6",
@@ -31,7 +30,6 @@
     "gsap": "^3.0.1",
     "imports-loader": "^0.8.0",
     "intersection-observer": "^0.7.0",
-    "netlify-lambda": "^1.6.3",
     "pixi-filters": "^3.0.3",
     "pixi.js": "^5.2.0",
     "prop-types": "^15.7.2",
@@ -57,8 +55,6 @@
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "lambda-dev": "netlify-lambda serve functions",
-    "lambda-build": "netlify-lambda build functions",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "repository": {

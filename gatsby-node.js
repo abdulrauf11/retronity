@@ -5,17 +5,6 @@
  */
 
 const path = require(`path`)
-const fs = require(`fs`)
-const { zipFunctions } = require(`@netlify/zip-it-and-ship-it`)
-
-exports.onPostBuild = () => {
-  const srcLocation = path.join(__dirname, `./functions`)
-  const outputLocation = path.join(__dirname, `./public/functions`)
-  if (!fs.existsSync(outputLocation)) {
-    fs.mkdirSync(outputLocation)
-  }
-  return zipFunctions(srcLocation, outputLocation)
-}
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
