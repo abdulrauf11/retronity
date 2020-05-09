@@ -97,7 +97,7 @@ const Footer = () => (
         <FadeLink to="/faq">Privacy Policy</FadeLink>
       </div>
       <div className="credits">
-        Website by{"  "}
+        A Project by{"  "}
         <a
           target="_blank"
           rel="noopener noreferrer"
