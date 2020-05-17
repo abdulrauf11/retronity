@@ -156,7 +156,10 @@ const MobileMenu = () => {
                 home
               </FadeLink>
               <FadeLink to="/visuals/" activeClassName="active">
-                rad visuals
+                shop
+              </FadeLink>
+              <FadeLink to="/visuals/" activeClassName="active">
+                free visuals
               </FadeLink>
               <FadeLink to="/faq/" activeClassName="active">
                 wut da faq

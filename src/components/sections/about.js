@@ -79,7 +79,7 @@ const About = () => {
 
       <Service>
         <h2>
-          we provide free visuals
+          we provide rad visuals
           <br />& loops for your music.
         </h2>
         <p>

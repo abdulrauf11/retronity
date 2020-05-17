@@ -5,7 +5,7 @@ require("dotenv").config({
 module.exports = {
   siteMetadata: {
     title: `Retronity`,
-    description: `we provide free visuals & loops for your music.`,
+    description: `we provide rad visuals & loops for your music.`,
     author: `@rauf_tech`,
   },
   plugins: [
@@ -21,7 +21,7 @@ module.exports = {
       options: {
         // your google analytics tracking id
         trackingId: "UA-131443581-2",
-        // Puts tracking script in the head instead of the body
+        // Puts tracking script in the head instead of the bodyekflkflkflfkfjkjkjkfjkfjwekfwejkfjkfkfjkfekjefkjfkkefj
         // head: true,
         // enable ip anonymization
         // anonymize: false,

@@ -84,10 +84,14 @@ const VisualSingle = ({ data }) => {
     childContentfulVisualVideoJsonNode: video,
   } = data.contentfulVisual
 
-  const splitUrl = video.secure_url.split("/")
-  const randomNumber = splitUrl[splitUrl.length - 2]
-  const slug = splitUrl[splitUrl.length - 1]
-  const downloadLink = `https://res.cloudinary.com/tippydreamer/video/upload/fl_attachment:${name}/${randomNumber}/${slug}`
+  const previewLink = video.secure_url.replace(
+    "/video/upload/",
+    "/video/upload/q_auto:good/"
+  )
+  const downloadLink = video.secure_url.replace(
+    "/video/upload/",
+    `/video/upload/q_auto:good,fl_attachment:${name}/`
+  )
 
   const treeRef = useRef(null)
   useEffect(() => {
@@ -114,7 +118,9 @@ const VisualSingle = ({ data }) => {
               {video.width}X{video.height}
             </p>
           </Details>
-          <video src={video.secure_url} controls />
+          <video controls disablePictureInPicture controlsList="nodownload">
+            <source src={previewLink} type="video/mp4" />
+          </video>
           <Buttons>
             <a className="download" href={downloadLink} download>
               Download
@@ -128,7 +134,6 @@ const VisualSingle = ({ data }) => {
               donate
             </a>
           </Buttons>
-
           <div className="faq-link">
             <FadeLink to="/faq/">how to use this rad visual?</FadeLink>
           </div>

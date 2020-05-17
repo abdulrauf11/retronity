@@ -40,6 +40,17 @@ const Text = styled.div`
   }
 `
 
+const Address = styled.div`
+  width: 60%;
+  max-width: 1000px;
+  display: flex;
+  margin-top: 2rem;
+  ${device.small`width: 100%;`}
+  .office {
+    flex: 1;
+  }
+`
+
 const ContactPage = () => {
   return (
     <Layout>
@@ -52,10 +63,12 @@ const ContactPage = () => {
             <p>
               Feel free to reach out whether you're interested in working with
               us, or just want to talk about the '80s.
-              <br />
-              Later days and better lays!
             </p>
           </Text>
+          <Address>
+            <p className="office">230 Block B Nespak Society, LHR, PK</p>
+            <p className="email">hello@rauftech.com</p>
+          </Address>
           <ContactForm />
         </Wrapper>
       </Main>

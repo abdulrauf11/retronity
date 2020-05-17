@@ -10,7 +10,15 @@ exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
   return graphql(`
     {
-      visuals: allContentfulVisual {
+      freeVisuals: allContentfulVisual {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
+
+      paidVisuals: allContentfulPaidVisual {
         edges {
           node {
             slug
@@ -19,10 +27,19 @@ exports.createPages = ({ graphql, actions }) => {
       }
     }
   `).then(result => {
-    result.data.visuals.edges.forEach(({ node }) => {
+    result.data.freeVisuals.edges.forEach(({ node }) => {
       createPage({
         path: `visuals/${node.slug}`,
         component: path.resolve(`./src/templates/visuals-single.js`),
+        context: {
+          slug: node.slug,
+        },
+      })
+    })
+    result.data.paidVisuals.edges.forEach(({ node }) => {
+      createPage({
+        path: `visuals/${node.slug}`,
+        component: path.resolve(`./src/templates/visuals-paid-single.js`),
         context: {
           slug: node.slug,
         },
