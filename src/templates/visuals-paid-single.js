@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import styled from "styled-components"
 import { graphql } from "gatsby"
 import { gsap } from "gsap"
@@ -80,10 +80,8 @@ const VisualSingle = ({ data }) => {
     "/video/upload/",
     "/video/upload/q_auto:good/"
   )
-  const downloadLink = video.secure_url.replace(
-    "/video/upload/",
-    `/video/upload/q_auto:good,fl_attachment:${name}/`
-  )
+
+  const [buttonText, setButtonText] = useState("Buy Now")
 
   const treeRef = useRef(null)
   useEffect(() => {
@@ -118,7 +116,12 @@ const VisualSingle = ({ data }) => {
               <span>download includes loop video only.</span>
               <span>download link sent via email.</span>
               <span>
-                <button>Buy Now</button>
+                <button
+                  onMouseEnter={() => setButtonText("Coming Soon")}
+                  onMouseLeave={() => setButtonText("Buy Now")}
+                >
+                  {buttonText}
+                </button>
               </span>
             </div>
           </Checkout>
