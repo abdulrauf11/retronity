@@ -155,7 +155,7 @@ const MobileMenu = () => {
               <FadeLink to="/" activeClassName="active">
                 home
               </FadeLink>
-              <FadeLink to="/visuals/" activeClassName="active">
+              <FadeLink to="/shop/" activeClassName="active">
                 shop
               </FadeLink>
               <FadeLink to="/visuals/" activeClassName="active">
