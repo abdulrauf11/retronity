@@ -61,19 +61,19 @@ module.exports = {
     // `gatsby-plugin-offline`,
     `gatsby-plugin-styled-components`,
     {
-      resolve: `gatsby-source-contentful`,
-      options: {
-        spaceId: process.env.CONTENTFUL_SPACE_ID,
-        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-        host: process.env.CONTENTFUL_HOST,
-      },
-    },
-    {
       resolve: `gatsby-plugin-statickit`,
       options: {
         siteId: "787a939012d5",
       },
     },
     `gatsby-plugin-transition-link`,
+    {
+      resolve: `gatsby-source-vimeo`,
+      options: {
+        clientID: process.env.VIMEO_CLIENT_ID,
+        clientSecret: process.env.VIMEO_CLIENT_SECRET,
+        userID: "rauftech",
+      },
+    },
   ],
 }

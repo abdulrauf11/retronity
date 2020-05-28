@@ -24,10 +24,7 @@ const Wrapper = styled.section`
   margin-top: 4rem;
   margin-bottom: 12rem;
   ${device.large`margin-bottom: 17rem;`}
-  video {
-    margin: 2rem 0 4rem 0;
-    width: 100%;
-  }
+
   .faq-link {
     text-align: center;
     margin-top: 10rem;
@@ -42,6 +39,23 @@ const Wrapper = styled.section`
         color: var(--black);
       }
     }
+  }
+`
+
+const Video = styled.div`
+  margin: 2rem 0 4rem 0;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding-top: ${props => props.aspectRatio}%;
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
   }
 `
 
@@ -79,19 +93,11 @@ const Buttons = styled.div`
 `
 
 const VisualSingle = ({ data }) => {
-  const {
-    name,
-    childContentfulVisualVideoJsonNode: video,
-  } = data.contentfulVisual
+  const { id, title, width, height, iframe } = data.vimeoVideo
 
-  const previewLink = video.secure_url.replace(
-    "/video/upload/",
-    "/video/upload/q_auto:good/"
-  )
-  const downloadLink = video.secure_url.replace(
-    "/video/upload/",
-    `/video/upload/q_auto:good,fl_attachment:${name}/`
-  )
+  const download_link = data.allFreeVideosJson.edges.find(
+    ({ node }) => node._id === id
+  ).node.download_link
 
   const treeRef = useRef(null)
   useEffect(() => {
@@ -107,22 +113,28 @@ const VisualSingle = ({ data }) => {
 
   return (
     <Layout>
-      <SEO title={name} />
+      <SEO title={title} />
       <Main>
         <img className="tree" src={tree} alt="Tree" ref={treeRef} />
 
         <Wrapper>
           <Details>
-            <h1 className="name">{name}</h1>
+            <h1 className="name">{title}</h1>
             <p className="details">
-              {video.width}X{video.height}
+              {width}X{height}
             </p>
           </Details>
-          <video controls disablePictureInPicture controlsList="nodownload">
-            <source src={previewLink} type="video/mp4" />
-          </video>
+          <Video
+            aspectRatio={(height / width) * 100}
+            dangerouslySetInnerHTML={{ __html: iframe }}
+          />
           <Buttons>
-            <a className="download" href={downloadLink} download>
+            <a
+              href={download_link}
+              className="download"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Download
             </a>
             <a
@@ -147,13 +159,20 @@ export default VisualSingle
 
 export const queryVisual = graphql`
   query($slug: String!) {
-    contentfulVisual(slug: { eq: $slug }) {
-      name
-      order
-      childContentfulVisualVideoJsonNode {
-        secure_url
-        width
-        height
+    vimeoVideo(slug: { eq: $slug }) {
+      id
+      title
+      width
+      height
+      iframe
+    }
+
+    allFreeVideosJson {
+      edges {
+        node {
+          _id
+          download_link
+        }
       }
     }
   }

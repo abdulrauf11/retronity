@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   }
 `
 
-const Ticker = () => {
+const Ticker = ({ text }) => {
   const containerRef = useRef(null)
   const listRef = useRef(null)
 
@@ -43,9 +43,9 @@ const Ticker = () => {
   return (
     <Wrapper ref={containerRef}>
       <div className="list" ref={listRef}>
-        <h1 className="heading">free downloads</h1>
-        <h1 className="heading">free downloads</h1>
-        <h1 className="heading">free downloads</h1>
+        <h1 className="heading">{text}</h1>
+        <h1 className="heading">{text}</h1>
+        <h1 className="heading">{text}</h1>
       </div>
     </Wrapper>
   )

@@ -10,7 +10,7 @@ exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
   return graphql(`
     {
-      freeVisuals: allContentfulVisual {
+      freeVisuals: allVimeoVideo(filter: { paid: { eq: false } }) {
         edges {
           node {
             slug
@@ -18,7 +18,7 @@ exports.createPages = ({ graphql, actions }) => {
         }
       }
 
-      paidVisuals: allContentfulPaidVisual {
+      paidVisuals: allVimeoVideo(filter: { paid: { eq: true } }) {
         edges {
           node {
             slug

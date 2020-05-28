@@ -1,7 +1,6 @@
 import React from "react"
 import styled from "styled-components"
 import { graphql } from "gatsby"
-import Img from "gatsby-image/withIEPolyfill"
 
 import FadeLink from "../components/transition-link"
 import Layout from "../components/layout"
@@ -21,25 +20,15 @@ const Grid = styled.section`
   margin-bottom: 12rem;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-auto-rows: 1fr;
   grid-gap: 100px;
   ${device.small`margin-top: 4rem; margin-bottom: 6rem; grid-gap: 50px; grid-template-columns: repeat(1, 1fr);`}
   ${device.large`grid-gap: 150px 100px; margin-bottom: 18rem;`}
-  &::before {
-    content: "";
-    width: 0;
-    padding-bottom: 100%;
-    grid-row: 1 / 1;
-    grid-column: 1 / 1;
-  }
-  & > *:first-child {
-    grid-row: 1 / 1;
-    grid-column: 1 / 1;
-  }
   .grid-item {
+    height: 30rem;
     display: block;
     position: relative;
     overflow: hidden;
+    ${device.small`height: 18rem;`};
     .overlay {
       position: absolute;
       width: 100%;
@@ -69,33 +58,53 @@ const Grid = styled.section`
         ${device.large`font-size: 4rem;`}
       }
     }
+
+    .thumbnail {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 50%;
+    }
   }
 `
 
 const Visuals = ({ data }) => {
-  let visuals = data.allContentfulVisual.edges.map(({ node }) => node)
-  visuals.sort((a, b) => (a.order > b.order ? 1 : b.order > a.order ? -1 : 0))
+  const visuals = data.allVimeoVideo.edges.map(e => e.node)
+  const ref_visuals = data.allFreeVideosJson.edges.map(e => e.node)
+
+  let list = []
+  for (let i = 0; i < visuals.length; i++) {
+    list.push({
+      ...visuals[i],
+      ...ref_visuals.find(itmInner => itmInner._id === visuals[i].id),
+    })
+  }
+  list.sort(function(a, b) {
+    return a.order - b.order
+  })
 
   return (
     <Layout>
       <SEO title="Visuals" />
       <Container>
-        <Ticker />
+        <Ticker text={"free visuals"} />
         <Checkers />
       </Container>
       <main>
         <Grid>
-          {visuals.map((node, index) => (
+          {list.map((item, index) => (
             <FadeLink
               className="grid-item"
               key={index}
-              to={`/visuals/${node.slug}`}
+              to={`/visuals/${item.slug}`}
             >
-              {!!node.thumbnail && (
-                <Img fluid={node.thumbnail.fluid} className="thumbnail" />
-              )}
+              <img
+                src={item.thumbnail.large}
+                alt={item.title}
+                className="thumbnail"
+              />
               <div className="overlay">
-                <h3 className="name">{node.name}</h3>
+                <h3 className="name">{item.title}</h3>
               </div>
             </FadeLink>
           ))}
@@ -110,17 +119,24 @@ export default Visuals
 
 export const query = graphql`
   {
-    allContentfulVisual {
+    allVimeoVideo(filter: { paid: { eq: false } }) {
       edges {
         node {
+          id
+          title
           slug
-          name
-          order
           thumbnail {
-            fluid(maxWidth: 700) {
-              ...GatsbyContentfulFluid
-            }
+            large
           }
+        }
+      }
+    }
+
+    allFreeVideosJson {
+      edges {
+        node {
+          _id
+          order
         }
       }
     }

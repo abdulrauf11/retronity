@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
 import { graphql } from "gatsby"
 import { gsap } from "gsap"
@@ -33,36 +33,62 @@ const Wrapper = styled.section`
 `
 
 const Checkout = styled.div`
-  margin-top: 2rem;
+  margin-top: 6rem;
   display: flex;
   ${device.medium`flex-direction: column;`}
-  .video-wrapper,
   .description {
     flex: 1;
   }
-  .video-wrapper {
-    video {
-      width: 100%;
-      height: auto;
-    }
+`
+
+const Video = styled.div`
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  ${device.medium`padding-top: ${props => props.aspectRatio}%;`};
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
   }
-  .description {
-    ${device.medium`margin-top: 2rem;`}
+`
+
+const Info = styled.div`
+  margin-left: 4rem;
+  ${device.medium`margin-left: 0; margin-top: 2rem;`}
+  .price {
+    font-family: "Gilroy Bold", sans-serif;
+    font-size: 4rem;
+  }
+  .details {
+    margin: 3rem 0;
+    width: 70%;
+    ${device.small`width: 100%;`}
+    .item {
+      display: flex;
+      margin: 1rem 0;
+    }
     span {
-      margin-left: 4rem;
-      display: block;
-      margin-bottom: 1rem;
-      ${device.medium`margin-left: 0;`}
+      flex: 1;
     }
-
-    .price {
-      font-family: "Gilroy Bold", sans-serif;
-      font-size: 2rem;
+    span:first-child {
+      font-family: "Gilroy Bold";
     }
   }
-
-  button {
-    margin-top: 4rem;
+  .note {
+    margin: 4rem 0;
+    font-style: italic;
+    font-size: 0.9rem;
+  }
+  a {
+    text-align: center;
+    text-transform: uppercase;
+    display: block;
     padding: 1rem;
     width: 100%;
     font-size: 0.8rem;
@@ -71,17 +97,11 @@ const Checkout = styled.div`
 `
 
 const VisualSingle = ({ data }) => {
-  const {
-    name,
-    childContentfulPaidVisualVideoJsonNode: video,
-  } = data.contentfulPaidVisual
+  const { id, title, width, height, iframe } = data.vimeoVideo
 
-  const previewLink = video.secure_url.replace(
-    "/video/upload/",
-    "/video/upload/q_auto:good/"
-  )
-
-  const [buttonText, setButtonText] = useState("Buy Now")
+  const buy_code = data.allPaidVideosJson.edges.find(
+    ({ node }) => node._id === id
+  ).node.buy_code
 
   const treeRef = useRef(null)
   useEffect(() => {
@@ -95,35 +115,87 @@ const VisualSingle = ({ data }) => {
     })
   }, [])
 
+  useEffect(() => {
+    function init2Checkout(document, src, libName, config) {
+      var script = document.createElement("script")
+      script.src = src
+      script.async = true
+      var firstScriptElement = document.getElementsByTagName("script")[0]
+      script.onload = function() {
+        for (var namespace in config) {
+          if (config.hasOwnProperty(namespace)) {
+            window[libName].setup.setConfig(namespace, config[namespace])
+          }
+        }
+        window[libName].register()
+      }
+
+      firstScriptElement.parentNode.insertBefore(script, firstScriptElement)
+    }
+    init2Checkout(
+      document,
+      "https://secure.avangate.com/checkout/client/twoCoInlineCart.js",
+      "TwoCoInlineCart",
+      {
+        app: { merchant: "250356384615", iframeLoad: "checkout" },
+        cart: {
+          host: "https://secure.2checkout.com",
+          customization: "inline",
+        },
+      }
+    )
+  }, [])
+
   return (
     <Layout>
-      <SEO title={name} />
+      <SEO title={title} />
       <Main>
         <img className="tree" src={tree} alt="Tree" ref={treeRef} />
 
         <Wrapper>
-          <h1 className="name">{name}</h1>
+          <h1 className="name">{title}</h1>
           <Checkout>
-            <div className="video-wrapper">
-              <video controls disablePictureInPicture controlsList="nodownload">
-                <source src={previewLink} type="video/mp4" />
-              </video>
-            </div>
-            <div className="description">
-              <span className="price">$80</span>
-              <span>resolution: 1080X1080</span>
-              <span>format: mp4</span>
-              <span>download includes loop video only.</span>
-              <span>download link sent via email.</span>
-              <span>
-                <button
-                  onMouseEnter={() => setButtonText("Coming Soon")}
-                  onMouseLeave={() => setButtonText("Buy Now")}
+            <Video
+              aspectRatio={(height / width) * 100}
+              dangerouslySetInnerHTML={{ __html: iframe }}
+            />
+            <Info>
+              <div className="price">$80</div>
+              <div className="details">
+                <div className="item">
+                  <span>resolution</span>
+                  <span>
+                    {width}X{height}
+                  </span>
+                </div>
+                <div className="item">
+                  <span>format</span>
+                  <span>mp4</span>
+                </div>
+                <div className="item">
+                  <span>video encoding</span>
+                  <span>H.264</span>
+                </div>
+              </div>
+
+              <div className="note">
+                <p>
+                  download includes loop video only. download link sent via
+                  email.
+                </p>
+              </div>
+
+              <div className="button-wrapper">
+                <a
+                  href="#buy"
+                  className="avangate_button"
+                  product-code={buy_code}
+                  product-quantity="1"
                 >
-                  {buttonText}
-                </button>
-              </span>
-            </div>
+                  Buy now
+                </a>
+              </div>
+            </Info>
           </Checkout>
         </Wrapper>
       </Main>
@@ -135,13 +207,20 @@ export default VisualSingle
 
 export const queryVisual = graphql`
   query($slug: String!) {
-    contentfulPaidVisual(slug: { eq: $slug }) {
-      name
-      order
-      childContentfulPaidVisualVideoJsonNode {
-        secure_url
-        width
-        height
+    vimeoVideo(slug: { eq: $slug }) {
+      id
+      title
+      width
+      height
+      iframe
+    }
+
+    allPaidVideosJson {
+      edges {
+        node {
+          _id
+          buy_code
+        }
       }
     }
   }
