@@ -24,11 +24,12 @@ const Grid = styled.section`
   ${device.small`margin-top: 4rem; margin-bottom: 6rem; grid-gap: 50px; grid-template-columns: repeat(1, 1fr);`}
   ${device.large`grid-gap: 150px 100px; margin-bottom: 18rem;`}
   .grid-item {
-    height: 30rem;
     display: block;
     position: relative;
     overflow: hidden;
+    height: 30rem;
     ${device.small`height: 18rem;`};
+    ${device.large`height: 40rem;`}
     .overlay {
       position: absolute;
       width: 100%;

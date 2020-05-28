@@ -22,8 +22,8 @@ const Main = styled.main`
 
 const Wrapper = styled.section`
   margin-top: 4rem;
-  margin-bottom: 12rem;
-  ${device.large`margin-bottom: 17rem;`}
+  margin-bottom: 15rem;
+  ${device.large`margin-bottom: 20rem;`}
 
   .faq-link {
     text-align: center;

@@ -16,17 +16,18 @@ const Container = styled.div`
 `
 
 const Grid = styled.section`
-  margin-bottom: 12rem;
+  margin-bottom: 18rem;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 150px 100px;
-  ${device.small`margin-top: 4rem; margin-bottom: 6rem; grid-gap: 150px 0; grid-template-columns: repeat(1, 1fr);`}
-  ${device.large`grid-gap: 200px 100px; margin-bottom: 18rem;`}
+  ${device.small`margin-top: 4rem; margin-bottom: 10rem; grid-gap: 150px 0; grid-template-columns: repeat(1, 1fr);`}
+  ${device.large`grid-gap: 200px 100px; margin-bottom: 22rem;`}
   .grid-item {
     display: block;
     position: relative;
     height: 30rem;
     ${device.small`height: 18rem;`};
+    ${device.large`height: 40rem;`}
   }
 
   .headings {
