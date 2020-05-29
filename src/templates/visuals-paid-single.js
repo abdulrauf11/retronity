@@ -30,24 +30,29 @@ const Wrapper = styled.section`
   margin-top: 4rem;
   margin-bottom: 15rem;
   ${device.large`margin-bottom: 20rem;`}
+
+  .note {
+    margin: 2rem 0;
+    font-style: italic;
+    font-size: 0.9rem;
+  }
 `
 
 const Checkout = styled.div`
   margin-top: 6rem;
   display: flex;
   ${device.medium`flex-direction: column;`}
-  .description {
-    flex: 1;
+
+  .video-wrapper {
+    flex: 2;
   }
 `
 
 const Video = styled.div`
-  background: var(--black);
-  flex: 1;
   position: relative;
   overflow: hidden;
   width: 100%;
-  ${device.medium`padding-top: ${props => props.aspectRatio}%;`};
+  padding-top: ${props => props.aspectRatio}%;
   iframe {
     position: absolute;
     top: 0;
@@ -60,16 +65,15 @@ const Video = styled.div`
 `
 
 const Info = styled.div`
+  flex: 1;
   margin-left: 4rem;
   ${device.medium`margin-left: 0; margin-top: 2rem;`}
   .price {
     font-family: "Gilroy Bold", sans-serif;
-    font-size: 4rem;
+    font-size: 3rem;
   }
   .details {
     margin: 3rem 0;
-    width: 70%;
-    ${device.small`width: 100%;`}
     .item {
       display: flex;
       margin: 1rem 0;
@@ -81,11 +85,7 @@ const Info = styled.div`
       font-family: "Gilroy Bold";
     }
   }
-  .note {
-    margin: 4rem 0;
-    font-style: italic;
-    font-size: 0.9rem;
-  }
+
   a {
     text-align: center;
     text-transform: uppercase;
@@ -98,11 +98,14 @@ const Info = styled.div`
 `
 
 const VisualSingle = ({ data }) => {
-  const { id, title, width, height, iframe } = data.vimeoVideo
+  const { id, width, height, title, iframe } = data.vimeoVideo
 
-  const buy_code = data.allPaidVideosJson.edges.find(
+  const ref_data = data.allPaidVideosJson.edges.find(
     ({ node }) => node._id === id
-  ).node.buy_code
+  )
+
+  const buy_code = ref_data.node.buy_code
+  const sizes = ref_data.node.sizes
 
   const treeRef = useRef(null)
   useEffect(() => {
@@ -156,36 +159,28 @@ const VisualSingle = ({ data }) => {
         <Wrapper>
           <h1 className="name">{title}</h1>
           <Checkout>
-            <Video
-              aspectRatio={(height / width) * 100}
-              dangerouslySetInnerHTML={{ __html: iframe }}
-            />
+            <div className="video-wrapper">
+              <Video
+                aspectRatio={(height / width) * 100}
+                dangerouslySetInnerHTML={{ __html: iframe }}
+              />
+            </div>
             <Info>
               <div className="price">$80</div>
               <div className="details">
                 <div className="item">
                   <span>resolution</span>
-                  <span>
-                    {width}X{height}
-                  </span>
+                  <span>{sizes.join(", ")}</span>
                 </div>
                 <div className="item">
                   <span>format</span>
-                  <span>mp4</span>
+                  <span>mp4, H.264</span>
                 </div>
                 <div className="item">
-                  <span>video encoding</span>
-                  <span>H.264</span>
+                  <span>no. of files</span>
+                  <span>{sizes.length}</span>
                 </div>
               </div>
-
-              <div className="note">
-                <p>
-                  download includes loop video only. download link sent via
-                  email.
-                </p>
-              </div>
-
               <div className="button-wrapper">
                 <a
                   href="#buy"
@@ -198,6 +193,11 @@ const VisualSingle = ({ data }) => {
               </div>
             </Info>
           </Checkout>
+          <div className="note">
+            <p>
+              *download includes loop video only. download link sent via email.
+            </p>
+          </div>
         </Wrapper>
       </Main>
     </Layout>
@@ -221,6 +221,7 @@ export const queryVisual = graphql`
         node {
           _id
           buy_code
+          sizes
         }
       }
     }

@@ -3,36 +3,28 @@
     "title": "Lotus",
     "_id": "419613588",
     "order": 1,
-    "buy_code": "8A1410CD70"
+    "buy_code": "8A1410CD70",
+    "sizes": ["1920X1080", "1080X1080"]
   },
   {
-    "title": "Fly Away",
-    "_id": "423185513",
-    "order": 2,
-    "buy_code": "C2B453306D"
-  },
-  {
-    "title": "Up",
+    "title": "Round and Round",
     "_id": "423184273",
-    "order": 3,
-    "buy_code": "2D24BCF66F"
-  },
-  {
-    "title": "Abduction",
-    "_id": "423181741",
-    "order": 4,
-    "buy_code": "9ABEC85F7C"
+    "order": 2,
+    "buy_code": "2D24BCF66F",
+    "sizes": ["1920X1080", "1080X1080"]
   },
   {
     "title": "Delorean Ride",
     "_id": "422945576",
-    "order": 5,
-    "buy_code": "329049148D"
+    "order": 3,
+    "buy_code": "329049148D",
+    "sizes": ["1920X1080", "1080X1080"]
   },
   {
     "title": "Lonely",
     "_id": "422947228",
-    "order": 6,
-    "buy_code": "C64E10D033"
+    "order": 4,
+    "buy_code": "C64E10D033",
+    "sizes": ["1920X1080", "1080X1080"]
   }
 ]
