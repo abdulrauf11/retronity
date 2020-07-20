@@ -1,0 +1,11 @@
+:root {
+  --brand-primary: #9000ff;
+  --brand-secondary: #ff00ff;
+
+  --body-bg: #000;
+  --body-text: #fff;
+  --component-bg: #000;
+  --component-text-color: #fff;
+
+  --default-button-color--inverted: var(--brand-primary);
+}
