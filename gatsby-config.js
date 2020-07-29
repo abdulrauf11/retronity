@@ -19,11 +19,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        // your google analytics tracking id
         trackingId: "UA-131443581-2",
-        // Puts tracking script in the head instead of the bodyekflkflkflfkfjkjkjkfjkfjwekfwejkfjkfkfjkfekjefkjfkkefj
         // head: true,
-        // enable ip anonymization
         // anonymize: false,
       },
     },
@@ -33,13 +30,6 @@ module.exports = {
       options: {
         name: `images`,
         path: `${__dirname}/src/images`,
-      },
-    },
-    `gatsby-transformer-json`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `${__dirname}/src/data`,
       },
     },
     `gatsby-transformer-sharp`,
@@ -67,12 +57,22 @@ module.exports = {
       },
     },
     `gatsby-plugin-transition-link`,
+
     {
       resolve: `gatsby-source-vimeo`,
       options: {
         clientID: process.env.VIMEO_CLIENT_ID,
         clientSecret: process.env.VIMEO_CLIENT_SECRET,
         userID: "rauftech",
+      },
+    },
+
+    {
+      resolve: "gatsby-source-sanity",
+      options: {
+        projectId: process.env.SANITY_PROJECT_ID,
+        dataset: process.env.SANITY_PROJECT_DATASET,
+        token: process.env.SANITY_PROJECT_TOKEN,
       },
     },
   ],

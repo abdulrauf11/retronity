@@ -6,8 +6,8 @@ import device from "./device"
 const CircleWrapper = styled.div`
   .circle {
     position: fixed;
-    width: 14px;
-    height: 14px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     background: var(--white);
     top: 0;
@@ -16,9 +16,6 @@ const CircleWrapper = styled.div`
     z-index: 1000000;
     mix-blend-mode: exclusion;
     ${device.small`display: none;`}
-    &.large {
-      transform: scale(5);
-    }
   }
 `
 
@@ -35,15 +32,17 @@ const Cursor = () => {
 
   function handleMouseEnter() {
     gsap.to(circleRef.current, 0.35, {
-      scale: 5,
+      scale: 1,
       ease: "sine",
+      force3D: false,
     })
   }
 
   function handleMouseLeave() {
     gsap.to(circleRef.current, 0.35, {
-      scale: 1,
+      scale: 1 / 5,
       ease: "sine",
+      force3D: false,
     })
   }
 
@@ -51,6 +50,7 @@ const Cursor = () => {
     gsap.set(circleRef.current, {
       xPercent: -50,
       yPercent: -50,
+      scale: 1 / 5,
     })
 
     const getLinks = document.querySelectorAll("a, button")

@@ -9,6 +9,14 @@ export default {
       type: "string",
     },
     {
+      title: "Slug",
+      name: "slug",
+      type: "slug",
+      options: {
+        source: "title",
+      },
+    },
+    {
       title: "Vimeo Embed",
       name: "vimeo",
       type: "vimeo",

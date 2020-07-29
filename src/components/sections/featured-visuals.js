@@ -7,11 +7,11 @@ import FadeLink from "../transition-link"
 import device from "../device"
 import arrow from "../../images/visuals/right-arrow.svg"
 import tree from "../../images/visuals/tree.svg"
+import map from "../../images/swirly.png"
 
 import Loadable from "@loadable/component"
-import SliderLoader from "../canvas/slider-loader"
 const LoadableSlider = Loadable(() => import("../canvas/slider"), {
-  fallback: <SliderLoader currIndex={0} />,
+  fallback: null,
 })
 
 const Wrapper = styled.div`
@@ -203,90 +203,37 @@ const Card = styled.div`
   }
 `
 
-const Downloads = () => {
-  const imgData = useStaticQuery(graphql`
-    query {
-      sliderOne: file(relativePath: { eq: "slider/ride_along.png" }) {
-        childImageSharp {
-          fluid(maxWidth: 1200, maxHeight: 750) {
-            ...GatsbyImageSharpFluid_withWebp
-          }
-        }
-      }
-      sliderTwo: file(relativePath: { eq: "slider/chasing_dreams.png" }) {
-        childImageSharp {
-          fluid(maxWidth: 1200, maxHeight: 750) {
-            ...GatsbyImageSharpFluid_withWebp
-          }
-        }
-      }
-      sliderThree: file(relativePath: { eq: "slider/fade_away.png" }) {
-        childImageSharp {
-          fluid(maxWidth: 1200, maxHeight: 750) {
-            ...GatsbyImageSharpFluid_withWebp
-          }
-        }
-      }
-      sliderFour: file(relativePath: { eq: "slider/collage.png" }) {
-        childImageSharp {
-          fluid(maxWidth: 1200, maxHeight: 750) {
-            ...GatsbyImageSharpFluid_withWebp
-          }
-        }
-      }
-      map: file(relativePath: { eq: "swirly.png" }) {
-        childImageSharp {
-          fluid(maxWidth: 1200, maxHeight: 750) {
-            ...GatsbyImageSharpFluid_withWebp
+const FeaturedVisuals = () => {
+  const data = useStaticQuery(graphql`
+    {
+      allSanityFeaturedVisual {
+        edges {
+          node {
+            quote
+            poster {
+              asset {
+                fluid {
+                  src
+                  srcWebp
+                }
+              }
+            }
+            ref {
+              title
+              slug {
+                current
+              }
+            }
           }
         }
       }
     }
-  `)
+  `).allSanityFeaturedVisual.edges
 
-  let allImages = [
-    imgData.sliderOne.childImageSharp.fluid,
-    imgData.sliderTwo.childImageSharp.fluid,
-    imgData.sliderThree.childImageSharp.fluid,
-    imgData.sliderFour.childImageSharp.fluid,
-    imgData.map.childImageSharp.fluid,
-  ].map(i => (i.srcWebp ? i.srcWebp : i.src))
-  const sliderOne = allImages[0]
-  const sliderTwo = allImages[1]
-  const sliderThree = allImages[2]
-  const sliderFour = allImages[3]
-  const map = allImages[4]
-
-  const data = [
-    {
-      title: "ride along",
-      quote:
-        "If my calculations are correct, when this baby hits 88 miles per hour, you're gonna see some serious shit.",
-      reference: "Back to the Future (1985)",
-      thumbnail: sliderOne,
-      slug: "/visuals/ride-along",
-    },
-    {
-      title: "chasing dreams",
-      quote:
-        "All he'd wanted were the same answers the rest of us want. Where did I come from? Where am I going? How long have I got?",
-      reference: "Blade Runner (1982)",
-      thumbnail: sliderTwo,
-      slug: "/visuals/chasing-dreams",
-    },
-    {
-      title: "fade away",
-      quote: "The more things change, the more they stay the same.",
-      reference: "The Color Purple (1985)",
-      thumbnail: sliderThree,
-      slug: "/visuals/fade-away",
-    },
-    {
-      thumbnail: sliderFour,
-      slug: "/visuals/",
-    },
-  ]
-  const thumbnails = data.map(v => v.thumbnail)
+  const thumbnails = data.map(({ node }) => ({
+    name: node.ref.title,
+    url: node.poster.asset.fluid.src,
+  }))
 
   const animatedRef = useRef(null)
 
@@ -348,27 +295,19 @@ const Downloads = () => {
         </Carousel>
         <Card>
           <div className="animated" ref={animatedRef}>
-            {currIndex < data.length - 1 ? (
-              <>
-                <h3 className="name">{data[currIndex].title}</h3>
-                <p className="quote">
-                  "{data[currIndex].quote}" –{" "}
-                  <span className="reference">{data[currIndex].reference}</span>
-                </p>
-                <div className="link-wrapper">
-                  <FadeLink className="link" to={data[currIndex].slug}>
-                    download now
-                  </FadeLink>
-                  <button className="next" onClick={handleClick}>
-                    <img src={arrow} alt="Arrow" />
-                  </button>
-                </div>
-              </>
-            ) : (
-              <div className="view-all">
-                <FadeLink to={data[currIndex].slug}>view all</FadeLink>
-              </div>
-            )}
+            <h3 className="name">{data[currIndex].node.ref.title}</h3>
+            <p className="quote">{data[currIndex].node.quote}</p>
+            <div className="link-wrapper">
+              <FadeLink
+                className="link"
+                to={`/visuals/${data[currIndex].node.ref.slug.current}`}
+              >
+                download now
+              </FadeLink>
+              <button className="next" onClick={handleClick}>
+                <img src={arrow} alt="Arrow" />
+              </button>
+            </div>
           </div>
         </Card>
       </section>
@@ -376,4 +315,4 @@ const Downloads = () => {
   )
 }
 
-export default Downloads
+export default FeaturedVisuals

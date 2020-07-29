@@ -2,8 +2,9 @@ import React, { useEffect, useRef } from "react"
 import * as PIXI from "pixi.js"
 import PixiPlugin from "gsap/PixiPlugin"
 import styled from "styled-components"
-import { BulgePinchFilter } from "@pixi/filter-bulge-pinch"
 import device from "../device"
+
+import { BulgePinchFilter } from "@pixi/filter-bulge-pinch"
 
 PixiPlugin.registerPIXI(PIXI)
 PIXI.settings.SPRITE_MAX_TEXTURES = Math.min(

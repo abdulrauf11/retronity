@@ -3,7 +3,7 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Hero from "../components/sections/hero"
 import About from "../components/sections/about"
-import Downloads from "../components/sections/downloads"
+import FeaturedVisuals from "../components/sections/featured-visuals"
 import License from "../components/sections/license"
 
 const IndexPage = () => {
@@ -13,7 +13,7 @@ const IndexPage = () => {
       <main>
         <Hero />
         <About />
-        <Downloads />
+        <FeaturedVisuals />
         <License />
       </main>
     </Layout>

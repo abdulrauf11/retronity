@@ -7,6 +7,8 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import plus from "../images/faq/plus.svg"
 
+const BlockContent = require("@sanity/block-content-to-react")
+
 const Wrapper = styled.section`
   margin-top: 4rem;
   margin-bottom: 15rem;
@@ -21,6 +23,7 @@ const Accordian = styled.ul`
     padding-bottom: 2rem;
     border-bottom: 1px solid rgba(255, 0, 255, 0.3);
   }
+
   .question {
     font-family: "Gilroy Bold", sans-serif;
     font-size: 3.5rem;
@@ -30,16 +33,24 @@ const Accordian = styled.ul`
     ${device.small`font-size: 2rem;`}
     ${device.large`font-size: 4.5rem;`}
   }
+
   .answer {
-    font-size: 1.2rem;
     margin-top: 1rem;
-    line-height: 1.6;
     width: 100%;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-out;
     ${device.small`width: 100%;`}
-    ${device.large`font-size: 1.3rem;`}
+    p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      ${device.large`font-size: 1.3rem;`}
+    }
+
+    a {
+      color: var(--purple);
+      text-decoration: underline;
+    }
   }
 
   .plus {
@@ -63,8 +74,6 @@ const Accordian = styled.ul`
 `
 
 const Faq = ({ data }) => {
-  const faqs = data.allFaqsJson.edges
-
   function handleClick(e) {
     const button = e.currentTarget
     if (button.style.transform) {
@@ -86,7 +95,7 @@ const Faq = ({ data }) => {
       <main>
         <Wrapper>
           <Accordian>
-            {faqs.map(({ node }, index) => (
+            {data.allSanityFaq.edges.map(({ node }, index) => (
               <li key={index}>
                 <div className="question">
                   {node.question}
@@ -94,7 +103,11 @@ const Faq = ({ data }) => {
                     <img src={plus} alt="Click to view answer" />
                   </button>
                 </div>
-                <div className="answer">{node.answer}</div>
+                <BlockContent
+                  blocks={node._rawAnswer}
+                  className="answer"
+                  renderContainerOnSingleChild={true}
+                />
               </li>
             ))}
           </Accordian>
@@ -106,13 +119,13 @@ const Faq = ({ data }) => {
 
 export default Faq
 
-export const queryVisual = graphql`
+export const query = graphql`
   {
-    allFaqsJson {
+    allSanityFaq {
       edges {
         node {
           question
-          answer
+          _rawAnswer(resolveReferences: { maxDepth: 10 })
         }
       }
     }

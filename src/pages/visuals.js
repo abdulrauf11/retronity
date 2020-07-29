@@ -19,17 +19,18 @@ const Container = styled.div`
 const Grid = styled.section`
   margin-bottom: 12rem;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 100px;
-  ${device.small`margin-top: 4rem; margin-bottom: 6rem; grid-gap: 50px; grid-template-columns: repeat(1, 1fr);`}
-  ${device.large`grid-gap: 150px 100px; margin-bottom: 18rem;`}
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-gap: 150px 50px;
+  ${device.small`margin-top: 4rem; margin-bottom: 6rem; grid-gap: 50px 0; grid-template-columns: 1fr`}
+  ${device.large`margin-bottom: 18rem;`}
+  
+  
   .grid-item {
     display: block;
     position: relative;
     overflow: hidden;
     height: 30rem;
     ${device.small`height: 18rem;`};
-    ${device.large`height: 40rem;`}
     .overlay {
       position: absolute;
       width: 100%;
@@ -70,19 +71,10 @@ const Grid = styled.section`
 `
 
 const Visuals = ({ data }) => {
-  const visuals = data.allVimeoVideo.edges.map(e => e.node)
-  const ref_visuals = data.allFreeVideosJson.edges.map(e => e.node)
-
-  let list = []
-  for (let i = 0; i < visuals.length; i++) {
-    list.push({
-      ...visuals[i],
-      ...ref_visuals.find(itmInner => itmInner._id === visuals[i].id),
-    })
+  function getThumbnail(slug) {
+    const edge = data.allVimeoVideo.edges.find(({ node }) => node.slug === slug)
+    return edge.node.thumbnail.large
   }
-  list.sort(function(a, b) {
-    return a.order - b.order
-  })
 
   return (
     <Layout>
@@ -93,19 +85,19 @@ const Visuals = ({ data }) => {
       </Container>
       <main>
         <Grid>
-          {list.map((item, index) => (
+          {data.allSanityFreeVisual.edges.map(({ node }, index) => (
             <FadeLink
               className="grid-item"
               key={index}
-              to={`/visuals/${item.slug}`}
+              to={`/visuals/${node.slug.current}`}
             >
               <img
-                src={item.thumbnail.large}
-                alt={item.title}
+                src={getThumbnail(node.slug.current)}
+                alt={node.title}
                 className="thumbnail"
               />
               <div className="overlay">
-                <h3 className="name">{item.title}</h3>
+                <h3 className="name">{node.title}</h3>
               </div>
             </FadeLink>
           ))}
@@ -120,24 +112,24 @@ export default Visuals
 
 export const query = graphql`
   {
-    allVimeoVideo(filter: { paid: { eq: false } }) {
+    allSanityFreeVisual(filter: { slug: { current: { ne: null } } }) {
       edges {
         node {
-          id
           title
-          slug
-          thumbnail {
-            large
+          slug {
+            current
           }
         }
       }
     }
 
-    allFreeVideosJson {
+    allVimeoVideo {
       edges {
         node {
-          _id
-          order
+          slug
+          thumbnail {
+            large
+          }
         }
       }
     }

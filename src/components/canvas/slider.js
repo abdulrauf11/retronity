@@ -41,19 +41,10 @@ const Slider = ({ currIndex, prevIndex, thumbnails, mapImage }) => {
     setFilter(displacementFilter)
 
     const loader = new PIXI.Loader()
-    loader
-      .add("one", thumbnails[0])
-      .add("two", thumbnails[1])
-      .add("three", thumbnails[2])
-      .add("four", thumbnails[3])
+    thumbnails.map(obj => loader.add(obj.name, obj.url))
 
     loader.load((_, resources) => {
-      const allImages = [
-        resources.one.data,
-        resources.two.data,
-        resources.three.data,
-        resources.four.data,
-      ]
+      const allImages = Object.values(resources).map(res => res.data)
       const allSprites = allImages.map((image, index) => {
         const texture = PIXI.Texture.from(image)
         const sprite = new PIXI.Sprite(texture)

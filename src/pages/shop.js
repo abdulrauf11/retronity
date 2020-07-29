@@ -18,16 +18,14 @@ const Container = styled.div`
 const Grid = styled.section`
   margin-bottom: 18rem;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 150px 100px;
-  ${device.small`margin-top: 4rem; margin-bottom: 10rem; grid-gap: 150px 0; grid-template-columns: repeat(1, 1fr);`}
-  ${device.large`grid-gap: 200px 100px; margin-bottom: 22rem;`}
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-gap: 150px 50px;
+  ${device.small`margin-top: 4rem; margin-bottom: 10rem; grid-gap: 150px 0; grid-template-columns: 1fr`}
   .grid-item {
     display: block;
     position: relative;
     height: 30rem;
     ${device.small`height: 18rem;`};
-    ${device.large`height: 40rem;`}
   }
 
   .headings {
@@ -50,19 +48,10 @@ const Grid = styled.section`
 `
 
 const Visuals = ({ data }) => {
-  const visuals = data.allVimeoVideo.edges.map(e => e.node)
-  const ref_visuals = data.allPaidVideosJson.edges.map(e => e.node)
-
-  let list = []
-  for (let i = 0; i < visuals.length; i++) {
-    list.push({
-      ...visuals[i],
-      ...ref_visuals.find(itmInner => itmInner._id === visuals[i].id),
-    })
+  function getThumbnail(slug) {
+    const edge = data.allVimeoVideo.edges.find(({ node }) => node.slug === slug)
+    return edge.node.thumbnail.large
   }
-  list.sort(function(a, b) {
-    return a.order - b.order
-  })
 
   return (
     <Layout>
@@ -73,17 +62,17 @@ const Visuals = ({ data }) => {
       </Container>
       <main>
         <Grid>
-          {list.map((item, index) => (
+          {data.allSanityPaidVisual.edges.map(({ node }, index) => (
             <div className="grid-item" key={index}>
-              <FadeLink to={`/visuals/${item.slug}`}>
+              <FadeLink to={`/visuals/${node.slug.current}`}>
                 <img
-                  src={item.thumbnail.large}
-                  alt={item.title}
+                  src={getThumbnail(node.slug.current)}
+                  alt={node.title}
                   className="thumbnail"
                 />
               </FadeLink>
               <div className="headings">
-                <h3 className="name">{item.title}</h3>
+                <h3 className="name">{node.title}</h3>
                 <h4 className="price">$80</h4>
               </div>
             </div>
@@ -98,24 +87,24 @@ export default Visuals
 
 export const query = graphql`
   {
-    allVimeoVideo(filter: { paid: { eq: true } }) {
+    allSanityPaidVisual(filter: { slug: { current: { ne: null } } }) {
       edges {
         node {
-          id
           title
-          slug
-          thumbnail {
-            large
+          slug {
+            current
           }
         }
       }
     }
 
-    allPaidVideosJson {
+    allVimeoVideo {
       edges {
         node {
-          _id
-          order
+          slug
+          thumbnail {
+            large
+          }
         }
       }
     }

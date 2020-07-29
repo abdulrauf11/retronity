@@ -8,8 +8,7 @@ const LoadableMirage = Loadable(() => import("../canvas/mirage"), {
 })
 
 const Wrapper = styled.section`
-  margin-top: 0rem;
-  ${device.small`margin-top: 2rem;`}
+  margin-top: 2rem;
   ${device.large`margin-top: 4rem;`}
   .container {
     width: 90%;
@@ -56,7 +55,6 @@ const Scene = styled.div`
 `
 
 const SocialLinks = styled.div`
-  margin-top: 5%;
   position: relative;
   ${device.small`display: none;`}
   .vertical {

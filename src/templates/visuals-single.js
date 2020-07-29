@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
 import { graphql } from "gatsby"
 import { gsap } from "gsap"
+import getVideoId from "get-video-id"
 
 import FadeLink from "../components/transition-link"
 import device from "../components/device"
@@ -93,11 +94,8 @@ const Buttons = styled.div`
 `
 
 const VisualSingle = ({ data }) => {
-  const { id, title, width, height, iframe } = data.vimeoVideo
-
-  const download_link = data.allFreeVideosJson.edges.find(
-    ({ node }) => node._id === id
-  ).node.download_link
+  const { title, downloadLink, vimeo } = data.sanityFreeVisual
+  const { width, height } = data.vimeoVideo
 
   const treeRef = useRef(null)
   useEffect(() => {
@@ -124,13 +122,21 @@ const VisualSingle = ({ data }) => {
               {width}X{height}
             </p>
           </Details>
-          <Video
-            aspectRatio={(height / width) * 100}
-            dangerouslySetInnerHTML={{ __html: iframe }}
-          />
+          <Video aspectRatio={(height / width) * 100}>
+            <iframe
+              title={title}
+              src={`https://player.vimeo.com/video/${
+                getVideoId(vimeo[0].url).id
+              }?byline=0&portrait=0`}
+              allowFullScreen
+              frameBorder="0"
+              webkitallowfullscreen="true"
+              mozallowfullscreen="true"
+            />
+          </Video>
           <Buttons>
             <a
-              href={download_link}
+              href={downloadLink}
               className="download"
               target="_blank"
               rel="noopener noreferrer"
@@ -159,21 +165,17 @@ export default VisualSingle
 
 export const queryVisual = graphql`
   query($slug: String!) {
-    vimeoVideo(slug: { eq: $slug }) {
-      id
+    sanityFreeVisual(slug: { current: { eq: $slug } }) {
       title
-      width
-      height
-      iframe
+      downloadLink
+      vimeo {
+        url
+      }
     }
 
-    allFreeVideosJson {
-      edges {
-        node {
-          _id
-          download_link
-        }
-      }
+    vimeoVideo(slug: { eq: $slug }) {
+      width
+      height
     }
   }
 `

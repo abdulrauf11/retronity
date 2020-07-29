@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react"
+import styled from "styled-components"
 import * as PIXI from "pixi.js"
 import { gsap } from "gsap"
 import PixiPlugin from "gsap/PixiPlugin"
@@ -6,8 +7,6 @@ import { useStaticQuery, graphql } from "gatsby"
 
 import { GlitchFilter } from "@pixi/filter-glitch"
 import { RGBSplitFilter } from "@pixi/filter-rgb-split"
-
-import styled from "styled-components"
 
 PixiPlugin.registerPIXI(PIXI)
 PIXI.settings.SPRITE_MAX_TEXTURES = Math.min(
@@ -57,10 +56,10 @@ const Mirage = () => {
     imgData.sun.childImageSharp.fluid,
     imgData.car.childImageSharp.fluid,
     imgData.map.childImageSharp.fluid,
-  ].map(i => (i.srcWebp ? i.srcWebp : i.src))
-  const sunImage = allImages[0]
-  const carImage = allImages[1]
-  const mapImage = allImages[2]
+  ]
+  const sunImage = allImages[0].src
+  const carImage = allImages[1].src
+  const mapImage = allImages[2].src
 
   function randomIntFromInterval(min, max) {
     return Math.random() * (max - min + 1) + min

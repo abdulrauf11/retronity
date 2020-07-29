@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
 import { graphql } from "gatsby"
 import { gsap } from "gsap"
+import getVideoId from "get-video-id"
 
 import device from "../components/device"
 import Layout from "../components/layout"
@@ -98,14 +99,8 @@ const Info = styled.div`
 `
 
 const VisualSingle = ({ data }) => {
-  const { id, width, height, title, iframe } = data.vimeoVideo
-
-  const ref_data = data.allPaidVideosJson.edges.find(
-    ({ node }) => node._id === id
-  )
-
-  const buy_code = ref_data.node.buy_code
-  const sizes = ref_data.node.sizes
+  const { title, size, buyCode, vimeo } = data.sanityPaidVisual
+  const { width, height } = data.vimeoVideo
 
   const treeRef = useRef(null)
   useEffect(() => {
@@ -160,17 +155,25 @@ const VisualSingle = ({ data }) => {
           <h1 className="name">{title}</h1>
           <Checkout>
             <div className="video-wrapper">
-              <Video
-                aspectRatio={(height / width) * 100}
-                dangerouslySetInnerHTML={{ __html: iframe }}
-              />
+              <Video aspectRatio={(height / width) * 100}>
+                <iframe
+                  title={title}
+                  src={`https://player.vimeo.com/video/${
+                    getVideoId(vimeo[0].url).id
+                  }?byline=0&portrait=0`}
+                  allowFullScreen
+                  frameBorder="0"
+                  webkitallowfullscreen="true"
+                  mozallowfullscreen="true"
+                />
+              </Video>
             </div>
             <Info>
               <div className="price">$80</div>
               <div className="details">
                 <div className="item">
                   <span>resolution</span>
-                  <span>{sizes.join(", ")}</span>
+                  <span>{size.join(", ")}</span>
                 </div>
                 <div className="item">
                   <span>format</span>
@@ -178,14 +181,14 @@ const VisualSingle = ({ data }) => {
                 </div>
                 <div className="item">
                   <span>no. of files</span>
-                  <span>{sizes.length}</span>
+                  <span>{size.length}</span>
                 </div>
               </div>
               <div className="button-wrapper">
                 <a
                   href="#buy"
                   className="avangate_button"
-                  product-code={buy_code}
+                  product-code={buyCode}
                   product-quantity="1"
                 >
                   Buy now
@@ -208,22 +211,18 @@ export default VisualSingle
 
 export const queryVisual = graphql`
   query($slug: String!) {
-    vimeoVideo(slug: { eq: $slug }) {
-      id
+    sanityPaidVisual(slug: { current: { eq: $slug } }) {
       title
-      width
-      height
-      iframe
+      size
+      buyCode
+      vimeo {
+        url
+      }
     }
 
-    allPaidVideosJson {
-      edges {
-        node {
-          _id
-          buy_code
-          sizes
-        }
-      }
+    vimeoVideo(slug: { eq: $slug }) {
+      width
+      height
     }
   }
 `

@@ -3,10 +3,12 @@ import createSchema from "part:@sanity/base/schema-creator"
 
 // Then import schema types from any plugins that might expose them
 import schemaTypes from "all:part:@sanity/base/schema-type"
-import freeVisual from "./freeVisual"
+import videoUrl from "./video"
 import vimeo from "./vimeo"
+import freeVisual from "./freeVisual"
 import paidVisual from "./paidVisual"
 import featuredVisual from "./featuredVisual"
+import faq from "./faq"
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -16,9 +18,11 @@ export default createSchema({
   // to the ones provided by any plugins that are installed
   types: schemaTypes.concat([
     /* Your types here! */
+    videoUrl,
     vimeo,
     freeVisual,
     paidVisual,
     featuredVisual,
+    faq,
   ]),
 })
