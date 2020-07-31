@@ -227,10 +227,40 @@ const FeaturedVisuals = () => {
           }
         }
       }
+      collage: file(relativePath: { eq: "slider/collage.png" }) {
+        childImageSharp {
+          fluid(maxWidth: 800) {
+            ...GatsbyImageSharpFluid_withWebp
+          }
+        }
+      }
     }
-  `).allSanityFeaturedVisual.edges
+  `)
 
-  const thumbnails = data.map(({ node }) => ({
+  const slides = data.allSanityFeaturedVisual.edges
+
+  if (!slides.find(element => element.node.ref.title === "Collage")) {
+    slides.push({
+      node: {
+        ref: {
+          title: "Collage",
+          slug: {
+            current: "/visuals",
+          },
+        },
+        poster: {
+          asset: {
+            fluid: {
+              src: data.collage.childImageSharp.fluid.src,
+              srcWebp: data.collage.childImageSharp.fluid.srcWebp,
+            },
+          },
+        },
+      },
+    })
+  }
+
+  const thumbnails = slides.map(({ node }) => ({
     name: node.ref.title,
     url: node.poster.asset.fluid.src,
     urlWebp: node.poster.asset.fluid.srcWebp,
@@ -248,7 +278,7 @@ const FeaturedVisuals = () => {
       opacity: 0,
       ease: "sine",
       onComplete: () => {
-        setCurrIndex((currIndex + 1) % data.length)
+        setCurrIndex((currIndex + 1) % slides.length)
       },
     })
   }
@@ -296,19 +326,29 @@ const FeaturedVisuals = () => {
         </Carousel>
         <Card>
           <div className="animated" ref={animatedRef}>
-            <h3 className="name">{data[currIndex].node.ref.title}</h3>
-            <p className="quote">{data[currIndex].node.quote}</p>
-            <div className="link-wrapper">
-              <FadeLink
-                className="link"
-                to={`/visuals/${data[currIndex].node.ref.slug.current}`}
-              >
-                download now
-              </FadeLink>
-              <button className="next" onClick={handleClick}>
-                <img src={arrow} alt="Arrow" />
-              </button>
-            </div>
+            {currIndex < slides.length - 1 ? (
+              <>
+                <h3 className="name">{slides[currIndex].node.ref.title}</h3>
+                <p className="quote">{slides[currIndex].node.quote}</p>
+                <div className="link-wrapper">
+                  <FadeLink
+                    className="link"
+                    to={`/visuals/${slides[currIndex].node.ref.slug.current}`}
+                  >
+                    download now
+                  </FadeLink>
+                  <button className="next" onClick={handleClick}>
+                    <img src={arrow} alt="Arrow" />
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="view-all">
+                <FadeLink to={slides[currIndex].node.ref.slug.current}>
+                  view all
+                </FadeLink>
+              </div>
+            )}
           </div>
         </Card>
       </section>
