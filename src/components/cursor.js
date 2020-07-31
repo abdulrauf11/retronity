@@ -23,9 +23,14 @@ const Cursor = () => {
   const circleRef = useRef(null)
   function handleMouseMove(e) {
     if (!circleRef.current) return
-    gsap.to(circleRef.current, 0.1, {
+    const tl = gsap.timeline()
+    tl.to(circleRef.current, 0.1, {
       x: e.clientX,
       y: e.clientY,
+      ease: "sine",
+    })
+    tl.to(circleRef.current, 0.1, {
+      opacity: 1,
       ease: "sine",
     })
   }
@@ -51,6 +56,7 @@ const Cursor = () => {
       xPercent: -50,
       yPercent: -50,
       scale: 1 / 5,
+      opacity: 0,
     })
 
     const getLinks = document.querySelectorAll("a, button")

@@ -18,6 +18,26 @@ const CanvasWrapper = styled.div`
   top: 0;
 `
 
+function check_webp_feature(feature, callback) {
+  var kTestImages = {
+    lossy: "UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA",
+    lossless: "UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==",
+    alpha:
+      "UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==",
+    animation:
+      "UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA",
+  }
+  var img = new Image()
+  img.onload = function() {
+    var result = img.width > 0 && img.height > 0
+    callback(result)
+  }
+  img.onerror = function() {
+    callback(false)
+  }
+  img.src = "data:image/webp;base64," + kTestImages[feature]
+}
+
 const Slider = ({ currIndex, prevIndex, thumbnails, mapImage }) => {
   const canvasWrapperRef = useRef(null)
   const canvasRef = useRef(null)
@@ -41,20 +61,25 @@ const Slider = ({ currIndex, prevIndex, thumbnails, mapImage }) => {
     setFilter(displacementFilter)
 
     const loader = new PIXI.Loader()
-    thumbnails.map(obj => loader.add(obj.name, obj.url))
 
-    loader.load((_, resources) => {
-      const allImages = Object.values(resources).map(res => res.data)
-      const allSprites = allImages.map((image, index) => {
-        const texture = PIXI.Texture.from(image)
-        const sprite = new PIXI.Sprite(texture)
-        sprite.width = canvasWrapperRef.current.clientWidth
-        sprite.height = canvasWrapperRef.current.clientHeight
-        container.addChild(sprite)
-        index && gsap.set(sprite, { alpha: 0 })
-        return sprite
+    check_webp_feature("lossy", result => {
+      result
+        ? thumbnails.map(obj => loader.add(obj.name, obj.urlWebp))
+        : thumbnails.map(obj => loader.add(obj.name, obj.url))
+
+      loader.load((_, resources) => {
+        const allImages = Object.values(resources).map(res => res.data)
+        const allSprites = allImages.map((image, index) => {
+          const texture = PIXI.Texture.from(image)
+          const sprite = new PIXI.Sprite(texture)
+          sprite.width = canvasWrapperRef.current.clientWidth
+          sprite.height = canvasWrapperRef.current.clientHeight
+          container.addChild(sprite)
+          index && gsap.set(sprite, { alpha: 0 })
+          return sprite
+        })
+        setSprites(allSprites)
       })
-      setSprites(allSprites)
     })
 
     const app = new PIXI.Application({

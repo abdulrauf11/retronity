@@ -9,21 +9,21 @@ module.exports = {
     author: `@rauf_tech`,
   },
   plugins: [
-    {
-      resolve: "gatsby-plugin-google-tagmanager",
-      options: {
-        id: "GTM-W7JB36Z",
-        defaultDataLayer: { platform: "gatsby" },
-      },
-    },
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: "UA-131443581-2",
-        // head: true,
-        // anonymize: false,
-      },
-    },
+    // {
+    //   resolve: "gatsby-plugin-google-tagmanager",
+    //   options: {
+    //     id: "GTM-W7JB36Z",
+    //     defaultDataLayer: { platform: "gatsby" },
+    //   },
+    // },
+    // {
+    //   resolve: `gatsby-plugin-google-analytics`,
+    //   options: {
+    //     trackingId: "UA-131443581-2",
+    //     // head: true,
+    //     // anonymize: false,
+    //   },
+    // },
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,

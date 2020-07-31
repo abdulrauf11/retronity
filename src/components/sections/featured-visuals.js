@@ -212,7 +212,7 @@ const FeaturedVisuals = () => {
             quote
             poster {
               asset {
-                fluid {
+                fluid(maxWidth: 800) {
                   src
                   srcWebp
                 }
@@ -233,6 +233,7 @@ const FeaturedVisuals = () => {
   const thumbnails = data.map(({ node }) => ({
     name: node.ref.title,
     url: node.poster.asset.fluid.src,
+    urlWebp: node.poster.asset.fluid.srcWebp,
   }))
 
   const animatedRef = useRef(null)
