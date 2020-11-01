@@ -1,15 +1,17 @@
 import React from "react"
+import Loadable from "@loadable/component"
 import styled from "styled-components"
 import device from "../device"
 import dots from "../../images/about/dots.svg"
-import Loadable from "@loadable/component"
+
 const RgbText = styled.div`
   font-size: 9vw;
   font-family: "Gilroy Bold";
   ${device.small`font-size: 45px;`}
   ${device.large`font-size: 9rem;`}
 `
-const LoadableBulgeText = Loadable(() => import("../canvas/bulge-text"), {
+
+const BulgeText = Loadable(() => import("../canvas/bulge-text"), {
   fallback: (
     <RgbText>
       retronity is
@@ -70,7 +72,7 @@ const About = () => {
     <Wrapper>
       <div className="heading-wrapper">
         <TextWrapper>
-          <LoadableBulgeText />
+          <BulgeText />
         </TextWrapper>
         <Dots>
           <img src={dots} alt="Dots" />

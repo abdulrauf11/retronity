@@ -1,10 +1,18 @@
 import React from "react"
+import Loadable from "@loadable/component"
 import styled from "styled-components"
 import device from "../device"
 
-import Loadable from "@loadable/component"
-const LoadableMirage = Loadable(() => import("../canvas/mirage"), {
-  fallback: <div className="scene-loader"></div>,
+const Loader = styled.div`
+  background: var(--pink);
+  opacity: 0.1;
+  border-radius: 50%;
+  width: 93%;
+  height: 93%;
+`
+
+const Mirage = Loadable(() => import("../canvas/mirage"), {
+  fallback: <Loader />,
 })
 
 const Wrapper = styled.section`
@@ -45,13 +53,6 @@ const Scene = styled.div`
   max-width: 800px;
   max-height: 800px;
   ${device.small`margin-right: auto;`}
-  .scene-loader {
-    background: var(--pink);
-    opacity: 0.1;
-    border-radius: 50%;
-    width: 93%;
-    height: 93%;
-  }
 `
 
 const SocialLinks = styled.div`
@@ -107,7 +108,7 @@ const Hero = () => {
           <br />& beyond
         </h1>
         <Scene>
-          <LoadableMirage />
+          <Mirage />
         </Scene>
       </div>
 

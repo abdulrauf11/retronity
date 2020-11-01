@@ -86,11 +86,8 @@ const Slider = ({ currIndex, prevIndex, thumbnails, mapImage }) => {
       width: canvasWrapperRef.current.clientWidth,
       height: canvasWrapperRef.current.clientHeight,
       view: canvasRef.current,
-      resolution: window.devicePixelRatio,
-      autoDensity: true,
-      antialias: true,
+      resolution: 1.0,
       resizeTo: canvasWrapperRef.current,
-      transparent: true,
     })
     app.renderer.plugins.interaction.autoPreventDefault = false
     app.renderer.view.style.touchAction = "auto"

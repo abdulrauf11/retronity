@@ -1,86 +1,116 @@
-import React, { useRef, useEffect } from "react"
+import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
 import { gsap } from "gsap"
+
 import device from "./device"
 
-const CircleWrapper = styled.div`
-  .circle {
-    position: fixed;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: var(--white);
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 1000000;
-    mix-blend-mode: exclusion;
-    ${device.small`display: none;`}
-  }
+const Container = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  pointer-events: none;
+  opacity: 0;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background: var(--white);
+  transform: scale(0.5);
+
+  ${device.small`display: none;`};
 `
 
-const Cursor = () => {
-  const circleRef = useRef(null)
-  function handleMouseMove(e) {
-    if (!circleRef.current) return
-    const tl = gsap.timeline()
-    tl.to(circleRef.current, 0.1, {
-      x: e.clientX,
-      y: e.clientY,
+function Cursor() {
+  const cursorRef = useRef()
+
+  function handleMouseEnterLink() {
+    if (!cursorRef.current) return
+    gsap.set(cursorRef.current, { mixBlendMode: "exclusion" })
+    gsap.to(cursorRef.current, {
+      duration: 0.3,
+      scale: 2,
       ease: "sine",
-    })
-    tl.to(circleRef.current, 0.1, {
-      opacity: 1,
-      ease: "sine",
+      force3D: true,
     })
   }
 
-  function handleMouseEnter() {
-    gsap.to(circleRef.current, 0.35, {
-      scale: 1,
+  function handleMouseLeaveLink() {
+    if (!cursorRef.current) return
+    gsap.set(cursorRef.current, { mixBlendMode: "none" })
+    gsap.to(cursorRef.current, {
+      duration: 0.3,
+      scale: 0.5,
       ease: "sine",
-      force3D: false,
+      force3D: true,
     })
   }
 
-  function handleMouseLeave() {
-    gsap.to(circleRef.current, 0.35, {
-      scale: 1 / 5,
-      ease: "sine",
-      force3D: false,
-    })
+  function handleMouseMove(e, mouse) {
+    mouse.x = e.x
+    mouse.y = e.y
+    cursorRef.current &&
+      gsap.to(cursorRef.current, {
+        duration: 0.2,
+        opacity: 1,
+        xPercent: -50,
+        yPercent: -50,
+      })
+  }
+
+  function handleMouseOut(e) {
+    if (e.toElement == null && e.relatedTarget == null) {
+      cursorRef.current && gsap.to(cursorRef.current, { opacity: 0 })
+    }
   }
 
   useEffect(() => {
-    gsap.set(circleRef.current, {
-      xPercent: -50,
-      yPercent: -50,
-      scale: 1 / 5,
-      opacity: 0,
-    })
+    const ball = cursorRef.current
 
-    const getLinks = document.querySelectorAll("a, button")
-    getLinks.forEach(l => {
-      l.addEventListener("mouseenter", handleMouseEnter)
-      l.addEventListener("mouseleave", handleMouseLeave)
-    })
+    const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 }
+    const mouse = { x: pos.x, y: pos.y }
+    const speed = 1.0
 
-    document.addEventListener("mousemove", e => handleMouseMove(e))
+    const fpms = 60 / 1000
+
+    const xSet = gsap.quickSetter(ball, "x", "px")
+    const ySet = gsap.quickSetter(ball, "y", "px")
+
+    window.addEventListener("mousemove", e => handleMouseMove(e, mouse))
+    window.addEventListener("mouseout", e => handleMouseOut(e))
+
+    gsap.ticker.add((_, deltaTime) => {
+      const delta = deltaTime * fpms
+      const dt = 1.0 - Math.pow(1.0 - speed, delta)
+
+      pos.x += (mouse.x - pos.x) * dt
+      pos.y += (mouse.y - pos.y) * dt
+      xSet(pos.x)
+      ySet(pos.y)
+    })
 
     return () => {
-      document.removeEventListener("mousemove", e => handleMouseMove(e))
-      getLinks.forEach(l => {
-        l.removeEventListener("mouseenter", handleMouseEnter)
-        l.removeEventListener("mouseleave", handleMouseLeave)
+      window.removeEventListener("mousemove", e => handleMouseMove(e, mouse))
+      window.removeEventListener("mouseout", e => handleMouseOut(e))
+    }
+  }, [])
+
+  useEffect(() => {
+    const links = document.querySelectorAll("a, button")
+
+    links.forEach(l => {
+      l.addEventListener("mouseenter", handleMouseEnterLink)
+      l.addEventListener("mouseleave", handleMouseLeaveLink)
+    })
+
+    return () => {
+      links.forEach(l => {
+        l.removeEventListener("mouseenter", handleMouseEnterLink)
+        l.removeEventListener("mouseleave", handleMouseLeaveLink)
       })
     }
   }, [])
 
-  return (
-    <CircleWrapper>
-      <div className="circle" ref={circleRef}></div>
-    </CircleWrapper>
-  )
+  return <Container ref={cursorRef}></Container>
 }
 
 export default Cursor

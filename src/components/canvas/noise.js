@@ -21,6 +21,7 @@ const CanvasWrapper = styled.div`
   height: 100vh;
   overflow: visible;
   canvas {
+    display: block;
     width: 100%;
     height: 100%;
   }
@@ -32,13 +33,11 @@ const NoiseBg = () => {
 
   useEffect(() => {
     const app = new PIXI.Application({
-      width: window.innerWidth,
-      height: window.innerHeight,
+      width: canvasWrapperRef.current.clientWidth,
+      height: canvasWrapperRef.current.clientHeight,
       view: canvasRef.current,
-      resolution: window.devicePixelRatio,
-      autoDensity: true,
-      antialias: true,
-      transparent: true,
+      resizeTo: canvasWrapperRef.current,
+      resolution: 0.5,
     })
     app.renderer.plugins.interaction.autoPreventDefault = false
     app.renderer.view.style.touchAction = "auto"
@@ -61,16 +60,22 @@ const NoiseBg = () => {
     })
 
     function resize() {
-      app.renderer.resize(window.innerWidth, window.innerHeight)
+      const newWidth = canvasWrapperRef.current.clientWidth
+      const newHeight = canvasWrapperRef.current.clientHeight
+      app.renderer.resize(newWidth, newHeight)
+      container.width = app.screen.width
+      container.height = app.screen.height
     }
     window.addEventListener("resize", resize)
     return () => window.removeEventListener("resize", resize)
   }, [])
 
   return (
-    <CanvasWrapper ref={canvasWrapperRef}>
-      <canvas ref={canvasRef}></canvas>
-    </CanvasWrapper>
+    <>
+      <CanvasWrapper ref={canvasWrapperRef}>
+        <canvas ref={canvasRef}></canvas>
+      </CanvasWrapper>
+    </>
   )
 }
 

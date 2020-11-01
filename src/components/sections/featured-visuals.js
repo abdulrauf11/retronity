@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react"
+import Loadable from "@loadable/component"
 import styled from "styled-components"
 import { gsap } from "gsap"
 import { useStaticQuery, graphql } from "gatsby"
@@ -9,10 +10,7 @@ import arrow from "../../images/visuals/right-arrow.svg"
 import tree from "../../images/visuals/tree.svg"
 import map from "../../images/swirly.png"
 
-import Loadable from "@loadable/component"
-const LoadableSlider = Loadable(() => import("../canvas/slider"), {
-  fallback: null,
-})
+const Slider = Loadable(() => import("../canvas/slider"))
 
 const Wrapper = styled.div`
   margin-bottom: 20rem;
@@ -310,7 +308,7 @@ const FeaturedVisuals = () => {
         <Carousel>
           <div className="thumbnail-wrapper">
             <div className="thumbnail">
-              <LoadableSlider
+              <Slider
                 currIndex={currIndex}
                 prevIndex={prevIndex}
                 thumbnails={thumbnails}

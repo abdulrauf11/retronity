@@ -139,7 +139,7 @@ const MobileMenu = () => {
 
   return (
     <Wrapper>
-      <Hamburger onClick={toggleActive}>
+      <Hamburger onClick={toggleActive} aria-label="Toggle mobile menu">
         <div className={`bar ${active && "active"}`} />
         <div className={`bar ${active && "active"}`} />
       </Hamburger>
