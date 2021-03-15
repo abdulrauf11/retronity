@@ -61,9 +61,6 @@ const Header = () => {
         <Logo />
       </Sticky>
       <PageLinks>
-        <FadeLink to="/shop/" activeClassName="active">
-          shop
-        </FadeLink>
         <FadeLink to="/visuals/" activeClassName="active">
           free visuals
         </FadeLink>
