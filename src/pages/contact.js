@@ -65,10 +65,10 @@ const ContactPage = () => {
               us, or just want to talk about the '80s.
             </p>
           </Text>
-          <Address>
+          {/* <Address>
             <p className="office">230 Block B Nespak Society, LHR, PK</p>
             <p className="email">hello@rauftech.com</p>
-          </Address>
+          </Address> */}
           <ContactForm />
         </Wrapper>
       </Main>
