@@ -96,7 +96,7 @@ const Footer = () => (
       <div className="privacy-policy">
         <FadeLink to="/faq">Privacy Policy</FadeLink>
       </div>
-      <div className="credits">
+      {/* <div className="credits">
         A Project by{"  "}
         <a
           target="_blank"
@@ -104,6 +104,16 @@ const Footer = () => (
           href="https://www.rauftech.com/"
         >
           Rauf Tech
+        </a>
+      </div> */}
+      <div className="credits">
+        A Project by{"  "}
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.instagram.com/tippydreamer/"
+        >
+          tippydreamer
         </a>
       </div>
     </End>
